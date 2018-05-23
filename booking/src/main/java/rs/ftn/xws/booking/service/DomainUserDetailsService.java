@@ -1,6 +1,7 @@
 package rs.ftn.xws.booking.service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,19 +16,31 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import rs.ftn.xws.booking.dto.SignUpRequest;
 import rs.ftn.xws.booking.persistence.domain.Permission;
 import rs.ftn.xws.booking.persistence.domain.Role;
+import rs.ftn.xws.booking.persistence.domain.RoleName;
 import rs.ftn.xws.booking.persistence.domain.User;
+import rs.ftn.xws.booking.persistence.repository.RoleRepository;
 import rs.ftn.xws.booking.persistence.repository.UserRepository;
 import rs.ftn.xws.booking.security.UserPrincipal;
+
+
 
 @Service
 public class DomainUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
@@ -38,6 +51,30 @@ public class DomainUserDetailsService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
 		return getUserPrincipal(user);
+	}
+	
+	public void changePassword(User user, String newPassword) {
+		user.setPassword(passwordEncoder.encode(newPassword));
+		userRepository.save(user);
+		logger.info("User {} has changed their password.", user.getEmail());
+	}
+	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email).orElse(null);
+	}
+
+	@Transactional
+	public User registerUser(SignUpRequest signUpRequest) {
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return null;
+		}
+
+		User user = new User(signUpRequest.getEmail(), passwordEncoder.encode(signUpRequest.getPassword()),
+				Collections.singleton(roleRepository.findByName(RoleName.ROLE_USER)));
+
+		userRepository.save(user);
+
+		return user;
 	}
 
 	private UserPrincipal getUserPrincipal(User user) {
@@ -56,5 +93,10 @@ public class DomainUserDetailsService implements UserDetailsService {
 				.collect(Collectors.toList());
 
 		return new UserPrincipal(user.getId(), user.getPassword(), user.getEmail(), user.isEnabled(), authorities);
+	}
+
+	public void activateUser(User user) {
+		user.setEnabled(true);
+		userRepository.save(user);
 	}
 }
