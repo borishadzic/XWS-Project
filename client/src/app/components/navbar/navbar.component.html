@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+
+    <mat-nav-list>
+      <mat-list-item routerLink="/home">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <p matLine>Home</p>
+      </mat-list-item>
+      <mat-list-item *ngIf="!(authService.loginEvent | async)" routerLink="/login">
+        <mat-icon mat-list-icon>fingerprint</mat-icon>
+        <p matLine>Login/SignUp</p>
+      </mat-list-item>
+      <mat-list-item *ngIf="(authService.loginEvent | async)" (click)="onLogout()">
+        <mat-icon mat-list-icon>exit_to_app</mat-icon>
+        <p matLine>Logout</p>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content style="background: white;">
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="(isHandset | async)!.matches">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Booking XWS</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
