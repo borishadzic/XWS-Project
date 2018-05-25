@@ -18,6 +18,10 @@
         <mat-icon mat-list-icon>fingerprint</mat-icon>
         <p matLine>Login/SignUp</p>
       </mat-list-item>
+      <mat-list-item *ngIf="(authService.loginEvent | async)" routerLink="/change-password">
+        <mat-icon mat-list-icon>compare_arrows</mat-icon>
+        <p matLine>Change password</p>
+      </mat-list-item>
       <mat-list-item *ngIf="(authService.loginEvent | async)" (click)="onLogout()">
         <mat-icon mat-list-icon>exit_to_app</mat-icon>
         <p matLine>Logout</p>

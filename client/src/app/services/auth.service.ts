@@ -54,4 +54,8 @@ export class AuthService {
     return this.http.post<any>(environment.hostUrl + '/api/account/password-reset', credentials);
   }
 
+  changePassword(credentials:any):Observable<any>{
+    return this.http.post<any>(environment.hostUrl + '/api/account/password-change', credentials);
+  }
+
 }

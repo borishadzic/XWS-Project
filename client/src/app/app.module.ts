@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TokenInterceptor } from './services/token.interceptor';
 import { EmailDialogComponent } from './components/email-dialog/email-dialog.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { EmailDialogComponent } from './components/email-dialog/email-dialog.com
     RegisterComponent,
     ResetPasswordComponent,
     NavbarComponent,
-    EmailDialogComponent
+    EmailDialogComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
