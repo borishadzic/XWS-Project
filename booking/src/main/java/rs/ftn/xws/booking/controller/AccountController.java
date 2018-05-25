@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ftn.xws.booking.dto.ApiResponse;
 import rs.ftn.xws.booking.dto.JwtAuthenticationResponse;
 import rs.ftn.xws.booking.dto.LoginRequest;
+import rs.ftn.xws.booking.dto.PasswordChangeRequest;
 import rs.ftn.xws.booking.dto.PasswordResetRequest;
 import rs.ftn.xws.booking.dto.ProfileDto;
 import rs.ftn.xws.booking.dto.SignUpRequest;
@@ -140,6 +141,19 @@ public class AccountController {
 			logger.error("ResetTokenException {}", e.getMessage());
 			return ResponseEntity.badRequest().body(new ApiResponse(false, "Invalid request!"));
 		}
+    }
+    
+    @PostMapping("/password-change")
+    public ResponseEntity<ApiResponse> changePassword(@RequestBody @Valid PasswordChangeRequest passwordChange){
+  		
+    		User user = domainUserDetailsService.findCurrentUser();
+    		if(user != null){
+	    		domainUserDetailsService.changePassword(user, passwordChange.getNewPassword());
+	    		return ResponseEntity.ok(new ApiResponse(true, "Password successfuly reseted!"));
+    		}else{
+    			return ResponseEntity.badRequest().body(new ApiResponse(false, "Invalid request!"));
+    		}
+    	
     }
     
 }

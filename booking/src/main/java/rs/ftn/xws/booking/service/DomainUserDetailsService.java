@@ -62,6 +62,10 @@ public class DomainUserDetailsService implements UserDetailsService {
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email).orElse(null);
 	}
+	
+	public User findCurrentUser(){
+		return userRepository.findCurrentUser();
+	}
 
 	@Transactional
 	public User registerUser(SignUpRequest signUpRequest) {
