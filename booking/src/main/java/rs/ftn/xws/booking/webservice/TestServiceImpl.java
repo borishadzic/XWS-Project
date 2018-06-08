@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 @WebService(endpointInterface = "rs.ftn.xws.booking.webservice.TestService",
 			serviceName = "TestService",
-			portName = "TestPort",
+			portName = "TestServicePort",
 			targetNamespace = "http://booking.xws.ftn.rs/test")
 public class TestServiceImpl implements TestService {
 
