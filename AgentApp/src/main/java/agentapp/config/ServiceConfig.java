@@ -56,7 +56,7 @@ public class ServiceConfig {
 	public WSS4JInInterceptor getWSS4JInInterceptor() {
 		Map<String, Object> inProps = new HashMap<String, Object>();
 		inProps.put(WSHandlerConstants.ACTION, 
-				WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE /*+ " " + WSHandlerConstants.ENCRYPT*/);
+				WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.ENCRYPT);
 		inProps.put(WSHandlerConstants.SIG_PROP_FILE, "client-crypto.properties");
 		inProps.put(WSHandlerConstants.DEC_PROP_FILE, "client-crypto.properties");
 		inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS, ClientPasswordCallback.class.getName());
