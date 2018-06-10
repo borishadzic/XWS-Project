@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import rs.ftn.xws.booking.webservice.AccomodationWebService;
 import rs.ftn.xws.booking.webservice.TestServiceImpl;
 
 @Configuration
@@ -24,10 +25,20 @@ public class CXFConfig {
 	@Autowired
 	private TestServiceImpl testService;
 	
+	@Autowired
+	private AccomodationWebService accomodationWebService;
+	
 	@Bean
 	public Endpoint testServiceEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(springBus(), testService);
 		endpoint.publish("/TestService");
+		return endpoint;
+	}
+	
+	@Bean
+	public Endpoint accomodationWebServiceEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(springBus(), accomodationWebService);
+		endpoint.publish("/AccomodationWebService");
 		return endpoint;
 	}
 	
