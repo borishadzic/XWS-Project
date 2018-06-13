@@ -1,9 +1,12 @@
 package rs.ftn.xws.booking.persistence.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class AccomodationImage {
@@ -13,6 +16,10 @@ public class AccomodationImage {
 	private Long id;
 
 	private String url;
+
+	@JoinColumn(name = "accomodation_id")
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private Accomodation accomodation;
 
 	public AccomodationImage() {
 
@@ -36,6 +43,14 @@ public class AccomodationImage {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Accomodation getAccomodation() {
+		return accomodation;
+	}
+
+	public void setAccomodation(Accomodation accomodation) {
+		this.accomodation = accomodation;
 	}
 
 }

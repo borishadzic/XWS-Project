@@ -23,3 +23,18 @@ insert into user_roles (user_id, role_id)
 values ((select id from users where email = 'bokih.95@gmail.com'), 1);
 insert into user_roles (user_id, role_id) 
 values ((select id from users where email = 'darkokirin@gmail.com'), 1);
+
+-- accomodation types
+insert into accomodation_type (type) values ('apartment');
+insert into accomodation_type (type) values ('bed&breakfast');
+insert into accomodation_type (type) values ('hotel');
+
+-- additional services
+insert into additional_service (name) values ('Parking');
+insert into additional_service (name) values ('Wifi');
+insert into additional_service (name) values ('Breakfast');
+insert into additional_service (name) values ('Polupansion');
+insert into additional_service (name) values ('Pansion');
+insert into additional_service (name) values ('TV');
+insert into additional_service (name) values ('Mini kuhinja/kuhinja');
+insert into additional_service (name) values ('Privatno kupatilo');

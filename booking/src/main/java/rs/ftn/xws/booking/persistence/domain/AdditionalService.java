@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.NaturalId;
+
 @Entity
 public class AdditionalService {
 	
@@ -15,6 +17,7 @@ public class AdditionalService {
 	private Long id;
 	
 	@Column
+	@NaturalId
 	@NotBlank
 	private String name;
 	

@@ -13,11 +13,9 @@ import org.springframework.stereotype.Service;
 import rs.ftn.xws.booking.persistence.domain.Accomodation;
 import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 import rs.ftn.xws.booking.persistence.domain.AdditionalService;
-import rs.ftn.xws.booking.persistence.domain.Location;
 import rs.ftn.xws.booking.persistence.domain.Term;
 import rs.ftn.xws.booking.persistence.repository.AccomodationTypeRepository;
 import rs.ftn.xws.booking.persistence.repository.AdditionalServiceRepository;
-import rs.ftn.xws.booking.persistence.repository.LocationRepository;
 import rs.ftn.xws.booking.persistence.repository.TermRepository;
 import rs.ftn.xws.booking.service.AccomodationService;
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
@@ -34,9 +32,6 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	private AccomodationService accService;
 	
 	@Autowired
-	private LocationRepository locationRepository;
-	
-	@Autowired
 	private AccomodationTypeRepository accTypeRepository;
 	
 	@Autowired
@@ -47,12 +42,6 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	
 	@Override
 	public Long addAccomodation(AccomodationSoap accomodation) {
-		//lokacija
-		Location location = new Location();
-		location.setCountry(accomodation.getCountry());
-		location.setCity(accomodation.getCity());
-		location.setAddress(accomodation.getAddress());
-		location = locationRepository.save(location);
 		//lokacija
 		//tip
 		AccomodationType acctype = new AccomodationType();
@@ -69,7 +58,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		}
 		//dodatne usluge
 		//termini
-		Set<Term> terms = new LinkedHashSet<Term>();
+		List<Term> terms = new ArrayList<Term>();
 		for(TermSoap termSoap : accomodation.getTerms()) {
 			Term term = new Term();
 			term.setStartDate(termSoap.getStartDate());
@@ -84,8 +73,10 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		newaccomodation.setCapacity(accomodation.getCapacity());
 		newaccomodation.setAdditionalServices(additionalServices);
 		newaccomodation.setTerms(terms);
-		newaccomodation.setLocation(location);
 		newaccomodation.setAccomodationType(acctype);
+		newaccomodation.setCity(accomodation.getCity());
+		newaccomodation.setCountry(accomodation.getCountry());
+		newaccomodation.setAddress(accomodation.getAddress());
 		newaccomodation = accService.addAccomodation(newaccomodation);
 		
 		return newaccomodation.getId();
@@ -107,16 +98,6 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	public List<AccomodationSoap> getAll() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Long addLocation(String country, String city, String address) {
-		Location newlocation = new Location();
-		newlocation.setCountry(country);
-		newlocation.setCity(city);
-		newlocation.setAddress(address);
-		newlocation = locationRepository.save(newlocation);
-		return newlocation.getId();
 	}
 	
 	@Override
