@@ -2,7 +2,7 @@ package rs.ftn.xws.booking.service;
 
 import java.util.List;
 
-import rs.ftn.xws.booking.domain.Accomodation;
+import rs.ftn.xws.booking.persistence.domain.Accomodation;
 
 public interface AccomodationService {
 	

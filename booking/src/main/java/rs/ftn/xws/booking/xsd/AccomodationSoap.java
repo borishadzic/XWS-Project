@@ -12,11 +12,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AccomodationSoap {
 	
-	@XmlElement(name = "location", required = true)
-	private LocationSoap location;
+	@XmlElement
+	private String name;
+	
+	@XmlElement(name = "country",required = true)
+	private String country;
+	
+	@XmlElement(name="city",required = true)
+	private String city;
+	
+	@XmlElement(name="address",required = true)
+	private String address;
 	
 	@XmlElement(name = "accomodationType", required = true)
-	private AccomodationTypeSoap accomodationType;
+	private String accomodationType;
 	
 	@XmlElement(name = "description", required = true)
 	private String description;
@@ -26,27 +35,11 @@ public class AccomodationSoap {
 	
 	@XmlElementWrapper(name = "additionalServices", required = true)
 	@XmlElement(name = "service", required = true)
-	private ArrayList<AdditionalServiceSoap> additionalServices;
+	private ArrayList<String> additionalServices;
 	
 	@XmlElementWrapper(name = "terms", required = true)
 	@XmlElement(name = "term", required = true)
 	private ArrayList<TermSoap> terms;
-
-	public LocationSoap getLocation() {
-		return location;
-	}
-
-	public void setLocation(LocationSoap location) {
-		this.location = location;
-	}
-
-	public AccomodationTypeSoap getAccomodationType() {
-		return accomodationType;
-	}
-
-	public void setAccomodationType(AccomodationTypeSoap accomodationType) {
-		this.accomodationType = accomodationType;
-	}
 
 	public String getDescription() {
 		return description;
@@ -64,20 +57,60 @@ public class AccomodationSoap {
 		this.capacity = capacity;
 	}
 
-	public ArrayList<AdditionalServiceSoap> getAdditionalServices() {
-		return additionalServices;
-	}
-
-	public void setAdditionalServices(ArrayList<AdditionalServiceSoap> additionalServices) {
-		this.additionalServices = additionalServices;
-	}
-
 	public ArrayList<TermSoap> getTerms() {
 		return terms;
 	}
 
 	public void setTerms(ArrayList<TermSoap> terms) {
 		this.terms = terms;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAccomodationType() {
+		return accomodationType;
+	}
+
+	public void setAccomodationType(String accomodationType) {
+		this.accomodationType = accomodationType;
+	}
+
+	public ArrayList<String> getAdditionalServices() {
+		return additionalServices;
+	}
+
+	public void setAdditionalServices(ArrayList<String> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

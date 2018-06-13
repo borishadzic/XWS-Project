@@ -8,14 +8,13 @@ import org.apache.cxf.annotations.SchemaValidation;
 import org.apache.cxf.annotations.SchemaValidation.SchemaValidationType;
 
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
-import rs.ftn.xws.booking.xsd.LocationSoap;
 
 @WebService(name = "AccomodationWebServiceSoap", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService")
 @SchemaValidation(type = SchemaValidationType.REQUEST)
 public interface AccomodationWebService {
 	
 	//proba
-	Long addLocation(LocationSoap location);
+	Long addLocation(String country,String city, String address);
 
 	//prevodi jaxb model u model koji se cuva u bazu i vraca id iz baze
 	Long addAccomodation(AccomodationSoap accomodation);
@@ -25,5 +24,9 @@ public interface AccomodationWebService {
 	Long deleteAccomodation(Long accomodationId);
 	
 	List<AccomodationSoap> getAll();
+	
+	List<String> getAllAccomodationTypes();
+	
+	List<String> getAllAdditionalServices();
 	
 }

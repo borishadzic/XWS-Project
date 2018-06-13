@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import agentapp.domain.Location;
 import agentapp.service.LocationService;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
-import rs.ftn.xws.booking.accomodationwebservice.LocationSoap;
 import rs.ftn.xws.booking.test.TestServiceSoap;
 
 @RestController
@@ -38,12 +37,8 @@ public class TestController {
 		loc.setAddress("Radnicka");
 		loc = locService.addLocation(loc);
 		
-		LocationSoap locSoap  = new LocationSoap();
-		locSoap.setCountry(loc.getCountry());
-		locSoap.setCity(loc.getCity());
-		locSoap.setAddress(loc.getAddress());
 		
-		Long id = accWebService.addLocation(locSoap);
+		Long id = accWebService.addLocation(loc.getCountry(),loc.getCity(),loc.getAddress());
 		
 		return id;
 	}

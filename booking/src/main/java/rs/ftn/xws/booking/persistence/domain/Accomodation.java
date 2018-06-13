@@ -1,4 +1,4 @@
-package rs.ftn.xws.booking.domain;
+package rs.ftn.xws.booking.persistence.domain;
 
 import java.util.Set;
 
@@ -18,6 +18,10 @@ public class Accomodation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column
+	@NotBlank
+	private String name;
 	
 	@ManyToOne
 	@JoinColumn(name = "locationId")
@@ -99,6 +103,14 @@ public class Accomodation {
 
 	public void setTerms(Set<Term> terms) {
 		this.terms = terms;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

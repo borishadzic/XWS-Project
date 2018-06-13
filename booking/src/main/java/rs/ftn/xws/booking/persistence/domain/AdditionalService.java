@@ -1,4 +1,4 @@
-package rs.ftn.xws.booking.domain;
+package rs.ftn.xws.booking.persistence.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class AccomodationType {
+public class AdditionalService {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +16,12 @@ public class AccomodationType {
 	
 	@Column
 	@NotBlank
-	private String type;
+	private String name;
 	
-	public AccomodationType() {}
+	public AdditionalService() {}
 	
-	public AccomodationType(String type) {
-		this.type = type;
+	public AdditionalService(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -32,12 +32,14 @@ public class AccomodationType {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getName() {
+		return name;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setName(String name) {
+		this.name = name;
 	}
+	
+	
 
 }

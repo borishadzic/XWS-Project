@@ -1,4 +1,4 @@
-package rs.ftn.xws.booking.domain;
+package rs.ftn.xws.booking.persistence.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

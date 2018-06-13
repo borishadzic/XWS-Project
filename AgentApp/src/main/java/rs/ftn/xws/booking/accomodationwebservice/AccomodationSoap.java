@@ -19,8 +19,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="location" type="{http://booking.xws.ftn.rs/accomodationWebService}locationSoap"/>
- *         &lt;element name="accomodationType" type="{http://booking.xws.ftn.rs/accomodationWebService}accomodationTypeSoap"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="accomodationType" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="capacity" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="additionalServices">
@@ -28,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element name="service" type="{http://booking.xws.ftn.rs/accomodationWebService}additionalServiceSoap" maxOccurs="unbounded"/>
+ *                   &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -55,7 +58,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "accomodationSoap", propOrder = {
-    "location",
+    "name",
+    "country",
+    "city",
+    "address",
     "accomodationType",
     "description",
     "capacity",
@@ -64,10 +70,15 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AccomodationSoap {
 
+    protected String name;
     @XmlElement(required = true)
-    protected LocationSoap location;
+    protected String country;
     @XmlElement(required = true)
-    protected AccomodationTypeSoap accomodationType;
+    protected String city;
+    @XmlElement(required = true)
+    protected String address;
+    @XmlElement(required = true)
+    protected String accomodationType;
     @XmlElement(required = true)
     protected String description;
     protected int capacity;
@@ -77,27 +88,99 @@ public class AccomodationSoap {
     protected AccomodationSoap.Terms terms;
 
     /**
-     * Gets the value of the location property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
-     *     {@link LocationSoap }
+     *     {@link String }
      *     
      */
-    public LocationSoap getLocation() {
-        return location;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the location property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LocationSoap }
+     *     {@link String }
      *     
      */
-    public void setLocation(LocationSoap value) {
-        this.location = value;
+    public void setName(String value) {
+        this.name = value;
+    }
+
+    /**
+     * Gets the value of the country property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * Sets the value of the country property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCountry(String value) {
+        this.country = value;
+    }
+
+    /**
+     * Gets the value of the city property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Sets the value of the city property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCity(String value) {
+        this.city = value;
+    }
+
+    /**
+     * Gets the value of the address property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Sets the value of the address property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddress(String value) {
+        this.address = value;
     }
 
     /**
@@ -105,10 +188,10 @@ public class AccomodationSoap {
      * 
      * @return
      *     possible object is
-     *     {@link AccomodationTypeSoap }
+     *     {@link String }
      *     
      */
-    public AccomodationTypeSoap getAccomodationType() {
+    public String getAccomodationType() {
         return accomodationType;
     }
 
@@ -117,10 +200,10 @@ public class AccomodationSoap {
      * 
      * @param value
      *     allowed object is
-     *     {@link AccomodationTypeSoap }
+     *     {@link String }
      *     
      */
-    public void setAccomodationType(AccomodationTypeSoap value) {
+    public void setAccomodationType(String value) {
         this.accomodationType = value;
     }
 
@@ -223,7 +306,7 @@ public class AccomodationSoap {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element name="service" type="{http://booking.xws.ftn.rs/accomodationWebService}additionalServiceSoap" maxOccurs="unbounded"/>
+     *         &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -239,7 +322,7 @@ public class AccomodationSoap {
     public static class AdditionalServices {
 
         @XmlElement(required = true)
-        protected List<AdditionalServiceSoap> service;
+        protected List<String> service;
 
         /**
          * Gets the value of the service property.
@@ -259,13 +342,13 @@ public class AccomodationSoap {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link AdditionalServiceSoap }
+         * {@link String }
          * 
          * 
          */
-        public List<AdditionalServiceSoap> getService() {
+        public List<String> getService() {
             if (service == null) {
-                service = new ArrayList<AdditionalServiceSoap>();
+                service = new ArrayList<String>();
             }
             return this.service;
         }
