@@ -11,18 +11,19 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 public class AccomodationType {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	@NaturalId
 	@NotBlank
 	private String type;
-	
-	public AccomodationType() {}
-	
+
+	public AccomodationType() {
+	}
+
 	public AccomodationType(String type) {
 		this.type = type;
 	}
@@ -42,5 +43,5 @@ public class AccomodationType {
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	
 }

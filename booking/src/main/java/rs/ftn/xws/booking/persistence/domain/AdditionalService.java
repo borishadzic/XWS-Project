@@ -11,18 +11,19 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 public class AdditionalService {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	@NaturalId
 	@NotBlank
 	private String name;
-	
-	public AdditionalService() {}
-	
+
+	public AdditionalService() {
+	}
+
 	public AdditionalService(String name) {
 		this.name = name;
 	}
@@ -42,7 +43,5 @@ public class AdditionalService {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -39,9 +40,9 @@ public class Accomodation {
 	@NotBlank
 	private String address;
 
-	@ManyToOne
-	@JoinColumn(name = "typeId")
 	@NotBlank
+	@JoinColumn(name = "typeId")
+	@ManyToOne(fetch = FetchType.LAZY)
 	private AccomodationType accomodationType;
 
 	@Column
@@ -52,13 +53,16 @@ public class Accomodation {
 	@NotBlank
 	private int capacity;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "accomodation_services", 
+		joinColumns = @JoinColumn(name = "accomodation_id"), 
+		inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private Set<AdditionalService> additionalServices;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accomodation", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Term> terms;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accomodation", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<AccomodationImage> images;
 
 	public Accomodation() {
@@ -70,6 +74,38 @@ public class Accomodation {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public AccomodationType getAccomodationType() {
@@ -112,14 +148,6 @@ public class Accomodation {
 		this.terms = terms;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public List<AccomodationImage> getImages() {
 		return images;
 	}
@@ -128,28 +156,11 @@ public class Accomodation {
 		this.images = images;
 	}
 
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	@Override
+	public String toString() {
+		return "Accomodation [id=" + id + ", name=" + name + ", country=" + country + ", city=" + city + ", address="
+				+ address + ", accomodationType=" + accomodationType + ", description=" + description + ", capacity="
+				+ capacity + ", additionalServices=" + additionalServices + ", images=" + images + "]";
 	}
 
 }
