@@ -13,6 +13,7 @@ export class NewAccomodationComponent implements OnInit {
   public form: FormGroup;
   public services = [];
   public types;
+  public categories;
 
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
@@ -28,6 +29,7 @@ export class NewAccomodationComponent implements OnInit {
       'city': new FormControl(null,Validators.required),
       'address': new FormControl(null,Validators.required),
       'accomodationType': new FormControl(null,Validators.required),
+      'category': new FormControl(null,Validators.required),
       'description': new FormControl(null),
       'capacity': new FormControl(null,Validators.required),
       'terms': new FormArray([]),
@@ -43,6 +45,10 @@ export class NewAccomodationComponent implements OnInit {
 
     this.http.get('http://localhost:8081/accomodationTypes').subscribe(data => {
       this.types = data;
+    });
+
+    this.http.get('http://localhost:8081/categories').subscribe(data => {
+      this.categories = data;
     });
   }
 

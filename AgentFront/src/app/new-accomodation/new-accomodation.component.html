@@ -24,11 +24,20 @@
       <div class="example-container">
           <mat-form-field>
               <mat-select placeholder="Choose your accomodation type" formControlName="accomodationType">
-                <mat-option *ngFor="let type of types" [value]="type.type">
+                <mat-option *ngFor="let type of types" [value]="type.id">
                   {{ type.type }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+      </div>
+      <div class="example-container">
+        <mat-form-field>
+            <mat-select placeholder="Choose your accomodation category" formControlName="category">
+              <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
       </div>
       <div class="example-container">
         <mat-form-field>
