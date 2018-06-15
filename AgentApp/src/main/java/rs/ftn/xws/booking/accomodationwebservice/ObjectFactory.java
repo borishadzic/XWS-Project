@@ -217,7 +217,6 @@ public class ObjectFactory {
         return new TermSoap();
     }
 
-   
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddAccomodationResponse }{@code >}}
      * 

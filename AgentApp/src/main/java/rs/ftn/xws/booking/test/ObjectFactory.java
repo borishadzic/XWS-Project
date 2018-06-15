@@ -24,10 +24,11 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _TestMethodOne_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethodOne");
-    private final static QName _TestMethodOneResponse_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethodOneResponse");
-    private final static QName _TestMethodTwoResponse_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethodTwoResponse");
-    private final static QName _TestMethodTwo_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethodTwo");
+    private final static QName _TestMethod_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethod");
+    private final static QName _UploadMultiple_QNAME = new QName("http://booking.xws.ftn.rs/test", "uploadMultiple");
+    private final static QName _UploadModelXsd_QNAME = new QName("http://booking.xws.ftn.rs/test", "uploadModelXsd");
+    private final static QName _TestMethodResponse_QNAME = new QName("http://booking.xws.ftn.rs/test", "testMethodResponse");
+    private final static QName _UploadMultipleResponse_QNAME = new QName("http://booking.xws.ftn.rs/test", "uploadMultipleResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rs.ftn.xws.booking.test
@@ -37,71 +38,96 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TestMethodTwo }
+     * Create an instance of {@link UploadModelXsd }
      * 
      */
-    public TestMethodTwo createTestMethodTwo() {
-        return new TestMethodTwo();
+    public UploadModelXsd createUploadModelXsd() {
+        return new UploadModelXsd();
     }
 
     /**
-     * Create an instance of {@link TestMethodOne }
+     * Create an instance of {@link TestMethodResponse }
      * 
      */
-    public TestMethodOne createTestMethodOne() {
-        return new TestMethodOne();
+    public TestMethodResponse createTestMethodResponse() {
+        return new TestMethodResponse();
     }
 
     /**
-     * Create an instance of {@link TestMethodOneResponse }
+     * Create an instance of {@link UploadMultipleResponse }
      * 
      */
-    public TestMethodOneResponse createTestMethodOneResponse() {
-        return new TestMethodOneResponse();
+    public UploadMultipleResponse createUploadMultipleResponse() {
+        return new UploadMultipleResponse();
     }
 
     /**
-     * Create an instance of {@link TestMethodTwoResponse }
+     * Create an instance of {@link TestMethod }
      * 
      */
-    public TestMethodTwoResponse createTestMethodTwoResponse() {
-        return new TestMethodTwoResponse();
+    public TestMethod createTestMethod() {
+        return new TestMethod();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodOne }{@code >}}
+     * Create an instance of {@link UploadMultiple }
      * 
      */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethodOne")
-    public JAXBElement<TestMethodOne> createTestMethodOne(TestMethodOne value) {
-        return new JAXBElement<TestMethodOne>(_TestMethodOne_QNAME, TestMethodOne.class, null, value);
+    public UploadMultiple createUploadMultiple() {
+        return new UploadMultiple();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodOneResponse }{@code >}}
+     * Create an instance of {@link UploadModelXsd.Images }
      * 
      */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethodOneResponse")
-    public JAXBElement<TestMethodOneResponse> createTestMethodOneResponse(TestMethodOneResponse value) {
-        return new JAXBElement<TestMethodOneResponse>(_TestMethodOneResponse_QNAME, TestMethodOneResponse.class, null, value);
+    public UploadModelXsd.Images createUploadModelXsdImages() {
+        return new UploadModelXsd.Images();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodTwoResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethod }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethodTwoResponse")
-    public JAXBElement<TestMethodTwoResponse> createTestMethodTwoResponse(TestMethodTwoResponse value) {
-        return new JAXBElement<TestMethodTwoResponse>(_TestMethodTwoResponse_QNAME, TestMethodTwoResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethod")
+    public JAXBElement<TestMethod> createTestMethod(TestMethod value) {
+        return new JAXBElement<TestMethod>(_TestMethod_QNAME, TestMethod.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodTwo }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMultiple }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethodTwo")
-    public JAXBElement<TestMethodTwo> createTestMethodTwo(TestMethodTwo value) {
-        return new JAXBElement<TestMethodTwo>(_TestMethodTwo_QNAME, TestMethodTwo.class, null, value);
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "uploadMultiple")
+    public JAXBElement<UploadMultiple> createUploadMultiple(UploadMultiple value) {
+        return new JAXBElement<UploadMultiple>(_UploadMultiple_QNAME, UploadMultiple.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadModelXsd }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "uploadModelXsd")
+    public JAXBElement<UploadModelXsd> createUploadModelXsd(UploadModelXsd value) {
+        return new JAXBElement<UploadModelXsd>(_UploadModelXsd_QNAME, UploadModelXsd.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "testMethodResponse")
+    public JAXBElement<TestMethodResponse> createTestMethodResponse(TestMethodResponse value) {
+        return new JAXBElement<TestMethodResponse>(_TestMethodResponse_QNAME, TestMethodResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMultipleResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/test", name = "uploadMultipleResponse")
+    public JAXBElement<UploadMultipleResponse> createUploadMultipleResponse(UploadMultipleResponse value) {
+        return new JAXBElement<UploadMultipleResponse>(_UploadMultipleResponse_QNAME, UploadMultipleResponse.class, null, value);
     }
 
 }

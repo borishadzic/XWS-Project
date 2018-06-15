@@ -46,4 +46,10 @@ public class TestServiceImpl implements TestService {
 		}
 	}
 
+	@Override
+	public String testMethod() {
+		System.out.println(webServiceContext.getUserPrincipal());
+		return "Server testMethod()";
+	}
+
 }

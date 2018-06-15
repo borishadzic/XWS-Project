@@ -30,22 +30,19 @@ public interface TestServiceSoap {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "testMethodOne", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethodOne")
-    @ResponseWrapper(localName = "testMethodOneResponse", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethodOneResponse")
-    public String testMethodOne();
+    @RequestWrapper(localName = "testMethod", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethod")
+    @ResponseWrapper(localName = "testMethodResponse", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethodResponse")
+    public String testMethod();
 
     /**
      * 
-     * @param testString
-     * @return
-     *     returns java.lang.String
+     * @param arg0
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "testMethodTwo", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethodTwo")
-    @ResponseWrapper(localName = "testMethodTwoResponse", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.TestMethodTwoResponse")
-    public String testMethodTwo(
-        @WebParam(name = "testString", targetNamespace = "")
-        String testString);
+    @RequestWrapper(localName = "uploadMultiple", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.UploadMultiple")
+    @ResponseWrapper(localName = "uploadMultipleResponse", targetNamespace = "http://booking.xws.ftn.rs/test", className = "rs.ftn.xws.booking.test.UploadMultipleResponse")
+    public void uploadMultiple(
+        @WebParam(name = "arg0", targetNamespace = "")
+        UploadModelXsd arg0);
 
 }

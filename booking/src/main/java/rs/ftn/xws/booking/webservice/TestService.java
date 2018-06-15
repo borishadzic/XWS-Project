@@ -11,4 +11,6 @@ public interface TestService {
 
 	void uploadMultiple(UploadModelXsd fileUploadServer);
 	
+	String testMethod();
+	
 }

@@ -1,19 +1,21 @@
 
 package rs.ftn.xws.booking.accomodationwebservice;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for accomodationSoap complex type.
+ * <p>
+ * Java class for accomodationSoap complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="accomodationSoap">
@@ -59,225 +61,223 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "accomodationSoap", propOrder = {
-    "name",
-    "country",
-    "city",
-    "address",
-    "accomodationType",
-    "category",
-    "description",
-    "capacity",
-    "additionalServices",
-    "terms"
-})
+@XmlType(name = "accomodationSoap", propOrder = { "name", "country", "city", "address", "accomodationType", "category",
+		"description", "capacity", "additionalServices", "terms" })
 public class AccomodationSoap {
 
-    protected String name;
-    @XmlElement(required = true)
-    protected String country;
-    @XmlElement(required = true)
-    protected String city;
-    @XmlElement(required = true)
-    protected String address;
-    protected long accomodationType;
-    protected long category;
-    @XmlElement(required = true)
-    protected String description;
-    protected int capacity;
-    
-    @XmlElementWrapper(name = "additionalServices", required = true)
-    @XmlElement(required = true, name="service")
-    protected List<Long> additionalServices;
-    
-    @XmlElementWrapper(name = "terms", required = true)
-    @XmlElement(required = true, name="term")
-    protected List<TermSoap> terms;
+	protected String name;
+	@XmlElement(required = true)
+	protected String country;
+	@XmlElement(required = true)
+	protected String city;
+	@XmlElement(required = true)
+	protected String address;
+	protected long accomodationType;
+	protected long category;
+	@XmlElement(required = true)
+	protected String description;
+	protected int capacity;
+	@XmlElementWrapper(name = "additionalServices", required = true)
+	@XmlElement(name = "service", required = true)
+	protected List<Long> additionalServices;
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+	@XmlElementWrapper(name = "terms", required = true)
+	@XmlElement(name = "term", required = true)
+	protected List<TermSoap> terms;
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+	/**
+	 * Gets the value of the name property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * Gets the value of the country property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCountry() {
-        return country;
-    }
+	/**
+	 * Sets the value of the name property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setName(String value) {
+		this.name = value;
+	}
 
-    /**
-     * Sets the value of the country property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCountry(String value) {
-        this.country = value;
-    }
+	/**
+	 * Gets the value of the country property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getCountry() {
+		return country;
+	}
 
-    /**
-     * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCity() {
-        return city;
-    }
+	/**
+	 * Sets the value of the country property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setCountry(String value) {
+		this.country = value;
+	}
 
-    /**
-     * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCity(String value) {
-        this.city = value;
-    }
+	/**
+	 * Gets the value of the city property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getCity() {
+		return city;
+	}
 
-    /**
-     * Gets the value of the address property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAddress() {
-        return address;
-    }
+	/**
+	 * Sets the value of the city property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setCity(String value) {
+		this.city = value;
+	}
 
-    /**
-     * Sets the value of the address property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAddress(String value) {
-        this.address = value;
-    }
+	/**
+	 * Gets the value of the address property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getAddress() {
+		return address;
+	}
 
-    /**
-     * Gets the value of the accomodationType property.
-     * 
-     */
-    public long getAccomodationType() {
-        return accomodationType;
-    }
+	/**
+	 * Sets the value of the address property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setAddress(String value) {
+		this.address = value;
+	}
 
-    /**
-     * Sets the value of the accomodationType property.
-     * 
-     */
-    public void setAccomodationType(long value) {
-        this.accomodationType = value;
-    }
+	/**
+	 * Gets the value of the accomodationType property.
+	 * 
+	 */
+	public long getAccomodationType() {
+		return accomodationType;
+	}
 
-    /**
-     * Gets the value of the category property.
-     * 
-     */
-    public long getCategory() {
-        return category;
-    }
+	/**
+	 * Sets the value of the accomodationType property.
+	 * 
+	 */
+	public void setAccomodationType(long value) {
+		this.accomodationType = value;
+	}
 
-    /**
-     * Sets the value of the category property.
-     * 
-     */
-    public void setCategory(long value) {
-        this.category = value;
-    }
+	/**
+	 * Gets the value of the category property.
+	 * 
+	 */
+	public long getCategory() {
+		return category;
+	}
 
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Sets the value of the category property.
+	 * 
+	 */
+	public void setCategory(long value) {
+		this.category = value;
+	}
 
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDescription(String value) {
-        this.description = value;
-    }
+	/**
+	 * Gets the value of the description property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Gets the value of the capacity property.
-     * 
-     */
-    public int getCapacity() {
-        return capacity;
-    }
+	/**
+	 * Sets the value of the description property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDescription(String value) {
+		this.description = value;
+	}
 
-    /**
-     * Sets the value of the capacity property.
-     * 
-     */
-    public void setCapacity(int value) {
-        this.capacity = value;
-    }
+	/**
+	 * Gets the value of the capacity property.
+	 * 
+	 */
+	public int getCapacity() {
+		return capacity;
+	}
 
+	/**
+	 * Sets the value of the capacity property.
+	 * 
+	 */
+	public void setCapacity(int value) {
+		this.capacity = value;
+	}
+
+	/**
+	 * Gets the value of the additionalServices property.
+	 * 
+	 * @return possible object is {@link AccomodationSoap.AdditionalServices }
+	 * 
+	 */
 	public List<Long> getAdditionalServices() {
 		return additionalServices;
 	}
 
-	public void setAdditionalServices(List<Long> additionalServices) {
-		this.additionalServices = additionalServices;
+	/**
+	 * Sets the value of the additionalServices property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AccomodationSoap.AdditionalServices }
+	 * 
+	 */
+	public void setAdditionalServices(List<Long> value) {
+		this.additionalServices = value;
 	}
 
+	/**
+	 * Gets the value of the terms property.
+	 * 
+	 * @return possible object is {@link AccomodationSoap.Terms }
+	 * 
+	 */
 	public List<TermSoap> getTerms() {
 		return terms;
 	}
 
-	public void setTerms(List<TermSoap> terms) {
-		this.terms = terms;
+	/**
+	 * Sets the value of the terms property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AccomodationSoap.Terms }
+	 * 
+	 */
+	public void setTerms(List<TermSoap> value) {
+		this.terms = value;
 	}
-
-   
 
 }
