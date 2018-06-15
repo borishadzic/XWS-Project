@@ -39,8 +39,16 @@ insert into additional_service (name) values ('TV');
 insert into additional_service (name) values ('Mini kuhinja/kuhinja');
 insert into additional_service (name) values ('Privatno kupatilo');
 
+-- category
+insert into category (category) values ('*');
+insert into category (category) values ('**');
+insert into category (category) values ('***');
+insert into category (category) values ('****');
+insert into category (category) values ('*****');
+insert into category (category) values ('uncategorized');
+
 -- test data
--- insert into accomodation (id, address, capacity, city, country, description, name, type_id)
--- values (1, 'Lozionicka 12', 4, 'Novi Sad', 'Srbija', 'Opis', 'Sheraton', 1) ;
+-- insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id)
+-- values (1, 'Lozionicka 12', 4, 'Novi Sad', 'Srbija', 'Opis', 'Sheraton', 1, 4) ;
 -- insert into accomodation_image values (1, 'url1', 1);
 -- insert into accomodation_image values (2, 'url2', 1);

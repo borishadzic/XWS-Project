@@ -7,19 +7,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.NaturalId;
+
 @Entity
 public class AdditionalService {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
-	@NotBlank
+	@NaturalId
 	private String name;
 	
-	public AdditionalService() {}
-	
+	@Column
+	private Long databaseId;
+
+	public AdditionalService() {
+	}
+
 	public AdditionalService(String name) {
 		this.name = name;
 	}
@@ -39,7 +45,13 @@ public class AdditionalService {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public Long getDatabaseId() {
+		return databaseId;
+	}
+
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
+	}
 
 }

@@ -1,6 +1,7 @@
 package rs.ftn.xws.booking.webservice;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,12 +14,18 @@ import org.springframework.stereotype.Service;
 import rs.ftn.xws.booking.persistence.domain.Accomodation;
 import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 import rs.ftn.xws.booking.persistence.domain.AdditionalService;
+import rs.ftn.xws.booking.persistence.domain.Category;
 import rs.ftn.xws.booking.persistence.domain.Term;
+import rs.ftn.xws.booking.persistence.repository.AccomodationRepository;
 import rs.ftn.xws.booking.persistence.repository.AccomodationTypeRepository;
 import rs.ftn.xws.booking.persistence.repository.AdditionalServiceRepository;
+import rs.ftn.xws.booking.persistence.repository.CategoryRepository;
 import rs.ftn.xws.booking.persistence.repository.TermRepository;
 import rs.ftn.xws.booking.service.AccomodationService;
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
+import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
+import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
+import rs.ftn.xws.booking.xsd.CategorySoap;
 import rs.ftn.xws.booking.xsd.TermSoap;
 
 @Service
@@ -32,6 +39,9 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	private AccomodationService accService;
 	
 	@Autowired
+	private AccomodationRepository accRepository;
+	
+	@Autowired
 	private AccomodationTypeRepository accTypeRepository;
 	
 	@Autowired
@@ -40,44 +50,43 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	@Autowired
 	private TermRepository termRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	@Override
 	public Long addAccomodation(AccomodationSoap accomodation) {
-		//lokacija
-		//tip
-		AccomodationType acctype = new AccomodationType();
-		acctype.setType(accomodation.getAccomodationType());
-		acctype = accTypeRepository.save(acctype);
-		//tip
+		
 		//dodatne usluge
-		Set<AdditionalService> additionalServices = new LinkedHashSet<AdditionalService>();
-		for(String ass : accomodation.getAdditionalServices()) {
-			AdditionalService additionalService = new AdditionalService();
-			additionalService.setName(ass);
-			additionalService = additionalServiceRepository.save(additionalService);
-			additionalServices.add(additionalService);
-		}
+		
 		//dodatne usluge
+		
 		//termini
-		List<Term> terms = new ArrayList<Term>();
-		for(TermSoap termSoap : accomodation.getTerms()) {
+		
+		
+		Set<AdditionalService> services = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accomodation.getAdditionalServices()));
+		//termini
+		Accomodation newaccomodation = new Accomodation();
+		newaccomodation.setName(accomodation.getName());
+		newaccomodation.setDescription(accomodation.getDescription());
+		newaccomodation.setCapacity(accomodation.getCapacity());
+		newaccomodation.setAdditionalServices(services);
+		newaccomodation.setAccomodationType(accTypeRepository.getOne(accomodation.getAccomodationType()));
+		newaccomodation.setCity(accomodation.getCity());
+		newaccomodation.setCountry(accomodation.getCountry());
+		newaccomodation.setAddress(accomodation.getAddress());
+		newaccomodation.setCategory(categoryRepository.getOne(accomodation.getCategory()));
+		newaccomodation = accService.addAccomodation(newaccomodation);
+		
+		
+		/*for(TermSoap termSoap : accomodation.getTerms()) {
 			Term term = new Term();
 			term.setStartDate(termSoap.getStartDate());
 			term.setEndDate(termSoap.getEndDate());
 			term.setPrice(termSoap.getPrice());
-			term = termRepository.save(term);
-			terms.add(term);
-		}
-		//termini
-		Accomodation newaccomodation = new Accomodation();
-		newaccomodation.setDescription(accomodation.getDescription());
-		newaccomodation.setCapacity(accomodation.getCapacity());
-		newaccomodation.setAdditionalServices(additionalServices);
-		newaccomodation.setTerms(terms);
-		newaccomodation.setAccomodationType(acctype);
-		newaccomodation.setCity(accomodation.getCity());
-		newaccomodation.setCountry(accomodation.getCountry());
-		newaccomodation.setAddress(accomodation.getAddress());
-		newaccomodation = accService.addAccomodation(newaccomodation);
+			term.setAccomodation(newaccomodation);
+			termRepository.save(term);
+		}*/
+		
 		
 		return newaccomodation.getId();
 	}
@@ -96,28 +105,88 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 
 	@Override
 	public List<AccomodationSoap> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<AccomodationSoap> accsoap = new ArrayList<>();
+		for(Accomodation acc : accRepository.findAll()) {
+			AccomodationSoap accS = new AccomodationSoap();
+			accS.setName(acc.getName());
+			accS.setCountry(acc.getCountry());
+			accS.setCity(acc.getCity());
+			accS.setAddress(acc.getAddress());
+			accS.setAccomodationType(acc.getAccomodationType().getId());
+			accS.setCategory(acc.getCategory().getId());
+			accS.setCapacity(acc.getCapacity());
+			accS.setDescription(acc.getDescription());
+			List<Long> asids = new ArrayList<>();
+			for(AdditionalService as : acc.getAdditionalServices()) {
+				asids.add(as.getId());
+			}
+			accS.setAdditionalServices((ArrayList<Long>) asids);
+			
+			List<TermSoap> termsSoap = new ArrayList<>();
+			for(Term term : acc.getTerms()) {
+				TermSoap termSoap = new TermSoap();
+				termSoap.setStartDate(term.getStartDate());
+				termSoap.setEndDate(term.getEndDate());
+				termSoap.setPrice(term.getPrice());
+				termSoap.setId(term.getId());
+				termsSoap.add(termSoap);
+			}
+			accS.setTerms((ArrayList<TermSoap>) termsSoap);
+			
+			accsoap.add(accS);
+		}
+		
+		return accsoap;
 	}
 	
 	@Override
-	public List<String> getAllAccomodationTypes() {
+	public List<AccomodationTypeSoap> getAllAccomodationTypes() {
 		List<AccomodationType> types = accTypeRepository.findAll();
-		List<String> typesSoap = new ArrayList<String>();
+		List<AccomodationTypeSoap> typesSoap = new ArrayList<AccomodationTypeSoap>();
 		for(AccomodationType type : types) {
-			typesSoap.add(type.getType());
+			AccomodationTypeSoap typeSoap = new AccomodationTypeSoap();
+			typeSoap.setId(type.getId());
+			typeSoap.setType(type.getType());
+			typesSoap.add(typeSoap);
 		}
 		return typesSoap;
 	}
 
 	@Override
-	public List<String> getAllAdditionalServices() {
+	public List<AdditionalServiceSoap> getAllAdditionalServices() {
 		List<AdditionalService> services = additionalServiceRepository.findAll();
-		List<String> servicesSoap = new ArrayList<String>();
+		List<AdditionalServiceSoap> servicesSoap = new ArrayList<AdditionalServiceSoap>();
 		for(AdditionalService service : services) {
-			servicesSoap.add(service.getName());
+			AdditionalServiceSoap addSoap = new AdditionalServiceSoap();
+			addSoap.setId(service.getId());
+			addSoap.setName(service.getName());
+			servicesSoap.add(addSoap);
 		}
 		return servicesSoap;
+	}
+
+	@Override
+	public List<CategorySoap> getAllCategories() {
+		List<Category> categories = categoryRepository.findAll();
+		List<CategorySoap> categoriesSoap = new ArrayList<CategorySoap>();
+		for(Category category : categories) {
+			CategorySoap categorySoap = new CategorySoap();
+			categorySoap.setId(category.getId());
+			categorySoap.setCategory(category.getCategory());
+			categoriesSoap.add(categorySoap);
+		}
+		return categoriesSoap;
+	}
+
+	@Override
+	public Long creatingTerm(TermSoap termSoap, Long accDatabaseId) {
+		Term term = new Term();
+		term.setStartDate(termSoap.getStartDate());
+		term.setEndDate(termSoap.getEndDate());
+		term.setPrice(termSoap.getPrice());
+		term.setAccomodation(accRepository.getOne(accDatabaseId));
+		term = termRepository.save(term);
+		return term.getId();
 	}
 
 }

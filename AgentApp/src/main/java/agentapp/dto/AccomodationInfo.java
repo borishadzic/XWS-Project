@@ -11,10 +11,11 @@ public class AccomodationInfo {
 	private String country;
 	private String city;
 	private String address;
-	private String accomodationType;
+	private Long accomodationType;
+	private Long category;
 	private String description;
 	private int capacity;
-	private ArrayList<Integer> additionalServices;
+	private ArrayList<Long> additionalServices;
 	private List<TermInfo> terms;
 
 	public AccomodationInfo() {
@@ -52,11 +53,11 @@ public class AccomodationInfo {
 		this.address = address;
 	}
 
-	public String getAccomodationType() {
+	public Long getAccomodationType() {
 		return accomodationType;
 	}
 
-	public void setAccomodationType(String accomodationType) {
+	public void setAccomodationType(Long accomodationType) {
 		this.accomodationType = accomodationType;
 	}
 
@@ -76,11 +77,11 @@ public class AccomodationInfo {
 		this.capacity = capacity;
 	}
 
-	public ArrayList<Integer> getAdditionalServices() {
+	public ArrayList<Long> getAdditionalServices() {
 		return additionalServices;
 	}
 
-	public void setAdditionalServices(ArrayList<Integer> additionalServices) {
+	public void setAdditionalServices(ArrayList<Long> additionalServices) {
 		this.additionalServices = additionalServices;
 	}
 
@@ -97,6 +98,14 @@ public class AccomodationInfo {
 		return "AccomodationInfo [name=" + name + ", country=" + country + ", city=" + city + ", address=" + address
 				+ ", accomodationType=" + accomodationType + ", description=" + description + ", capacity=" + capacity
 				+ ", additionalServices=" + additionalServices + ", terms=" + terms + "]";
+	}
+
+	public Long getCategory() {
+		return category;
+	}
+
+	public void setCategory(Long category) {
+		this.category = category;
 	}
 
 }

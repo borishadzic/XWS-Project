@@ -8,6 +8,10 @@ import org.apache.cxf.annotations.SchemaValidation;
 import org.apache.cxf.annotations.SchemaValidation.SchemaValidationType;
 
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
+import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
+import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
+import rs.ftn.xws.booking.xsd.CategorySoap;
+import rs.ftn.xws.booking.xsd.TermSoap;
 
 @WebService(name = "AccomodationWebServiceSoap", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService")
 @SchemaValidation(type = SchemaValidationType.REQUEST)
@@ -22,8 +26,13 @@ public interface AccomodationWebService {
 
 	List<AccomodationSoap> getAll();
 
-	List<String> getAllAccomodationTypes();
+	List<AccomodationTypeSoap> getAllAccomodationTypes();
 
-	List<String> getAllAdditionalServices();
+	List<AdditionalServiceSoap> getAllAdditionalServices();
+	
+	List<CategorySoap> getAllCategories();
+	
+	Long creatingTerm(TermSoap termSoap, Long accdatabaseId);
+	
 
 }

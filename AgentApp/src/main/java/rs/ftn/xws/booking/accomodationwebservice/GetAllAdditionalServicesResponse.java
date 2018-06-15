@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://booking.xws.ftn.rs/accomodationWebService}additionalServiceSoap" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 public class GetAllAdditionalServicesResponse {
 
     @XmlElement(name = "return")
-    protected List<String> _return;
+    protected List<AdditionalServiceSoap> _return;
 
     /**
      * Gets the value of the return property.
@@ -55,13 +55,13 @@ public class GetAllAdditionalServicesResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * {@link AdditionalServiceSoap }
      * 
      * 
      */
-    public List<String> getReturn() {
+    public List<AdditionalServiceSoap> getReturn() {
         if (_return == null) {
-            _return = new ArrayList<String>();
+            _return = new ArrayList<AdditionalServiceSoap>();
         }
         return this._return;
     }

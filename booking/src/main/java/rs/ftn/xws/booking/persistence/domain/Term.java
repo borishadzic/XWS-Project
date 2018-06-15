@@ -23,16 +23,13 @@ public class Term {
 
 	@Column
 	@Temporal(TemporalType.DATE)
-	@NotBlank
 	private Date startDate;
 
 	@Column
 	@Temporal(TemporalType.DATE)
-	@NotBlank
 	private Date endDate;
 	
 	@Column
-	@NotBlank
 	private float price;
 
 	@JoinColumn(name = "accomodation_id")

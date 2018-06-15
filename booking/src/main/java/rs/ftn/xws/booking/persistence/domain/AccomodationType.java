@@ -18,7 +18,6 @@ public class AccomodationType {
 
 	@Column
 	@NaturalId
-	@NotBlank
 	private String type;
 
 	public AccomodationType() {

@@ -25,32 +25,29 @@ public class Accomodation {
 	private Long id;
 
 	@Column
-	@NotBlank
 	private String name;
 
 	@Column
-	@NotBlank
 	private String country;
 
 	@Column
-	@NotBlank
 	private String city;
 
 	@Column
-	@NotBlank
 	private String address;
 
-	@NotBlank
 	@JoinColumn(name = "typeId")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private AccomodationType accomodationType;
+	
+	@JoinColumn(name = "categoryId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Category category;
 
 	@Column
-	@NotBlank
 	private String description;
 
 	@Column
-	@NotBlank
 	private int capacity;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -161,6 +158,14 @@ public class Accomodation {
 		return "Accomodation [id=" + id + ", name=" + name + ", country=" + country + ", city=" + city + ", address="
 				+ address + ", accomodationType=" + accomodationType + ", description=" + description + ", capacity="
 				+ capacity + ", additionalServices=" + additionalServices + ", images=" + images + "]";
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

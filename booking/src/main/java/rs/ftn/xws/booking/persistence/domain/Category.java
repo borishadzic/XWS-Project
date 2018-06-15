@@ -5,26 +5,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-public class AdditionalService {
+public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column
 	@NaturalId
-	private String name;
+	private String category;
 
-	public AdditionalService() {
-	}
-
-	public AdditionalService(String name) {
-		this.name = name;
+	public Category() {
 	}
 
 	public Long getId() {
@@ -35,12 +30,12 @@ public class AdditionalService {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

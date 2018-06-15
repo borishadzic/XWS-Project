@@ -25,7 +25,10 @@ public class AccomodationSoap {
 	private String address;
 	
 	@XmlElement(name = "accomodationType", required = true)
-	private String accomodationType;
+	private Long accomodationType;
+	
+	@XmlElement(name="category",required = true)
+	private Long category;
 	
 	@XmlElement(name = "description", required = true)
 	private String description;
@@ -35,7 +38,7 @@ public class AccomodationSoap {
 	
 	@XmlElementWrapper(name = "additionalServices", required = true)
 	@XmlElement(name = "service", required = true)
-	private ArrayList<String> additionalServices;
+	private ArrayList<Long> additionalServices;
 	
 	@XmlElementWrapper(name = "terms", required = true)
 	@XmlElement(name = "term", required = true)
@@ -73,19 +76,19 @@ public class AccomodationSoap {
 		this.name = name;
 	}
 
-	public String getAccomodationType() {
+	public Long getAccomodationType() {
 		return accomodationType;
 	}
 
-	public void setAccomodationType(String accomodationType) {
+	public void setAccomodationType(Long accomodationType) {
 		this.accomodationType = accomodationType;
 	}
 
-	public ArrayList<String> getAdditionalServices() {
+	public ArrayList<Long> getAdditionalServices() {
 		return additionalServices;
 	}
 
-	public void setAdditionalServices(ArrayList<String> additionalServices) {
+	public void setAdditionalServices(ArrayList<Long> additionalServices) {
 		this.additionalServices = additionalServices;
 	}
 
@@ -111,6 +114,14 @@ public class AccomodationSoap {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Long getCategory() {
+		return category;
+	}
+
+	public void setCategory(Long category) {
+		this.category = category;
 	}
 
 }

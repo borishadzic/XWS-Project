@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getAllAccomodationTypesResponse complex type.
+ * <p>Java class for getAllCategoriesResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getAllAccomodationTypesResponse">
+ * &lt;complexType name="getAllCategoriesResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://booking.xws.ftn.rs/accomodationWebService}accomodationTypeSoap" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://booking.xws.ftn.rs/accomodationWebService}categorySoap" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,13 +29,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getAllAccomodationTypesResponse", propOrder = {
+@XmlType(name = "getAllCategoriesResponse", propOrder = {
     "_return"
 })
-public class GetAllAccomodationTypesResponse {
+public class GetAllCategoriesResponse {
 
     @XmlElement(name = "return")
-    protected List<AccomodationTypeSoap> _return;
+    protected List<CategorySoap> _return;
 
     /**
      * Gets the value of the return property.
@@ -55,13 +55,13 @@ public class GetAllAccomodationTypesResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link AccomodationTypeSoap }
+     * {@link CategorySoap }
      * 
      * 
      */
-    public List<AccomodationTypeSoap> getReturn() {
+    public List<CategorySoap> getReturn() {
         if (_return == null) {
-            _return = new ArrayList<AccomodationTypeSoap>();
+            _return = new ArrayList<CategorySoap>();
         }
         return this._return;
     }

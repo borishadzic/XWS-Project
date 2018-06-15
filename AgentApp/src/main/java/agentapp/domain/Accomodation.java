@@ -1,49 +1,76 @@
 package agentapp.domain;
 
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Accomodation {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "locationId")
+
+	@Column
 	@NotBlank
-	private Location location;
-	
-	@ManyToOne
+	private String name;
+
+	@Column
+	@NotBlank
+	private String country;
+
+	@Column
+	@NotBlank
+	private String city;
+
+	@Column
+	@NotBlank
+	private String address;
+
 	@JoinColumn(name = "typeId")
-	@NotBlank
+	@ManyToOne(fetch = FetchType.LAZY)
 	private AccomodationType accomodationType;
 	
+	@JoinColumn(name = "categoryId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Category category;
+
 	@Column
-	@NotBlank
 	private String description;
-	
+
 	@Column
-	@NotBlank
 	private int capacity;
 	
-	@ManyToMany
+	@Column
+	private Long databaseId;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "accomodation_services", 
+		joinColumns = @JoinColumn(name = "accomodation_id"), 
+		inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private Set<AdditionalService> additionalServices;
-	
-	@ManyToMany
-	private Set<Term> terms;
-	
-	public Accomodation() {}
+
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Term> terms;
+
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<AccomodationImage> images;
+
+	public Accomodation() {
+	}
 
 	public Long getId() {
 		return id;
@@ -53,12 +80,36 @@ public class Accomodation {
 		this.id = id;
 	}
 
-	public Location getLocation() {
-		return location;
+	public String getName() {
+		return name;
 	}
 
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public AccomodationType getAccomodationType() {
@@ -93,12 +144,44 @@ public class Accomodation {
 		this.additionalServices = additionalServices;
 	}
 
-	public Set<Term> getTerms() {
+	public List<Term> getTerms() {
 		return terms;
 	}
 
-	public void setTerms(Set<Term> terms) {
+	public void setTerms(List<Term> terms) {
 		this.terms = terms;
 	}
-	
+
+	public List<AccomodationImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<AccomodationImage> images) {
+		this.images = images;
+	}
+
+	@Override
+	public String toString() {
+		return "Accomodation [id=" + id + ", name=" + name + ", country=" + country + ", city=" + city + ", address="
+				+ address + ", accomodationType=" + accomodationType + ", category=" + category + ", description="
+				+ description + ", capacity=" + capacity + ", databaseId=" + databaseId + ", additionalServices="
+				+ additionalServices + ", terms=" + terms + ", images=" + images + "]";
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Long getDatabaseId() {
+		return databaseId;
+	}
+
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
+	}
+
 }

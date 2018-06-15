@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -23,7 +24,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="accomodationType" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="accomodationType" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="capacity" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="additionalServices">
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+ *                   &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -63,6 +65,7 @@ import javax.xml.bind.annotation.XmlType;
     "city",
     "address",
     "accomodationType",
+    "category",
     "description",
     "capacity",
     "additionalServices",
@@ -77,15 +80,19 @@ public class AccomodationSoap {
     protected String city;
     @XmlElement(required = true)
     protected String address;
-    @XmlElement(required = true)
-    protected String accomodationType;
+    protected long accomodationType;
+    protected long category;
     @XmlElement(required = true)
     protected String description;
     protected int capacity;
-    @XmlElement(required = true)
-    protected AccomodationSoap.AdditionalServices additionalServices;
-    @XmlElement(required = true)
-    protected AccomodationSoap.Terms terms;
+    
+    @XmlElementWrapper(name = "additionalServices", required = true)
+    @XmlElement(required = true, name="service")
+    protected List<Long> additionalServices;
+    
+    @XmlElementWrapper(name = "terms", required = true)
+    @XmlElement(required = true, name="term")
+    protected List<TermSoap> terms;
 
     /**
      * Gets the value of the name property.
@@ -186,25 +193,33 @@ public class AccomodationSoap {
     /**
      * Gets the value of the accomodationType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getAccomodationType() {
+    public long getAccomodationType() {
         return accomodationType;
     }
 
     /**
      * Sets the value of the accomodationType property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setAccomodationType(String value) {
+    public void setAccomodationType(long value) {
         this.accomodationType = value;
+    }
+
+    /**
+     * Gets the value of the category property.
+     * 
+     */
+    public long getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the value of the category property.
+     * 
+     */
+    public void setCategory(long value) {
+        this.category = value;
     }
 
     /**
@@ -247,172 +262,22 @@ public class AccomodationSoap {
         this.capacity = value;
     }
 
-    /**
-     * Gets the value of the additionalServices property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AccomodationSoap.AdditionalServices }
-     *     
-     */
-    public AccomodationSoap.AdditionalServices getAdditionalServices() {
-        return additionalServices;
-    }
+	public List<Long> getAdditionalServices() {
+		return additionalServices;
+	}
 
-    /**
-     * Sets the value of the additionalServices property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AccomodationSoap.AdditionalServices }
-     *     
-     */
-    public void setAdditionalServices(AccomodationSoap.AdditionalServices value) {
-        this.additionalServices = value;
-    }
+	public void setAdditionalServices(List<Long> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
 
-    /**
-     * Gets the value of the terms property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AccomodationSoap.Terms }
-     *     
-     */
-    public AccomodationSoap.Terms getTerms() {
-        return terms;
-    }
+	public List<TermSoap> getTerms() {
+		return terms;
+	}
 
-    /**
-     * Sets the value of the terms property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AccomodationSoap.Terms }
-     *     
-     */
-    public void setTerms(AccomodationSoap.Terms value) {
-        this.terms = value;
-    }
+	public void setTerms(List<TermSoap> terms) {
+		this.terms = terms;
+	}
 
-
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "service"
-    })
-    public static class AdditionalServices {
-
-        @XmlElement(required = true)
-        protected List<String> service;
-
-        /**
-         * Gets the value of the service property.
-         * 
-         * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the service property.
-         * 
-         * <p>
-         * For example, to add a new item, do as follows:
-         * <pre>
-         *    getService().add(newItem);
-         * </pre>
-         * 
-         * 
-         * <p>
-         * Objects of the following type(s) are allowed in the list
-         * {@link String }
-         * 
-         * 
-         */
-        public List<String> getService() {
-            if (service == null) {
-                service = new ArrayList<String>();
-            }
-            return this.service;
-        }
-
-    }
-
-
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="term" type="{http://booking.xws.ftn.rs/accomodationWebService}termSoap" maxOccurs="unbounded"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "term"
-    })
-    public static class Terms {
-
-        @XmlElement(required = true)
-        protected List<TermSoap> term;
-
-        /**
-         * Gets the value of the term property.
-         * 
-         * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the term property.
-         * 
-         * <p>
-         * For example, to add a new item, do as follows:
-         * <pre>
-         *    getTerm().add(newItem);
-         * </pre>
-         * 
-         * 
-         * <p>
-         * Objects of the following type(s) are allowed in the list
-         * {@link TermSoap }
-         * 
-         * 
-         */
-        public List<TermSoap> getTerm() {
-            if (term == null) {
-                term = new ArrayList<TermSoap>();
-            }
-            return this.term;
-        }
-
-    }
+   
 
 }

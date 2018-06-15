@@ -17,6 +17,9 @@ public class TermSoap {
 	
 	@XmlElement(required = true)
 	private float price;
+	
+	@XmlElement
+	private Long id;
 
 	public Date getStartDate() {
 		return startDate;
@@ -40,6 +43,14 @@ public class TermSoap {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

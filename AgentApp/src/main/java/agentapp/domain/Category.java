@@ -9,24 +9,20 @@ import javax.persistence.Id;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-public class AccomodationType {
+public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column
 	@NaturalId
-	private String type;
+	private String category;
 	
 	@Column
 	private Long databaseId;
 
-	public AccomodationType() {
-	}
-
-	public AccomodationType(String type) {
-		this.type = type;
+	public Category() {
 	}
 
 	public Long getId() {
@@ -37,12 +33,12 @@ public class AccomodationType {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public Long getDatabaseId() {
@@ -52,5 +48,5 @@ public class AccomodationType {
 	public void setDatabaseId(Long databaseId) {
 		this.databaseId = databaseId;
 	}
-	
+
 }

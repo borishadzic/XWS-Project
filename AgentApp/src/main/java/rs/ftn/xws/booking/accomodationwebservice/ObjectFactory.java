@@ -29,11 +29,13 @@ public class ObjectFactory {
     private final static QName _GetAllAccomodationTypes_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAccomodationTypes");
     private final static QName _DeleteAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "deleteAccomodation");
     private final static QName _GetAllAdditionalServicesResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAdditionalServicesResponse");
+    private final static QName _GetAllCategoriesResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllCategoriesResponse");
+    private final static QName _CreatingTerm_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "creatingTerm");
     private final static QName _ModifyAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "modifyAccomodation");
-    private final static QName _AddLocation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "addLocation");
-    private final static QName _AddLocationResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "addLocationResponse");
     private final static QName _ModifyAccomodationResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "modifyAccomodationResponse");
+    private final static QName _CreatingTermResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "creatingTermResponse");
     private final static QName _GetAllAccomodationTypesResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAccomodationTypesResponse");
+    private final static QName _GetAllCategories_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllCategories");
     private final static QName _DeleteAccomodationResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "deleteAccomodationResponse");
     private final static QName _GetAll_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAll");
     private final static QName _GetAllAdditionalServices_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAdditionalServices");
@@ -88,19 +90,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AddLocationResponse }
+     * Create an instance of {@link CreatingTermResponse }
      * 
      */
-    public AddLocationResponse createAddLocationResponse() {
-        return new AddLocationResponse();
-    }
-
-    /**
-     * Create an instance of {@link AddLocation }
-     * 
-     */
-    public AddLocation createAddLocation() {
-        return new AddLocation();
+    public CreatingTermResponse createCreatingTermResponse() {
+        return new CreatingTermResponse();
     }
 
     /**
@@ -112,11 +106,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetAllCategories }
+     * 
+     */
+    public GetAllCategories createGetAllCategories() {
+        return new GetAllCategories();
+    }
+
+    /**
      * Create an instance of {@link ModifyAccomodationResponse }
      * 
      */
     public ModifyAccomodationResponse createModifyAccomodationResponse() {
         return new ModifyAccomodationResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllCategoriesResponse }
+     * 
+     */
+    public GetAllCategoriesResponse createGetAllCategoriesResponse() {
+        return new GetAllCategoriesResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreatingTerm }
+     * 
+     */
+    public CreatingTerm createCreatingTerm() {
+        return new CreatingTerm();
     }
 
     /**
@@ -168,6 +186,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AccomodationTypeSoap }
+     * 
+     */
+    public AccomodationTypeSoap createAccomodationTypeSoap() {
+        return new AccomodationTypeSoap();
+    }
+
+    /**
+     * Create an instance of {@link AdditionalServiceSoap }
+     * 
+     */
+    public AdditionalServiceSoap createAdditionalServiceSoap() {
+        return new AdditionalServiceSoap();
+    }
+
+    /**
+     * Create an instance of {@link CategorySoap }
+     * 
+     */
+    public CategorySoap createCategorySoap() {
+        return new CategorySoap();
+    }
+
+    /**
      * Create an instance of {@link TermSoap }
      * 
      */
@@ -175,22 +217,7 @@ public class ObjectFactory {
         return new TermSoap();
     }
 
-    /**
-     * Create an instance of {@link AccomodationSoap.AdditionalServices }
-     * 
-     */
-    public AccomodationSoap.AdditionalServices createAccomodationSoapAdditionalServices() {
-        return new AccomodationSoap.AdditionalServices();
-    }
-
-    /**
-     * Create an instance of {@link AccomodationSoap.Terms }
-     * 
-     */
-    public AccomodationSoap.Terms createAccomodationSoapTerms() {
-        return new AccomodationSoap.Terms();
-    }
-
+   
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddAccomodationResponse }{@code >}}
      * 
@@ -237,30 +264,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllCategoriesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getAllCategoriesResponse")
+    public JAXBElement<GetAllCategoriesResponse> createGetAllCategoriesResponse(GetAllCategoriesResponse value) {
+        return new JAXBElement<GetAllCategoriesResponse>(_GetAllCategoriesResponse_QNAME, GetAllCategoriesResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreatingTerm }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "creatingTerm")
+    public JAXBElement<CreatingTerm> createCreatingTerm(CreatingTerm value) {
+        return new JAXBElement<CreatingTerm>(_CreatingTerm_QNAME, CreatingTerm.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ModifyAccomodation }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "modifyAccomodation")
     public JAXBElement<ModifyAccomodation> createModifyAccomodation(ModifyAccomodation value) {
         return new JAXBElement<ModifyAccomodation>(_ModifyAccomodation_QNAME, ModifyAccomodation.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddLocation }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "addLocation")
-    public JAXBElement<AddLocation> createAddLocation(AddLocation value) {
-        return new JAXBElement<AddLocation>(_AddLocation_QNAME, AddLocation.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddLocationResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "addLocationResponse")
-    public JAXBElement<AddLocationResponse> createAddLocationResponse(AddLocationResponse value) {
-        return new JAXBElement<AddLocationResponse>(_AddLocationResponse_QNAME, AddLocationResponse.class, null, value);
     }
 
     /**
@@ -273,12 +300,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreatingTermResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "creatingTermResponse")
+    public JAXBElement<CreatingTermResponse> createCreatingTermResponse(CreatingTermResponse value) {
+        return new JAXBElement<CreatingTermResponse>(_CreatingTermResponse_QNAME, CreatingTermResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllAccomodationTypesResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getAllAccomodationTypesResponse")
     public JAXBElement<GetAllAccomodationTypesResponse> createGetAllAccomodationTypesResponse(GetAllAccomodationTypesResponse value) {
         return new JAXBElement<GetAllAccomodationTypesResponse>(_GetAllAccomodationTypesResponse_QNAME, GetAllAccomodationTypesResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllCategories }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getAllCategories")
+    public JAXBElement<GetAllCategories> createGetAllCategories(GetAllCategories value) {
+        return new JAXBElement<GetAllCategories>(_GetAllCategories_QNAME, GetAllCategories.class, null, value);
     }
 
     /**

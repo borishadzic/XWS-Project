@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for addLocationResponse complex type.
+ * <p>Java class for creatingTermResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="addLocationResponse">
+ * &lt;complexType name="creatingTermResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "addLocationResponse", propOrder = {
+@XmlType(name = "creatingTermResponse", propOrder = {
     "_return"
 })
-public class AddLocationResponse {
+public class CreatingTermResponse {
 
     @XmlElement(name = "return")
     protected Long _return;

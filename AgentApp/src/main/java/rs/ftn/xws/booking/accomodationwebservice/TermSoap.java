@@ -22,6 +22,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="startDate" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="endDate" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}float"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +35,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "termSoap", propOrder = {
     "startDate",
     "endDate",
-    "price"
+    "price",
+    "id"
 })
 public class TermSoap {
 
@@ -45,6 +47,7 @@ public class TermSoap {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar endDate;
     protected float price;
+    protected Long id;
 
     /**
      * Gets the value of the startDate property.
@@ -108,6 +111,30 @@ public class TermSoap {
      */
     public void setPrice(float value) {
         this.price = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setId(Long value) {
+        this.id = value;
     }
 
 }
