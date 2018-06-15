@@ -4,8 +4,8 @@
     class="sidenav"
     fixedInViewport="true"
     [attr.role]="isHandset ? 'dialog' : 'navigation'"
-    [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
-    [opened]="!(isHandset | async)!.matches">
+    [mode]="'over'"
+    [opened]="false">
 
     <mat-toolbar color="primary">Menu</mat-toolbar>
 
@@ -35,8 +35,7 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="(isHandset | async)!.matches">
+        (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Booking XWS</span>

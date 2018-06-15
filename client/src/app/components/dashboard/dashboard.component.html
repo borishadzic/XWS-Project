@@ -1,0 +1,57 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Homepage</h1>
+  <mat-grid-list cols="1" rowHeight="350px">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          Search
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dashboard-card-content">
+        <div>Card Content Here</div>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-list>
+
+  <mat-grid-list cols="2" rowHeight="fit" style="height: 100%;">
+    <mat-grid-tile *ngFor="let card of cards">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{card.accomodation.name}}</mat-card-title>
+            <mat-card-subtitle>Price {{ card.price }} <span>&#36;</span></mat-card-subtitle>
+            <mat-card-subtitle>From {{ card.startDate | date }} to {{ card.endDate | date }}</mat-card-subtitle>
+            <mat-card-subtitle>
+              {{ card.accomodation.country }}
+              {{ card.accomodation.city }}
+              {{ card.accomodation.address}}
+            </mat-card-subtitle>
+          </mat-card-title-group>
+        </mat-card-header>
+        <slideshow [height]="'40%'"
+          [backgroundSize]="'cover'"
+          [backgroundPosition]="'center center'"
+          [arrowSize]="'10px'"
+          [showDots]="true"
+          [autoPlay]="true"
+          [showArrows]="true"
+          [imageUrls]="card.accomodation.images"
+          [lazyLoad]="card.accomodation.images?.length > 1"
+          [autoPlayWaitForLazyLoad]="true">
+        </slideshow>
+        <mat-card-content class="dashboard-card-content">
+          <mat-list>
+            <mat-divider></mat-divider>
+            <h3 mat-subheader>Services</h3>
+            <mat-list-item *ngFor="let service of card.accomodation.additionalService">
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <h4 mat-line>{{ service }}</h4>>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
