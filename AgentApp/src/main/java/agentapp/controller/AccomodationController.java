@@ -13,6 +13,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -150,6 +151,12 @@ public class AccomodationController {
 		
 		//lokalno
 		return acc;
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping
+	public List<Accomodation> getAllAccomodations(){
+		return accomodationRepository.findAll();
 	}
 
 }
