@@ -88,7 +88,7 @@ public class SyncData {
 				acc.setCity(accSoap.getCity());
 				acc.setAddress(accSoap.getAddress());
 				acc.setDescription(accSoap.getDescription());
-				//acc.setDatabaseId(accSoap.get);
+				acc.setDatabaseId(accSoap.getId());
 				acc.setAccomodationType(accTypeRepository.getOne(accSoap.getAccomodationType()));
 				acc.setCategory(categoryRepository.getOne(accSoap.getCategory()));
 				acc.setCapacity(accSoap.getCapacity());
@@ -102,6 +102,7 @@ public class SyncData {
 					term.setEndDate(termSoap.getEndDate().toGregorianCalendar().getTime());
 					term.setPrice(termSoap.getPrice());
 					term.setDatabaseId(termSoap.getId());
+					term.setAccomodation(accRepository.getOne(termSoap.getAccomodationId()));
 					acc.getTerms().add(term);
 					termRepository.save(term);
 					

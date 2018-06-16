@@ -107,6 +107,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		List<AccomodationSoap> accsoap = new ArrayList<>();
 		for(Accomodation acc : accRepository.findAll()) {
 			AccomodationSoap accS = new AccomodationSoap();
+			accS.setId(acc.getId());
 			accS.setName(acc.getName());
 			accS.setCountry(acc.getCountry());
 			accS.setCity(acc.getCity());
@@ -128,6 +129,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 				termSoap.setEndDate(term.getEndDate());
 				termSoap.setPrice(term.getPrice());
 				termSoap.setId(term.getId());
+				termSoap.setAccomodationId(acc.getId());
 				termsSoap.add(termSoap);
 			}
 			accS.setTerms((ArrayList<TermSoap>) termsSoap);

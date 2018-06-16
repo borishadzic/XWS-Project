@@ -20,6 +20,9 @@ public class TermSoap {
 	
 	@XmlElement
 	private Long id;
+	
+	@XmlElement
+	private Long accomodationId;
 
 	public Date getStartDate() {
 		return startDate;
@@ -51,6 +54,14 @@ public class TermSoap {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getAccomodationId() {
+		return accomodationId;
+	}
+
+	public void setAccomodationId(Long accomodationId) {
+		this.accomodationId = accomodationId;
 	}
 	
 }

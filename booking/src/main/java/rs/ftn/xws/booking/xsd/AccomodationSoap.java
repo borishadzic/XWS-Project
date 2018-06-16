@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AccomodationSoap {
 	
 	@XmlElement
+	private Long id;
+	
+	@XmlElement
 	private String name;
 	
 	@XmlElement(name = "country",required = true)
@@ -122,6 +125,14 @@ public class AccomodationSoap {
 
 	public void setCategory(Long category) {
 		this.category = category;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

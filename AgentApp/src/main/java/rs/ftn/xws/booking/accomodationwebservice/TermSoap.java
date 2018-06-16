@@ -23,6 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="endDate" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}float"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="accomodationId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,7 +37,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "startDate",
     "endDate",
     "price",
-    "id"
+    "id",
+    "accomodationId"
 })
 public class TermSoap {
 
@@ -48,6 +50,7 @@ public class TermSoap {
     protected XMLGregorianCalendar endDate;
     protected float price;
     protected Long id;
+    protected Long accomodationId;
 
     /**
      * Gets the value of the startDate property.
@@ -135,6 +138,30 @@ public class TermSoap {
      */
     public void setId(Long value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the accomodationId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getAccomodationId() {
+        return accomodationId;
+    }
+
+    /**
+     * Sets the value of the accomodationId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setAccomodationId(Long value) {
+        this.accomodationId = value;
     }
 
 }
