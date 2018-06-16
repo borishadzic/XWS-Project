@@ -50,10 +50,12 @@ public class SyncData {
 
 	@PostConstruct
 	public void init() {
+			
+			System.out.println("########## SINHRONIZACIJAA #############");
 		
-			accTypeRepository.deleteAll();
+			/*accTypeRepository.deleteAll();
 			additionalServiceRepository.deleteAll();
-			categoryRepository.deleteAll();
+			categoryRepository.deleteAll();*/
 		
 		
 			List<AccomodationTypeSoap> typesSoap = accWebService.getAllAccomodationTypes();
