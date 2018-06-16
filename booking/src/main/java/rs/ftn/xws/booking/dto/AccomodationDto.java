@@ -9,6 +9,8 @@ public class AccomodationDto {
 	private String country;
 	private String city;
 	private String address;
+	private String description;
+	private String category;
 	private String accomodationType;
 	private List<String> additionalService;
 	private List<String> images;
@@ -21,13 +23,15 @@ public class AccomodationDto {
 
 	}
 
-	public AccomodationDto(Long id, String name, String country, String city, String address, String accomodationType,
-			List<String> additionalService, List<String> images) {
+	public AccomodationDto(Long id, String name, String country, String city, String address, String description,
+			String category, String accomodationType, List<String> additionalService, List<String> images) {
 		this.id = id;
 		this.name = name;
 		this.country = country;
 		this.city = city;
 		this.address = address;
+		this.description = description;
+		this.category = category;
 		this.accomodationType = accomodationType;
 		this.additionalService = additionalService;
 		this.images = images;
@@ -67,6 +71,22 @@ public class AccomodationDto {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getAccomodationType() {

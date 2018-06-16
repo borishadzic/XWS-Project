@@ -14,12 +14,16 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	@NaturalId
 	private String category;
 
 	public Category() {
+	}
+
+	public Category(String category) {
+		this.category = category;
 	}
 
 	public Long getId() {

@@ -18,10 +18,9 @@ public interface AccomodationService {
 
 	List<Accomodation> getAll();
 
-	List<TermDto> searchBy(String city, String country, float bprice, float tprice, Date startDate, Date endDate,
-			Sort sortBy, Order orderBy);
+	List<TermDto> getTerms();
 
-	List<TermDto> searchBy(String city, String country, float bprice, float tprice, Date startDate, Date endDate,
-			List<Long> types, List<Long> services, Sort sortBy, Order orderBy);
+	List<TermDto> searchBy(String city, String country, int capacity, Date startDate, Date endDate,
+			List<Long> types, List<Long> categories, List<Long> services, Sort sortBy, Order orderBy);
 
 }

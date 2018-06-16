@@ -60,52 +60,78 @@ public class AccomodationServiceImpl implements AccomodationService {
 	}
 
 	@Override
-	public List<TermDto> searchBy(String city, String country, float bprice, float tprice, Date startDate,
-			Date endDate, Sort sortBy, Order orderBy) {
-		List<Accomodation> accomodations = accomodationRepository.findByCityAndCountryAllIgnoringCase(city, country);
-		accomodations = filterByTerms(accomodations, startDate, endDate, bprice, tprice);
+	public List<TermDto> getTerms() {
+		List<Accomodation> accomodations = accomodationRepository.findAll();
+		accomodations = filterByNonReserved(accomodations);
+		return convert(accomodations);
+	}
+	
+	public List<Accomodation> filterByNonReserved(List<Accomodation> accomodations) {
+		accomodations.forEach(a -> {
+			List<Term> terms = a.getTerms().stream()
+					.filter(Term::isReserved)
+					.collect(Collectors.toList());
+
+			a.getTerms().removeAll(terms);
+		});
+
+		return accomodations.stream()
+				.filter(a -> a.getTerms().size() > 0)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<TermDto> searchBy(String city, String country, int capacity, Date startDate,
+			Date endDate, List<Long> types, List<Long> categories, List<Long> services, Sort sortBy, Order orderBy) {
+		
+		List<Accomodation> accomodations = accomodationRepository.findByCapacityGreaterThanEqualAndCityAndCountryAllIgnoringCase(capacity, city, country);
+
+		accomodations = filterByTypes(accomodations, types);
+		accomodations = filterByServices(accomodations, services);
+		accomodations = filterByTerms(accomodations, startDate, endDate);
 		
 		List<TermDto> terms = convert(accomodations);
 		
 		return sortAndOrer(terms, sortBy, orderBy);
 	}
 
-	@Override
-	public List<TermDto> searchBy(String city, String country, float bprice, float tprice, Date startDate,
-			Date endDate, List<Long> types, List<Long> services, Sort sortBy, Order orderBy) {
-		List<Accomodation> accomodations = accomodationRepository.findByCityAndCountryAllIgnoringCase(city, country);
+	private List<Accomodation> filterByTypes(List<Accomodation> accomodations, List<Long> types) {
+		if (types.size() == 0) {
+			return accomodations;
+		}
+		
 		List<AccomodationType> accomodationTypes = accomodationTypeRepository.findAllById(types);
-		List<AdditionalService> accomodationServices = additionalServiceRepository.findAllById(services);
 		
-		accomodations = filterByTypes(accomodations, accomodationTypes);
-		accomodations = filterByServices(accomodations, accomodationServices);
-		accomodations = filterByTerms(accomodations, startDate, endDate, bprice, tprice);
-		
-		return convert(accomodations);
-	}
-
-	private List<Accomodation> filterByTypes(List<Accomodation> accomodations, List<AccomodationType> types) {
 		return accomodations.stream()
-			.filter(a -> types.contains(a.getAccomodationType()))
+			.filter(a -> accomodationTypes.contains(a.getAccomodationType()))
 			.collect(Collectors.toList());
 	}
 
-	private List<Accomodation> filterByServices(List<Accomodation> accomodations, List<AdditionalService> services) {
+	private List<Accomodation> filterByServices(List<Accomodation> accomodations, List<Long> services) {
+		if (services.size() == 0) {
+			return accomodations;
+		}
+		
+		List<AdditionalService> accomodationServices = additionalServiceRepository.findAllById(services);
+		
 		return accomodations.stream()
-				.filter(a -> a.getAdditionalServices().containsAll(services))
+				.filter(a -> a.getAdditionalServices().containsAll(accomodationServices))
 				.collect(Collectors.toList());
 	}
 
-	private List<Accomodation> filterByTerms(List<Accomodation> accomodations, Date startDate, Date endDate,
-			float bPrice, float tPrice) {
+	private List<Accomodation> filterByTerms(List<Accomodation> accomodations, Date startDate, Date endDate) {
 		accomodations.forEach(a -> {
 			List<Term> terms = a.getTerms().stream()
 					.filter(t -> {
-						boolean dateComparison = t.getStartDate().after(startDate) && t.getEndDate().before(endDate);
-						if (dateComparison)
-							return !(t.getPrice() >= bPrice && t.getPrice() <= tPrice);
-						return !dateComparison;
-					}).collect(Collectors.toList());
+						if (t.isReserved()) {
+							return true;
+						}
+						if (t.getStartDate().before(startDate) || t.getEndDate().after(endDate)) {
+							return true;
+						}
+						return false;
+					})
+					.collect(Collectors.toList());
 
 			a.getTerms().removeAll(terms);
 		});
@@ -130,7 +156,7 @@ public class AccomodationServiceImpl implements AccomodationService {
 					.collect(Collectors.toList());
 
 			AccomodationDto accDto = new AccomodationDto(a.getId(), a.getName(), a.getCountry(), a.getCity(),
-					a.getAddress(), type, services, images);
+					a.getAddress(), a.getDescription(), a.getCategory().getCategory(), type, services, images);
 			
 			List<TermDto> terms = a.getTerms().stream()
 					.map(t -> new TermDto(t.getId(), t.getStartDate(), t.getEndDate(), t.getPrice(), accDto))
@@ -144,15 +170,14 @@ public class AccomodationServiceImpl implements AccomodationService {
 	
 	public List<TermDto> sortAndOrer(List<TermDto> terms, Sort sortBy, Order orderBy) {
 		Comparator<? super TermDto> comparator = null;
-		
-		if (sortBy == Sort.PRICE) {
-			comparator = Comparator.comparing(t -> ((TermDto)t).getPrice());
+
+		if (sortBy.equals(Sort.PRICE)) {
+			comparator = Comparator.comparing(a -> ((TermDto) a).getPrice());
 		} else if (sortBy == Sort.CATEGORY) {
-			// Ne valja trenutno
-			comparator = Comparator.comparing(t -> ((TermDto)t).getPrice());
+			comparator = Comparator.comparing(a -> ((TermDto) a).getAccomodation().getCategory());
 		} else {
-			// Isto ne valja trenutno
-			comparator = Comparator.comparing(t -> ((TermDto)t).getPrice());
+			// Ovo je za rejting
+			comparator = Comparator.comparing(a -> ((TermDto) a).getPrice());
 		}
 		
 		if (orderBy == Order.DESC) {

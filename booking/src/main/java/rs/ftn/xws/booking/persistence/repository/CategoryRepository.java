@@ -8,4 +8,6 @@ import rs.ftn.xws.booking.persistence.domain.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long>{
 
+	boolean existsByCategory(String category);
+	
 }

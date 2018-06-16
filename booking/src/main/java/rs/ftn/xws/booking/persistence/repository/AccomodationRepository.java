@@ -10,5 +10,5 @@ import rs.ftn.xws.booking.persistence.domain.Accomodation;
 @Repository
 public interface AccomodationRepository extends JpaRepository<Accomodation, Long> {
 
-	List<Accomodation> findByCityAndCountryAllIgnoringCase(String city, String country);
+	List<Accomodation> findByCapacityGreaterThanEqualAndCityAndCountryAllIgnoringCase(int capacity, String city, String country);
 }

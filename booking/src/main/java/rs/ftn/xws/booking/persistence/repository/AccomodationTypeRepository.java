@@ -8,4 +8,6 @@ import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 @Repository
 public interface AccomodationTypeRepository extends JpaRepository<AccomodationType,Long>{
 
+	boolean existsByType(String type);
+	
 }

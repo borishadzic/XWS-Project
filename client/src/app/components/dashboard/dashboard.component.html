@@ -1,57 +1,138 @@
 <div class="grid-container">
   <h1 class="mat-h1">Homepage</h1>
-  <mat-grid-list cols="1" rowHeight="350px">
-    <mat-card class="dashboard-card">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Search
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        fxLayout="row wrap"
+        fxLayoutAlign="space-evenly center"
+        [formGroup]="searchForm"
+        (ngSubmit)="sumbit()"
+        style="margin-bottom: 3em">
+
+        <mat-form-field>
+          <input matInput required placeholder="City" formControlName="city">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput required placeholder="Country" formControlName="country">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput required placeholder="Number of people" type="number" class="example-right-align" formControlName="capacity">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput required [matDatepicker]="pickerFrom" placeholder="From" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput required [matDatepicker]="pickerTo" placeholder="To" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Sort by" formControlName="sortBy">
+              <mat-option *ngFor="let s of sortBy" [value]="s.value">
+                {{ s.name }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Order" formControlName="orderBy">
+              <mat-option *ngFor="let o of order" [value]="o.value">
+                {{ o.name }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary" [disabled]="!searchForm.valid">Search</button>
+      </form>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            Advanced search
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-around start" *ngIf="filter">
+          <mat-selection-list #services dense>
+              <h3 mat-subheader>Additional services</h3>
+              <mat-list-option *ngFor="let service of filter.services" [value]="service.id">
+                {{ service.name }}
+              </mat-list-option>
+          </mat-selection-list>
+
+          <mat-selection-list dense #types>
+              <h3 mat-subheader>Accomodation types</h3>
+              <mat-list-option *ngFor="let type of filter.types" [value]="type.id">
+                {{ type.type }}
+              </mat-list-option>
+          </mat-selection-list>
+
+          <mat-selection-list dense #categories>
+              <h3 mat-subheader>Category</h3>
+              <mat-list-option *ngFor="let category of filter.categories" [value]="category.id">
+                {{ category.category }}
+              </mat-list-option>
+          </mat-selection-list>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="spacer"></div>
+
+  <div fxLayout="column" fxLayoutAlign="start strech" fxLayoutGap="30px">
+    <mat-card *ngFor="let term of terms" class="dashboard-card">
       <mat-card-header>
-        <mat-card-title>
-          Search
-        </mat-card-title>
+        <mat-card-title-group>
+          <mat-card-title>{{ term.accomodation.name}}</mat-card-title>
+          <mat-card-subtitle>{{ term.accomodation.category }}</mat-card-subtitle>
+          <mat-card-subtitle>Price {{ term.price }} <span>&#36;</span></mat-card-subtitle>
+          <mat-card-subtitle>From {{ term.startDate | date }} to {{ term.endDate | date }}</mat-card-subtitle>
+          <mat-card-subtitle>
+            {{ term.accomodation.country }}
+            {{ term.accomodation.city }}
+            {{ term.accomodation.address}}
+          </mat-card-subtitle>
+        </mat-card-title-group>
       </mat-card-header>
       <mat-card-content class="dashboard-card-content">
-        <div>Card Content Here</div>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-list>
-
-  <mat-grid-list cols="2" rowHeight="fit" style="height: 100%;">
-    <mat-grid-tile *ngFor="let card of cards">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>{{card.accomodation.name}}</mat-card-title>
-            <mat-card-subtitle>Price {{ card.price }} <span>&#36;</span></mat-card-subtitle>
-            <mat-card-subtitle>From {{ card.startDate | date }} to {{ card.endDate | date }}</mat-card-subtitle>
-            <mat-card-subtitle>
-              {{ card.accomodation.country }}
-              {{ card.accomodation.city }}
-              {{ card.accomodation.address}}
-            </mat-card-subtitle>
-          </mat-card-title-group>
-        </mat-card-header>
-        <slideshow [height]="'40%'"
+        <slideshow [height]="'250px'"
           [backgroundSize]="'cover'"
           [backgroundPosition]="'center center'"
           [arrowSize]="'10px'"
           [showDots]="true"
           [autoPlay]="true"
+          [backgroundRepeat]="false"
           [showArrows]="true"
-          [imageUrls]="card.accomodation.images"
-          [lazyLoad]="card.accomodation.images?.length > 1"
+          [imageUrls]="term.accomodation.images"
+          [lazyLoad]="term.accomodation.images?.length > 1"
           [autoPlayWaitForLazyLoad]="true">
         </slideshow>
-        <mat-card-content class="dashboard-card-content">
-          <mat-list>
-            <mat-divider></mat-divider>
-            <h3 mat-subheader>Services</h3>
-            <mat-list-item *ngFor="let service of card.accomodation.additionalService">
-              <mat-icon mat-list-icon>folder</mat-icon>
-              <h4 mat-line>{{ service }}</h4>>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-
-  </mat-grid-list>
+        <mat-list dense>
+          <h3 mat-subheader>Services</h3>
+          <mat-list-item *ngFor="let service of term.accomodation.additionalService">
+            <mat-icon mat-list-icon>room_service</mat-icon>
+            <p matLine>{{ service }}</p>
+          </mat-list-item>
+        </mat-list>
+        <p>{{ term.accomodation.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent"><mat-icon>flight</mat-icon>Reserve</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

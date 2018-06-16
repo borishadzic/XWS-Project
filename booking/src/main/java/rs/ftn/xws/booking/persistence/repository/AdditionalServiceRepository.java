@@ -8,4 +8,6 @@ import rs.ftn.xws.booking.persistence.domain.AdditionalService;
 @Repository
 public interface AdditionalServiceRepository extends JpaRepository<AdditionalService, Long> {
 
+	boolean existsByName(String name);
+	
 }

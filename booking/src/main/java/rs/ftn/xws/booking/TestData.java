@@ -46,7 +46,7 @@ public class TestData {
 		List<Long> types = Arrays.asList(1l, 2l);
 		List<Long> services = Arrays.asList(1l, 3l, 2l);
 		
-		List<Accomodation> accomodations = accomodationRepository.findByCityAndCountryAllIgnoringCase(city, country);
+		List<Accomodation> accomodations = accomodationRepository.findByCapacityGreaterThanEqualAndCityAndCountryAllIgnoringCase(0, city, country);
 		List<AccomodationType> accomodationTypes = accomodationTypeRepository.findAllById(types);
 		List<AdditionalService> accomodationServices = additionalServiceRepository.findAllById(services);
 		

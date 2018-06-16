@@ -32,8 +32,15 @@ public class Term {
 	private float price;
 
 	@JoinColumn(name = "accomodation_id")
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Accomodation accomodation;
+	
+	@JoinColumn(name = "user_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+	
+	@Column(nullable = false)
+	private boolean reserved;
 
 	public Term() {
 	}
@@ -82,6 +89,22 @@ public class Term {
 
 	public void setAccomodation(Accomodation accomodation) {
 		this.accomodation = accomodation;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public boolean isReserved() {
+		return reserved;
+	}
+	
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
 	}
 
 }
