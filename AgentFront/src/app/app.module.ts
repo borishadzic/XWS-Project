@@ -12,6 +12,7 @@ import { MaterialModule } from 'src/app/modules/material/material.module';
 import { NewAccomodationComponent } from './new-accomodation/new-accomodation.component';
 import { AccomodationsComponent } from './accomodations/accomodations.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AccomodationComponent } from './accomodation/accomodation.component';
 
 
 
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     NavbarComponent,
     NewAccomodationComponent,
-    AccomodationsComponent
+    AccomodationsComponent,
+    AccomodationComponent
   ],
   imports: [
     BrowserModule,

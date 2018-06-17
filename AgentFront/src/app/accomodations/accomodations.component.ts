@@ -1,31 +1,23 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accomodations',
   templateUrl: './accomodations.component.html',
   styleUrls: ['./accomodations.component.css']
 })
-export class AccomodationsComponent implements OnInit,AfterViewInit {
-  displayedColumns = ['id', 'name', 'progress', 'color'];
-  myDisplayedColumns = ['id','name','country','city','type','category','capacity'];
-  dataSource: MatTableDataSource<UserData>;
+export class AccomodationsComponent implements OnInit {
+  
+  myDisplayedColumns = ['id','name','country','city','type','category','capacity','manage'];
   myDataSource: MatTableDataSource<AccomodationData>;
   public accomodations;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient) {
-    // Create 100 users
-    const users: UserData[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-
-    
+  constructor(private http: HttpClient,private router: Router) {   
   }
 
   ngOnInit() {
@@ -47,10 +39,6 @@ export class AccomodationsComponent implements OnInit,AfterViewInit {
     
   }
 
-  ngAfterViewInit(){
-    
-  }
-
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
@@ -61,19 +49,7 @@ export class AccomodationsComponent implements OnInit,AfterViewInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-}
 
 function createAccomodation(acc): AccomodationData{
   return{
@@ -85,20 +61,6 @@ function createAccomodation(acc): AccomodationData{
     category: acc.category.category,
     capacity: acc.capacity
   }
-}
-
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
 }
 
 export interface AccomodationData{

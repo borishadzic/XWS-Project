@@ -23,6 +23,12 @@ public class TermSoap {
 	
 	@XmlElement
 	private Long accomodationId;
+	
+	@XmlElement
+	private boolean reserved;
+	
+	@XmlElement
+	private String userId;
 
 	public Date getStartDate() {
 		return startDate;
@@ -62,6 +68,22 @@ public class TermSoap {
 
 	public void setAccomodationId(Long accomodationId) {
 		this.accomodationId = accomodationId;
+	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

@@ -11,6 +11,8 @@ public class TermInfo {
 	private Date endDate;
 
 	private float price;
+	
+	private boolean reserved;
 
 	public Date getStartDate() {
 		return startDate;
@@ -39,6 +41,14 @@ public class TermInfo {
 	@Override
 	public String toString() {
 		return "TermInfo [startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + "]";
+	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
 	}
 
 }

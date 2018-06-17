@@ -14,7 +14,9 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -135,12 +137,14 @@ public class AccomodationController {
 			XMLGregorianCalendar enddate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			termSoap.setEndDate(enddate);
 			termSoap.setPrice(termInfo.getPrice());
+			termSoap.setReserved(false);
 			//
 			Term termlocal = new Term();
 			termlocal.setStartDate(termInfo.getStartDate());
 			termlocal.setEndDate(termInfo.getEndDate());
 			termlocal.setPrice(termInfo.getPrice());
 			termlocal.setAccomodation(acc);
+			termlocal.setReserved(false);
 			Long id = accWebService.creatingTerm(termSoap, databaseId);
 			termlocal.setDatabaseId(id);
 			termRepository.save(termlocal);
@@ -157,6 +161,85 @@ public class AccomodationController {
 	@GetMapping
 	public List<Accomodation> getAllAccomodations(){
 		return accomodationRepository.findAll();
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/{id}")
+	public Accomodation getAccomodationById(@PathVariable("id") Long id){
+		return accomodationRepository.getOne(id);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PutMapping("/{id}")
+	public Accomodation modifyAccomodation(@RequestBody AccomodationInfo info,@PathVariable("id") Long id) throws DatatypeConfigurationException{
+		//local
+		Accomodation accomodation = accomodationRepository.getOne(id);
+		accomodation.setName(info.getName());
+		accomodation.setCountry(info.getCountry());
+		accomodation.setCity(info.getCity());
+		accomodation.setAddress(info.getAddress());
+		accomodation.setAccomodationType(accTypeRepo.getOne(info.getAccomodationType()));
+		accomodation.setCategory(categoryRepository.getOne(info.getCategory()));
+		accomodation.setDescription(info.getDescription());
+		accomodation.setCapacity(info.getCapacity());
+		Set<AdditionalService> services = new HashSet<AdditionalService>(addServiceRepository.findAllById(info.getAdditionalServices()));
+		accomodation.getAdditionalServices().clear();
+		accomodation.setAdditionalServices(services);
+		accomodation.getTerms().clear();
+		List<Term> tempTerms = new ArrayList<>();
+		for(Term term : termRepository.findAll()) {
+			if(term.getAccomodation().getId() == accomodation.getId()) {
+				tempTerms.add(term);
+			}
+		}
+		
+		accomodation = accomodationRepository.save(accomodation);
+		
+		termRepository.deleteAll(tempTerms);
+		
+		List<TermSoap> termsSoap = new ArrayList<>();
+		
+		for(TermInfo terminfo : info.getTerms()) {
+			//local
+			Term term = new Term();
+			term.setStartDate(terminfo.getStartDate());
+			term.setEndDate(terminfo.getEndDate());
+			term.setPrice(terminfo.getPrice());
+			term.setReserved(terminfo.isReserved());
+			term.setAccomodation(accomodation);
+			termRepository.save(term);
+			
+			//soap
+			GregorianCalendar c = new GregorianCalendar();
+			TermSoap termSoap = new TermSoap();
+			c.setTime(terminfo.getStartDate());
+			termSoap.setStartDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
+			c.setTime(terminfo.getEndDate());
+			termSoap.setEndDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
+			termSoap.setPrice(terminfo.getPrice());
+			termSoap.setReserved(terminfo.isReserved());
+			termSoap.setAccomodationId(accomodation.getId());
+			termsSoap.add(termSoap);
+			
+		}
+		// local
+		
+		//soap
+		AccomodationSoap accSoap = new AccomodationSoap();
+		accSoap.setName(info.getName());
+		accSoap.setCountry(info.getCountry());
+		accSoap.setCity(info.getCity());
+		accSoap.setAddress(info.getAddress());
+		accSoap.setAccomodationType(info.getAccomodationType());
+		accSoap.setCategory(info.getCategory());
+		accSoap.setDescription(info.getDescription());
+		accSoap.setCapacity(info.getCapacity());
+		accSoap.setAdditionalServices(info.getAdditionalServices());
+		accSoap.setTerms(termsSoap);
+		//soap
+		
+		
+		return accomodationRepository.save(accomodation);
 	}
 
 }

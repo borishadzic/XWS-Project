@@ -40,6 +40,12 @@ public class Term {
 	
 	@Column
 	private Long databaseId;
+	
+	@Column(nullable = false)
+	private boolean reserved;
+	
+	@Column
+	private String userId;
 
 	public Term() {
 	}
@@ -96,6 +102,22 @@ public class Term {
 
 	public void setDatabaseId(Long databaseId) {
 		this.databaseId = databaseId;
+	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

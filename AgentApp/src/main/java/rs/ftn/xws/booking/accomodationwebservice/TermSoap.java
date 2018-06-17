@@ -24,6 +24,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}float"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="accomodationId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="reserved" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +40,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "endDate",
     "price",
     "id",
-    "accomodationId"
+    "accomodationId",
+    "reserved",
+    "userId"
 })
 public class TermSoap {
 
@@ -51,6 +55,8 @@ public class TermSoap {
     protected float price;
     protected Long id;
     protected Long accomodationId;
+    protected boolean reserved;
+    protected String userId;
 
     /**
      * Gets the value of the startDate property.
@@ -162,6 +168,46 @@ public class TermSoap {
      */
     public void setAccomodationId(Long value) {
         this.accomodationId = value;
+    }
+
+    /**
+     * Gets the value of the reserved property.
+     * 
+     */
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    /**
+     * Sets the value of the reserved property.
+     * 
+     */
+    public void setReserved(boolean value) {
+        this.reserved = value;
+    }
+
+    /**
+     * Gets the value of the userId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the value of the userId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUserId(String value) {
+        this.userId = value;
     }
 
 }

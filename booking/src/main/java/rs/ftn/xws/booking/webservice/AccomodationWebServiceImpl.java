@@ -54,14 +54,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	
 	@Override
 	public Long addAccomodation(AccomodationSoap accomodation) {
-		
-		//dodatne usluge
-		
-		//dodatne usluge
-		
-		//termini
-		
-		
+						
 		Set<AdditionalService> services = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accomodation.getAdditionalServices()));
 		//termini
 		Accomodation newaccomodation = new Accomodation();
@@ -130,6 +123,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 				termSoap.setPrice(term.getPrice());
 				termSoap.setId(term.getId());
 				termSoap.setAccomodationId(acc.getId());
+				termSoap.setReserved(term.isReserved());
 				termsSoap.add(termSoap);
 			}
 			accS.setTerms((ArrayList<TermSoap>) termsSoap);
@@ -186,6 +180,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		term.setEndDate(termSoap.getEndDate());
 		term.setPrice(termSoap.getPrice());
 		term.setAccomodation(accRepository.getOne(accDatabaseId));
+		term.setReserved(false);
 		term = termRepository.save(term);
 		return term.getId();
 	}
