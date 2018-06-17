@@ -9,9 +9,9 @@
     <mat-card-content>
       <form
         fxLayout="row wrap"
-        fxLayoutAlign="space-evenly center"
+        fxLayoutAlign="space-around center"
         [formGroup]="searchForm"
-        (ngSubmit)="sumbit()"
+        (ngSubmit)="onSumbit()"
         style="margin-bottom: 3em">
 
         <mat-form-field>
@@ -53,8 +53,9 @@
               </mat-option>
             </mat-select>
         </mat-form-field>
-
-        <button type="submit" mat-raised-button color="primary" [disabled]="!searchForm.valid">Search</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!searchForm.valid">
+            <mat-icon>search</mat-icon> Search
+        </button>
       </form>
 
       <mat-expansion-panel>
@@ -94,45 +95,11 @@
   <div class="spacer"></div>
 
   <div fxLayout="column" fxLayoutAlign="start strech" fxLayoutGap="30px">
-    <mat-card *ngFor="let term of terms" class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>{{ term.accomodation.name}}</mat-card-title>
-          <mat-card-subtitle>{{ term.accomodation.category }}</mat-card-subtitle>
-          <mat-card-subtitle>Price {{ term.price }} <span>&#36;</span></mat-card-subtitle>
-          <mat-card-subtitle>From {{ term.startDate | date }} to {{ term.endDate | date }}</mat-card-subtitle>
-          <mat-card-subtitle>
-            {{ term.accomodation.country }}
-            {{ term.accomodation.city }}
-            {{ term.accomodation.address}}
-          </mat-card-subtitle>
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content class="dashboard-card-content">
-        <slideshow [height]="'250px'"
-          [backgroundSize]="'cover'"
-          [backgroundPosition]="'center center'"
-          [arrowSize]="'10px'"
-          [showDots]="true"
-          [autoPlay]="true"
-          [backgroundRepeat]="false"
-          [showArrows]="true"
-          [imageUrls]="term.accomodation.images"
-          [lazyLoad]="term.accomodation.images?.length > 1"
-          [autoPlayWaitForLazyLoad]="true">
-        </slideshow>
-        <mat-list dense>
-          <h3 mat-subheader>Services</h3>
-          <mat-list-item *ngFor="let service of term.accomodation.additionalService">
-            <mat-icon mat-list-icon>room_service</mat-icon>
-            <p matLine>{{ service }}</p>
-          </mat-list-item>
-        </mat-list>
-        <p>{{ term.accomodation.description }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="accent"><mat-icon>flight</mat-icon>Reserve</button>
-      </mat-card-actions>
-    </mat-card>
+    <app-accomodation-item
+      *ngFor="let term of terms; let i = index"
+      [term]="term"
+      [isAuthenticated]="isAuthenticated"
+      (reserve)="onReserve($event, i)">
+    </app-accomodation-item>
   </div>
 </div>

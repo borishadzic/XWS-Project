@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './modules/material/material.module';
+import { MaterialModule } from './modules/material.module';
 import { SlideshowModule } from 'ng-simple-slideshow';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TokenInterceptor } from './services/token.interceptor';
 import { EmailDialogComponent } from './components/email-dialog/email-dialog.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AccomodationItemComponent } from './components/dashboard/accomodation-item/accomodation-item.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ResetPasswordComponent,
     NavbarComponent,
     EmailDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AccomodationItemComponent,
+    ReservationsComponent
   ],
   imports: [
     CommonModule,

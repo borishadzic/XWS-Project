@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectionList } from '@angular/material';
+import { MatSelectionList, MatSnackBar } from '@angular/material';
 
 import { FilterService } from '../../services/filter.service';
+import { AuthService } from '../../services/auth.service';
 import { AccomodationService } from '../../services/accomodation.service';
+import { ReservationService } from '../../services/reservation.service';
 import { Filter } from '../../models/filter';
 
 @Component({
@@ -13,6 +15,7 @@ import { Filter } from '../../models/filter';
 })
 export class DashboardComponent implements OnInit {
 
+  public isAuthenticated = false;
   public terms = [];
   public filter: Filter;
   public searchForm: FormGroup;
@@ -22,6 +25,7 @@ export class DashboardComponent implements OnInit {
     { name: 'Category', value: 'CATEGORY' },
     { name: 'Rating', value: 'RATING' }
   ];
+
   public order = [
     { name: 'Ascending', value: 'ASC' },
     { name: 'Descending', value: 'DESC' },
@@ -29,13 +33,18 @@ export class DashboardComponent implements OnInit {
 
   constructor(private filterService: FilterService,
               private fb: FormBuilder,
-              private accomodationService: AccomodationService) { }
+              private authService: AuthService,
+              private accomodationService: AccomodationService,
+              private reservationService: ReservationService,
+              private snackBar: MatSnackBar) { }
 
   @ViewChild('services') services: MatSelectionList;
   @ViewChild('types') types: MatSelectionList;
   @ViewChild('categories') categories: MatSelectionList;
 
   ngOnInit() {
+    this.isAuthenticated = this.authService.isLoggedIn();
+
     this.filterService.getSearchFilter().subscribe(
       filter => this.filter = filter
     );
@@ -54,7 +63,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  sumbit() {
+  onSumbit() {
     const services = this.services.selectedOptions.selected.map(t => t.value).join();
     const types = this.types.selectedOptions.selected.map(t => t.value).join();
     const categories = this.categories.selectedOptions.selected.map(t => t.value).join();
@@ -63,6 +72,22 @@ export class DashboardComponent implements OnInit {
       this.accomodationService.searchAccomodations(this.searchForm.value, services, types, categories)
         .subscribe(terms => this.terms = terms);
     }
+  }
+
+  onReserve(id, index) {
+    this.reservationService.reserve(id).subscribe(
+      () => {
+        this.terms.splice(index, 1);
+        this.snackBar.open(`Reservation has been made`, 'Close', {
+          duration: 2000
+        });
+      },
+      () => {
+        this.snackBar.open(`Error while reserving. Please refresh the page`, 'Close', {
+          duration: 2000
+        });
+      }
+    );
   }
 
 }
