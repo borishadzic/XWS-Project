@@ -60,9 +60,14 @@ export class NewAccomodationComponent implements OnInit {
     const group = new FormGroup({
       'startDate': new FormControl(null,Validators.required),
       'endDate': new FormControl(null,Validators.required),
-      'price': new FormControl(null,Validators.required)
+      'price': new FormControl(null,Validators.required),
+      //'reserved': new FormControl(null)
     });
     (<FormArray>this.form.get('terms')).push(group);
+  }
+
+  onTermRemove(term,event){
+    (<FormArray>this.form.get('terms')).removeAt((<FormArray>this.form.get('terms')).value.indexOf(term.value));
   }
 
   onServiceCheck(id: any,event: any){

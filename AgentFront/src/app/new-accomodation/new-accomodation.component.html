@@ -71,6 +71,13 @@
             <mat-form-field class="term">
                 <input matInput placeholder="Price" class="form-control" formControlName="price">
             </mat-form-field>
+            <mat-form-field class="term" color="warn" appearance="outline">
+              <mat-chip-list>
+                
+                <mat-chip class="form-control" color="warn" selected="true" (click)="onTermRemove(termControl,$event)">Remove</mat-chip>
+                
+              </mat-chip-list>
+            </mat-form-field>
           </div>
         </div>
       </div>
