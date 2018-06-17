@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import rs.ftn.xws.booking.persistence.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 
 	@EntityGraph(value = "User.Roles.Permissions")
 	Optional<User> findByEmail(String email);
