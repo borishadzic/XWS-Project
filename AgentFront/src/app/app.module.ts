@@ -13,6 +13,7 @@ import { NewAccomodationComponent } from './new-accomodation/new-accomodation.co
 import { AccomodationsComponent } from './accomodations/accomodations.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AccomodationComponent } from './accomodation/accomodation.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 
@@ -25,7 +26,8 @@ import { AccomodationComponent } from './accomodation/accomodation.component';
     NavbarComponent,
     NewAccomodationComponent,
     AccomodationsComponent,
-    AccomodationComponent
+    AccomodationComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,

@@ -49,10 +49,7 @@ export class AccomodationsComponent implements OnInit {
   }
 
   onRemove(id){
-    console.log(this.accomodations[id-1]);
     this.http.delete('http://localhost:8081/accomodations/'+id,{ responseType: 'text' }).subscribe(data => {
-      //let index=this.accomodations.indexOf(id);
-      //console.log(index);
       this.accomodations.splice(id-1,1);
       const accomodationsD: AccomodationData[] = [];
       for (let i = 0; i < this.accomodations.length; i++) { accomodationsD.push(createAccomodation(this.accomodations[i])); }
