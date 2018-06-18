@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 public class Term {
 
@@ -35,7 +36,6 @@ public class Term {
 
 	@JoinColumn(name = "accomodation_id")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonIgnore
 	private Accomodation accomodation;
 	
 	@Column
@@ -46,6 +46,9 @@ public class Term {
 	
 	@Column
 	private String userId;
+	
+	@Column(nullable = false)
+	private boolean visited;
 
 	public Term() {
 	}
@@ -118,6 +121,14 @@ public class Term {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 }

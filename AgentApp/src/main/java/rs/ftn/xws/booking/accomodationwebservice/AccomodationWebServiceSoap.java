@@ -51,6 +51,23 @@ public interface AccomodationWebServiceSoap {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.Long
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "setVisitedValue", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValue")
+    @ResponseWrapper(localName = "setVisitedValueResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValueResponse")
+    public Long setVisitedValue(
+        @WebParam(name = "arg0", targetNamespace = "")
+        boolean arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Long arg1);
+
+    /**
+     * 
      * @return
      *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.CategorySoap>
      */

@@ -33,12 +33,14 @@ public class ObjectFactory {
     private final static QName _CreatingTerm_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "creatingTerm");
     private final static QName _ModifyAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "modifyAccomodation");
     private final static QName _ModifyAccomodationResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "modifyAccomodationResponse");
+    private final static QName _SetVisitedValue_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "setVisitedValue");
     private final static QName _CreatingTermResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "creatingTermResponse");
     private final static QName _GetAllAccomodationTypesResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAccomodationTypesResponse");
     private final static QName _GetAllCategories_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllCategories");
     private final static QName _DeleteAccomodationResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "deleteAccomodationResponse");
     private final static QName _GetAll_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAll");
     private final static QName _GetAllAdditionalServices_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllAdditionalServices");
+    private final static QName _SetVisitedValueResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "setVisitedValueResponse");
     private final static QName _GetAllResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "getAllResponse");
     private final static QName _Accomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService", "Accomodation");
 
@@ -63,6 +65,14 @@ public class ObjectFactory {
      */
     public GetAllAdditionalServices createGetAllAdditionalServices() {
         return new GetAllAdditionalServices();
+    }
+
+    /**
+     * Create an instance of {@link SetVisitedValueResponse }
+     * 
+     */
+    public SetVisitedValueResponse createSetVisitedValueResponse() {
+        return new SetVisitedValueResponse();
     }
 
     /**
@@ -119,6 +129,14 @@ public class ObjectFactory {
      */
     public ModifyAccomodationResponse createModifyAccomodationResponse() {
         return new ModifyAccomodationResponse();
+    }
+
+    /**
+     * Create an instance of {@link SetVisitedValue }
+     * 
+     */
+    public SetVisitedValue createSetVisitedValue() {
+        return new SetVisitedValue();
     }
 
     /**
@@ -217,6 +235,7 @@ public class ObjectFactory {
         return new TermSoap();
     }
 
+
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddAccomodationResponse }{@code >}}
      * 
@@ -299,6 +318,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetVisitedValue }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "setVisitedValue")
+    public JAXBElement<SetVisitedValue> createSetVisitedValue(SetVisitedValue value) {
+        return new JAXBElement<SetVisitedValue>(_SetVisitedValue_QNAME, SetVisitedValue.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CreatingTermResponse }{@code >}}
      * 
      */
@@ -350,6 +378,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getAllAdditionalServices")
     public JAXBElement<GetAllAdditionalServices> createGetAllAdditionalServices(GetAllAdditionalServices value) {
         return new JAXBElement<GetAllAdditionalServices>(_GetAllAdditionalServices_QNAME, GetAllAdditionalServices.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetVisitedValueResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "setVisitedValueResponse")
+    public JAXBElement<SetVisitedValueResponse> createSetVisitedValueResponse(SetVisitedValueResponse value) {
+        return new JAXBElement<SetVisitedValueResponse>(_SetVisitedValueResponse_QNAME, SetVisitedValueResponse.class, null, value);
     }
 
     /**

@@ -13,6 +13,8 @@ public class TermInfo {
 	private float price;
 	
 	private boolean reserved;
+	
+	private boolean visited;
 
 	public Date getStartDate() {
 		return startDate;
@@ -49,6 +51,14 @@ public class TermInfo {
 
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 }

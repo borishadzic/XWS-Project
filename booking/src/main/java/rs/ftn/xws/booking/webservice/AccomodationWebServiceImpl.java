@@ -211,4 +211,13 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		return term.getId();
 	}
 
+	@Override
+	public Long setVisitedValue(boolean visited, Long termId) {
+		Term term = termRepository.getOne(termId);
+		term.setVisited(visited);
+		termRepository.save(term);
+		
+		return term.getId();
+	}
+
 }

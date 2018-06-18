@@ -26,6 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="accomodationId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="reserved" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="visited" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +43,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "id",
     "accomodationId",
     "reserved",
-    "userId"
+    "userId",
+    "visited"
 })
 public class TermSoap {
 
@@ -57,6 +59,7 @@ public class TermSoap {
     protected Long accomodationId;
     protected boolean reserved;
     protected String userId;
+    protected boolean visited;
 
     /**
      * Gets the value of the startDate property.
@@ -208,6 +211,22 @@ public class TermSoap {
      */
     public void setUserId(String value) {
         this.userId = value;
+    }
+
+    /**
+     * Gets the value of the visited property.
+     * 
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * Sets the value of the visited property.
+     * 
+     */
+    public void setVisited(boolean value) {
+        this.visited = value;
     }
 
 }

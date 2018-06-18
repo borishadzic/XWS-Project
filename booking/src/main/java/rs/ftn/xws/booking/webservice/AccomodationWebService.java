@@ -34,5 +34,5 @@ public interface AccomodationWebService {
 	
 	Long creatingTerm(TermSoap termSoap, Long accdatabaseId);
 	
-
+	Long setVisitedValue(boolean visited, Long termId);
 }

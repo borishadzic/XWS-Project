@@ -42,6 +42,9 @@ public class Term {
 	@Column(nullable = false)
 	private boolean reserved;
 	
+	@Column(nullable = false)
+	private boolean visited;
+	
 	public Term() {
 	}
 
@@ -105,6 +108,14 @@ public class Term {
 
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 

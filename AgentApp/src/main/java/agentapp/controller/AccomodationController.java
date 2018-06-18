@@ -102,6 +102,7 @@ public class AccomodationController {
 			XMLGregorianCalendar enddate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			termSoap.setEndDate(enddate);
 			termSoap.setPrice(terminfo.getPrice());
+			termSoap.setVisited(terminfo.isVisited());
 			termsSoap.add(termSoap);
 		}
 		
@@ -141,6 +142,7 @@ public class AccomodationController {
 			termSoap.setEndDate(enddate);
 			termSoap.setPrice(termInfo.getPrice());
 			termSoap.setReserved(false);
+			termSoap.setVisited(false);
 			//
 			Term termlocal = new Term();
 			termlocal.setStartDate(termInfo.getStartDate());
@@ -148,6 +150,7 @@ public class AccomodationController {
 			termlocal.setPrice(termInfo.getPrice());
 			termlocal.setAccomodation(acc);
 			termlocal.setReserved(false);
+			termlocal.setVisited(false);
 			Long id = accWebService.creatingTerm(termSoap, databaseId);
 			termlocal.setDatabaseId(id);
 			termRepository.save(termlocal);
@@ -214,6 +217,8 @@ public class AccomodationController {
 			XMLGregorianCalendar enddate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			termSoap.setEndDate(enddate);
 			termSoap.setPrice(terminfo.getPrice());
+			termSoap.setReserved(terminfo.isReserved());
+			termSoap.setVisited(terminfo.isVisited());
 			termsSoap.add(termSoap);
 		}
 		
@@ -246,6 +251,7 @@ public class AccomodationController {
 			termSoap.setEndDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
 			termSoap.setPrice(terminfo.getPrice());
 			termSoap.setReserved(terminfo.isReserved());
+			termSoap.setVisited(terminfo.isVisited());
 			termSoap.setAccomodationId(accomodation.getId());
 			Long dbid = accWebService.creatingTerm(termSoap, accomodation.getDatabaseId());
 			termsSoap.add(termSoap);
@@ -257,6 +263,7 @@ public class AccomodationController {
 			term.setEndDate(terminfo.getEndDate());
 			term.setPrice(terminfo.getPrice());
 			term.setReserved(terminfo.isReserved());
+			term.setVisited(terminfo.isVisited());
 			term.setAccomodation(accomodation);
 			term.setDatabaseId(dbid);
 			termRepository.save(term);
@@ -278,6 +285,32 @@ public class AccomodationController {
 		accomodationRepository.deleteById(id);
 		
 		return new ResponseEntity<>("Deleted",HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/{id}/{visited}")
+	public ResponseEntity<String> setVisitedValue(@PathVariable("visited") boolean visited,@PathVariable("id") Long id){
+		
+		Term term = termRepository.getOne(id);
+		
+		term.setVisited(visited);
+		
+		termRepository.save(term);
+		
+		accWebService.setVisitedValue(visited, term.getId());
+		
+		return new ResponseEntity<>("Visited changed",HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/visited")
+	public List<Term> getTerms(){
+		/*List<Term> terms = termRepository.findAll();
+		if(terms == null) {
+			return new ResponseEntity<>(null,HttpStatus.BAD_GATEWAY);
+		}
+		return new ResponseEntity<>(terms,HttpStatus.OK);*/
+		return termRepository.findAll();
 	}
 
 }

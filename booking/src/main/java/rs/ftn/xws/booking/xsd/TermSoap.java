@@ -29,6 +29,9 @@ public class TermSoap {
 	
 	@XmlElement
 	private String userId;
+	
+	@XmlElement
+	private boolean visited;
 
 	public Date getStartDate() {
 		return startDate;
@@ -84,6 +87,14 @@ public class TermSoap {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 	
 }
