@@ -12,7 +12,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -195,19 +198,44 @@ public class AccomodationController {
 		
 		accomodation = accomodationRepository.save(accomodation);
 		
+		
 		termRepository.deleteAll(tempTerms);
 		
 		List<TermSoap> termsSoap = new ArrayList<>();
+		for(TermInfo terminfo : info.getTerms() ) {
+			GregorianCalendar c = new GregorianCalendar();
+			
+			
+			TermSoap termSoap = new TermSoap();
+			c.setTime(terminfo.getStartDate());
+			XMLGregorianCalendar startdate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			termSoap.setStartDate(startdate);
+			c.setTime(terminfo.getEndDate());
+			XMLGregorianCalendar enddate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			termSoap.setEndDate(enddate);
+			termSoap.setPrice(terminfo.getPrice());
+			termsSoap.add(termSoap);
+		}
+		
+		
+		AccomodationSoap accSoap = new AccomodationSoap();
+		accSoap.setName(info.getName());
+		accSoap.setCountry(info.getCountry());
+		accSoap.setCity(info.getCity());
+		accSoap.setAddress(info.getAddress());
+		accSoap.setAccomodationType(info.getAccomodationType());
+		accSoap.setCategory(info.getCategory());
+		accSoap.setDescription(info.getDescription());
+		accSoap.setCapacity(info.getCapacity());
+		accSoap.setId(accomodation.getDatabaseId());
+		accSoap.setAdditionalServices(info.getAdditionalServices());
+		accSoap.setTerms(termsSoap);
+		
+		accWebService.modifyAccomodation(accSoap);
+		
 		
 		for(TermInfo terminfo : info.getTerms()) {
-			//local
-			Term term = new Term();
-			term.setStartDate(terminfo.getStartDate());
-			term.setEndDate(terminfo.getEndDate());
-			term.setPrice(terminfo.getPrice());
-			term.setReserved(terminfo.isReserved());
-			term.setAccomodation(accomodation);
-			termRepository.save(term);
+			
 			
 			//soap
 			GregorianCalendar c = new GregorianCalendar();
@@ -219,27 +247,37 @@ public class AccomodationController {
 			termSoap.setPrice(terminfo.getPrice());
 			termSoap.setReserved(terminfo.isReserved());
 			termSoap.setAccomodationId(accomodation.getId());
+			Long dbid = accWebService.creatingTerm(termSoap, accomodation.getDatabaseId());
 			termsSoap.add(termSoap);
+			
+			
+			//local
+			Term term = new Term();
+			term.setStartDate(terminfo.getStartDate());
+			term.setEndDate(terminfo.getEndDate());
+			term.setPrice(terminfo.getPrice());
+			term.setReserved(terminfo.isReserved());
+			term.setAccomodation(accomodation);
+			term.setDatabaseId(dbid);
+			termRepository.save(term);
 			
 		}
 		// local
 		
-		//soap
-		AccomodationSoap accSoap = new AccomodationSoap();
-		accSoap.setName(info.getName());
-		accSoap.setCountry(info.getCountry());
-		accSoap.setCity(info.getCity());
-		accSoap.setAddress(info.getAddress());
-		accSoap.setAccomodationType(info.getAccomodationType());
-		accSoap.setCategory(info.getCategory());
-		accSoap.setDescription(info.getDescription());
-		accSoap.setCapacity(info.getCapacity());
-		accSoap.setAdditionalServices(info.getAdditionalServices());
-		accSoap.setTerms(termsSoap);
-		//soap
-		
 		
 		return accomodationRepository.save(accomodation);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> removeAccomodation(@PathVariable("id") Long id){
+		
+		Accomodation acc = accomodationRepository.getOne(id);
+		
+		accWebService.deleteAccomodation(acc.getDatabaseId());
+		accomodationRepository.deleteById(id);
+		
+		return new ResponseEntity<>("Deleted",HttpStatus.OK);
 	}
 
 }

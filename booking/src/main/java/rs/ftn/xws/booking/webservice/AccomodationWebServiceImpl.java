@@ -85,14 +85,40 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 
 	@Override
 	public Long modifyAccomodation(AccomodationSoap accomodation) {
-		// TODO Auto-generated method stub
-		return null;
+		Accomodation acc = accRepository.getOne(accomodation.getId());
+		
+		//acc.getTerms().clear();
+		List<Term> tempTerms = new ArrayList<>();
+		for(Term term : termRepository.findAll()) {
+			if(term.getAccomodation().getId() == acc.getId()) {
+				tempTerms.add(term);
+			}
+		}
+		
+		termRepository.deleteAll(tempTerms);
+		
+		//modifikovanje
+		acc.setName(accomodation.getName());
+		acc.setCountry(accomodation.getCountry());
+		acc.setCity(accomodation.getCity());
+		acc.setAddress(accomodation.getAddress());
+		acc.setAccomodationType(accTypeRepository.getOne(accomodation.getAccomodationType()));
+		acc.setCategory(categoryRepository.getOne(accomodation.getCategory()));
+		acc.setDescription(accomodation.getDescription());
+		acc.setCapacity(accomodation.getCapacity());
+		Set<AdditionalService> services = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accomodation.getAdditionalServices()));
+		acc.getAdditionalServices().clear();
+		acc.setAdditionalServices(services);
+		
+		accRepository.save(acc);
+		
+		return acc.getId();
 	}
 
 	@Override
 	public Long deleteAccomodation(Long accomodationId) {
-		// TODO Auto-generated method stub
-		return null;
+		accRepository.deleteById(accomodationId);
+		return accomodationId;
 	}
 
 	@Override
@@ -180,7 +206,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		term.setEndDate(termSoap.getEndDate());
 		term.setPrice(termSoap.getPrice());
 		term.setAccomodation(accRepository.getOne(accDatabaseId));
-		term.setReserved(false);
+		term.setReserved(termSoap.isReserved());
 		term = termRepository.save(term);
 		return term.getId();
 	}
