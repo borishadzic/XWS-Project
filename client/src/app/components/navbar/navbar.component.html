@@ -12,22 +12,22 @@
     <mat-nav-list>
       <!-- Router link home -->
       <mat-list-item routerLink="/home">
-        <mat-icon mat-list-icon>home</mat-icon>
+        <mat-icon mat-list-icon color="accent">home</mat-icon>
         <p matLine>Home</p>
       </mat-list-item>
 
       <!-- If user is logged in -->
       <ng-container *ngIf="authService.loginEvent | async; else logedOut">
         <mat-list-item routerLink="/reservations">
-          <mat-icon mat-list-icon>notifications</mat-icon>
+          <mat-icon mat-list-icon color="accent">notifications</mat-icon>
           <p matLine>My reservations</p>
         </mat-list-item>
         <mat-list-item routerLink="/change-password">
-          <mat-icon mat-list-icon>compare_arrows</mat-icon>
+          <mat-icon mat-list-icon color="accent">compare_arrows</mat-icon>
           <p matLine>Change password</p>
         </mat-list-item>
         <mat-list-item (click)="onLogout()">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>
+          <mat-icon mat-list-icon color="accent">exit_to_app</mat-icon>
           <p matLine>Logout</p>
         </mat-list-item>
       </ng-container>
@@ -35,7 +35,7 @@
       <!-- Else show logout link -->
       <ng-template #logedOut>
           <mat-list-item routerLink="/login">
-            <mat-icon mat-list-icon>fingerprint</mat-icon>
+            <mat-icon mat-list-icon color="accent">fingerprint</mat-icon>
             <p matLine>Login/SignUp</p>
           </mat-list-item>
       </ng-template>

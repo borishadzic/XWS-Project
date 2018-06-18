@@ -70,22 +70,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UploadMultiple }
-     * 
-     */
-    public UploadMultiple createUploadMultiple() {
-        return new UploadMultiple();
-    }
-
-    /**
-     * Create an instance of {@link UploadModelXsd.Images }
-     * 
-     */
-    public UploadModelXsd.Images createUploadModelXsdImages() {
-        return new UploadModelXsd.Images();
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TestMethod }{@code >}}
      * 
      */

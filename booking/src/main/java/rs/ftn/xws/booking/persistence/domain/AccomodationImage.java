@@ -25,8 +25,9 @@ public class AccomodationImage {
 
 	}
 
-	public AccomodationImage(String url) {
+	public AccomodationImage(String url, Accomodation accomodation) {
 		this.url = url;
+		this.accomodation = accomodation;
 	}
 
 	public Long getId() {

@@ -3,6 +3,8 @@ package agentapp.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.ws.soap.MTOMFeature;
+
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
@@ -16,18 +18,17 @@ import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
 import rs.ftn.xws.booking.test.TestService;
 import rs.ftn.xws.booking.test.TestServiceSoap;
 
-
 @Configuration
 public class ServiceConfig {
-	
+
 	@Bean
 	public TestServiceSoap getTestServiceSoap() {
 		TestService service = new TestService();
-		TestServiceSoap info = service.getTestServicePort();
+		TestServiceSoap info = service.getTestServicePort(new MTOMFeature());
 		setUpInterceptors(info);
 		return info;
 	}
-	
+
 	@Bean
 	public AccomodationWebServiceSoap getAccomodationWebServiceSoap() {
 		AccomodationWebService service = new AccomodationWebService();
@@ -35,13 +36,13 @@ public class ServiceConfig {
 		setUpInterceptors(sservice);
 		return sservice;
 	}
-	
+
 	private void setUpInterceptors(Object o) {
 		Client client = ClientProxy.getClient(o);
 		client.getOutInterceptors().add(getWSS4JOutInterceptor());
 		client.getInInterceptors().add(getWSS4JInInterceptor());
 	}
-	
+
 	@Bean
 	public WSS4JOutInterceptor getWSS4JOutInterceptor() {
 		Map<String, Object> outProps = new HashMap<String, Object>();
@@ -61,11 +62,11 @@ public class ServiceConfig {
 
 		return new WSS4JOutInterceptor(outProps);
 	}
-	
+
 	@Bean
 	public WSS4JInInterceptor getWSS4JInInterceptor() {
 		Map<String, Object> inProps = new HashMap<String, Object>();
-		inProps.put(WSHandlerConstants.ACTION, 
+		inProps.put(WSHandlerConstants.ACTION,
 				WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.ENCRYPT);
 		inProps.put(WSHandlerConstants.SIG_PROP_FILE, "client-crypto.properties");
 		inProps.put(WSHandlerConstants.DEC_PROP_FILE, "client-crypto.properties");
@@ -73,5 +74,5 @@ public class ServiceConfig {
 
 		return new WSS4JInInterceptor(inProps);
 	}
-	
+
 }

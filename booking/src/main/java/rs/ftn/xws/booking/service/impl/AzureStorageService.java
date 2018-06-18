@@ -72,6 +72,10 @@ public class AzureStorageService implements StorageService {
 	}
 	
 	private String getFileExtension(String fileType) {
+		if (fileType == null) {
+			throw new UnsupportedFileType("Image type can not be determined.");
+		}
+		
 		if (fileType.contains("jpeg")) {
 			return ".jpeg";
 		} else if (fileType.contains("jpg")) {

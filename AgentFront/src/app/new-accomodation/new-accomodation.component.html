@@ -56,12 +56,12 @@
         <button mat-raised-button type="button"
         (click)="onAddTerm()" [disabled]="!form.get('terms').valid">Add term</button>
         <div class="form-group"
-        *ngFor="let termControl of form.get('terms').controls; let i = index"> 
+        *ngFor="let termControl of form.get('terms').controls; let i = index">
           <div [formGroupName]="i">
             <mat-form-field class="term">
               <input matInput [matDatepicker]="pickerFrom" placeholder="From" class="form-control" formControlName="startDate">
               <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-              <mat-datepicker #pickerFrom></mat-datepicker>    
+              <mat-datepicker #pickerFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="term">
               <input matInput [matDatepicker]="pickerTo" placeholder="To" class="form-control" formControlName="endDate">
@@ -73,9 +73,9 @@
             </mat-form-field>
             <mat-form-field class="term" color="warn" appearance="outline">
               <mat-chip-list>
-                
+
                 <mat-chip class="form-control" color="warn" selected="true" (click)="onTermRemove(termControl,$event)">Remove</mat-chip>
-                
+
               </mat-chip-list>
             </mat-form-field>
           </div>
@@ -87,13 +87,17 @@
       <div formArrayName="additionalServices">
         <h4>Your additional services</h4>
         <div *ngFor="let service of services">
-         
+
             <mat-checkbox (change)="onServiceCheck(service.id, $event)">{{service.name}}</mat-checkbox>
-          
+
         </div>
       </div>
       <br>
       <mat-divider></mat-divider>
+      <br>
+      <div>
+        <input type="file" multiple accept="image/*" placeholder="Upload images" (change)="onFileChanged($event)">
+      </div>
       <br>
       <button mat-raised-button color="warn" type="submit" [disabled]="!form.valid">Add</button>
     </form>
@@ -107,6 +111,6 @@
       </mat-chip-list>
   </mat-card-content>
 
- 
+
 </mat-card>
 

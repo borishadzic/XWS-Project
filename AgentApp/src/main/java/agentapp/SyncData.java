@@ -97,19 +97,19 @@ public class SyncData {
 				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accSoap.getAdditionalServices()));
 				acc.setAdditionalServices(serviceslocal);
 				acc.setTerms(new ArrayList<Term>());
-				accRepository.save(acc);
+				acc = accRepository.save(acc);
 				for(TermSoap termSoap: accSoap.getTerms() ) {
 					Term term = new Term();
 					term.setStartDate(termSoap.getStartDate().toGregorianCalendar().getTime());
 					term.setEndDate(termSoap.getEndDate().toGregorianCalendar().getTime());
 					term.setPrice(termSoap.getPrice());
 					term.setDatabaseId(termSoap.getId());
-					term.setAccomodation(accRepository.getOne(termSoap.getAccomodationId()));
-					acc.getTerms().add(term);
+					term.setAccomodation(acc);
+//					acc.getTerms().add(term);
 					termRepository.save(term);
 					
 				}
-				accRepository.save(acc);
+//				accRepository.save(acc);
 				
 			}
 		

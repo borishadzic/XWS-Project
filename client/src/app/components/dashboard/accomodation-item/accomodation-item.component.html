@@ -16,8 +16,8 @@
     [autoPlay]="true" [backgroundRepeat]="false" [showArrows]="true" [imageUrls]="term.accomodation.images" [lazyLoad]="term.accomodation.images?.length > 1"
     [autoPlayWaitForLazyLoad]="true">
   </slideshow>
-  <mat-card-content fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-    <mat-list fxFlexAlign="start">
+  <mat-card-content fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around center" fxLayoutGap="2em">
+    <mat-list fxFlexAlign="start" fxFlexAlign.lt-md="center">
       <h3 mat-subheader>Services</h3>
       <mat-list-item *ngFor="let service of term.accomodation.additionalService">
         <mat-icon mat-list-icon>room_service</mat-icon>

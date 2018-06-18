@@ -6,28 +6,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.activation.DataHandler;
+import javax.validation.Valid;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import agentapp.domain.Accomodation;
 import agentapp.domain.AdditionalService;
 import agentapp.domain.Term;
 import agentapp.dto.AccomodationInfo;
+import agentapp.dto.ImagesInfo;
+import agentapp.dto.InputStreamDataSource;
 import agentapp.dto.TermInfo;
 import agentapp.repository.AccomodationRepository;
 import agentapp.repository.AccomodationTypeRepository;
@@ -38,6 +43,8 @@ import agentapp.service.AccomodationService;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
 import rs.ftn.xws.booking.accomodationwebservice.TermSoap;
+import rs.ftn.xws.booking.test.TestServiceSoap;
+import rs.ftn.xws.booking.test.UploadModelXsd;
 
 @RestController
 @RequestMapping("/accomodations")
@@ -63,6 +70,9 @@ public class AccomodationController {
 	
 	@Autowired
 	private AccomodationRepository accomodationRepository;
+	
+	@Autowired
+	private TestServiceSoap testService;
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
@@ -161,6 +171,31 @@ public class AccomodationController {
 		
 		//lokalno
 		return acc;
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("{id}")
+	public ResponseEntity<?> uploadAccomodationImages(@PathVariable Long id, @ModelAttribute @Valid ImagesInfo imagesInfo) throws Exception {
+		List<MultipartFile> images = imagesInfo.getImage();
+		Accomodation accomodation = accomodationRepository.getOne(id);
+		
+		if (accomodation == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		UploadModelXsd uploadModelXsd = new UploadModelXsd();
+		List<DataHandler> dataHandlerImages = new ArrayList<>();
+		
+		for (MultipartFile image : images) {
+			dataHandlerImages.add(new DataHandler(new InputStreamDataSource(image.getInputStream(), image.getContentType())));
+		}		
+		
+		uploadModelXsd.setImages(dataHandlerImages);
+		uploadModelXsd.setId(accomodation.getDatabaseId());
+		
+		testService.uploadMultiple(uploadModelXsd);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
