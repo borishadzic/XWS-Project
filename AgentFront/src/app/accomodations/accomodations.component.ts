@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AccomodationsComponent implements OnInit {
   
-  myDisplayedColumns = ['id','name','country','city','type','category','capacity','manage'];
+  myDisplayedColumns = ['id','name','country','city','type','category','capacity','manage','remove'];
   myDataSource: MatTableDataSource<AccomodationData>;
   public accomodations;
 
@@ -47,6 +47,20 @@ export class AccomodationsComponent implements OnInit {
       this.myDataSource.paginator.firstPage();
     }
   }
+
+  onRemove(id){
+    console.log(this.accomodations[id-1]);
+    this.http.delete('http://localhost:8081/accomodations/'+id,{ responseType: 'text' }).subscribe(data => {
+      //let index=this.accomodations.indexOf(id);
+      //console.log(index);
+      this.accomodations.splice(id-1,1);
+      const accomodationsD: AccomodationData[] = [];
+      for (let i = 0; i < this.accomodations.length; i++) { accomodationsD.push(createAccomodation(this.accomodations[i])); }
+      this.myDataSource = new MatTableDataSource(accomodationsD);
+    });
+  }
+
+
 }
 
 
