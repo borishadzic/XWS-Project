@@ -1,6 +1,7 @@
-package rs.ftn.xws.booking.persistence.domain;
+package agentapp.domain;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,17 +27,17 @@ public class Message {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Term term;
 
-	private String agent;
+	@Column
+	private Long databaseId;
 
 	public Message() {
 
 	}
 
-	public Message(String message, User user, Term term, String agent) {
+	public Message(String message, User user, Term term) {
 		this.message = message;
 		this.user = user;
 		this.term = term;
-		this.agent = agent;
 	}
 
 	public Long getId() {
@@ -71,12 +72,12 @@ public class Message {
 		this.term = term;
 	}
 
-	public String getAgent() {
-		return agent;
+	public Long getDatabaseId() {
+		return databaseId;
 	}
 
-	public void setAgent(String agent) {
-		this.agent = agent;
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
 	}
 
 }

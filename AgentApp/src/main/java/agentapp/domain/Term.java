@@ -13,9 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 @Entity
 public class Term {
 
@@ -30,23 +27,24 @@ public class Term {
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
-	
+
 	@Column
 	private float price;
 
 	@JoinColumn(name = "accomodation_id")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Accomodation accomodation;
-	
+
 	@Column
 	private Long databaseId;
-	
+
 	@Column(nullable = false)
 	private boolean reserved;
-	
-	@Column
-	private String userId;
-	
+
+	@JoinColumn(name = "user_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+
 	@Column(nullable = false)
 	private boolean visited;
 
@@ -115,20 +113,20 @@ public class Term {
 		this.reserved = reserved;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public boolean isVisited() {
 		return visited;
 	}
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

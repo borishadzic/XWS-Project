@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +16,24 @@ import rs.ftn.xws.booking.persistence.domain.Accomodation;
 import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 import rs.ftn.xws.booking.persistence.domain.AdditionalService;
 import rs.ftn.xws.booking.persistence.domain.Category;
+import rs.ftn.xws.booking.persistence.domain.Message;
 import rs.ftn.xws.booking.persistence.domain.Term;
+import rs.ftn.xws.booking.persistence.domain.User;
 import rs.ftn.xws.booking.persistence.repository.AccomodationRepository;
 import rs.ftn.xws.booking.persistence.repository.AccomodationTypeRepository;
 import rs.ftn.xws.booking.persistence.repository.AdditionalServiceRepository;
 import rs.ftn.xws.booking.persistence.repository.CategoryRepository;
+import rs.ftn.xws.booking.persistence.repository.MessageRepository;
 import rs.ftn.xws.booking.persistence.repository.TermRepository;
+import rs.ftn.xws.booking.persistence.repository.UserRepository;
 import rs.ftn.xws.booking.service.AccomodationService;
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
 import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
 import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
 import rs.ftn.xws.booking.xsd.CategorySoap;
+import rs.ftn.xws.booking.xsd.MessageSoap;
 import rs.ftn.xws.booking.xsd.TermSoap;
+import rs.ftn.xws.booking.xsd.UserSoap;
 
 @Service
 @WebService(endpointInterface = "rs.ftn.xws.booking.webservice.AccomodationWebService",
@@ -52,6 +60,15 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Resource
+	private WebServiceContext webServiceContext;
+	
+	@Autowired
+	private MessageRepository messageRepository;
+	
 	@Override
 	public Long addAccomodation(AccomodationSoap accomodation) {
 						
@@ -67,6 +84,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		newaccomodation.setCountry(accomodation.getCountry());
 		newaccomodation.setAddress(accomodation.getAddress());
 		newaccomodation.setCategory(categoryRepository.getOne(accomodation.getCategory()));
+		newaccomodation.setAgent(webServiceContext.getUserPrincipal().getName());
 		newaccomodation = accService.addAccomodation(newaccomodation);
 		
 		
@@ -125,36 +143,38 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	public List<AccomodationSoap> getAll() {
 		List<AccomodationSoap> accsoap = new ArrayList<>();
 		for(Accomodation acc : accRepository.findAll()) {
-			AccomodationSoap accS = new AccomodationSoap();
-			accS.setId(acc.getId());
-			accS.setName(acc.getName());
-			accS.setCountry(acc.getCountry());
-			accS.setCity(acc.getCity());
-			accS.setAddress(acc.getAddress());
-			accS.setAccomodationType(acc.getAccomodationType().getId());
-			accS.setCategory(acc.getCategory().getId());
-			accS.setCapacity(acc.getCapacity());
-			accS.setDescription(acc.getDescription());
-			List<Long> asids = new ArrayList<>();
-			for(AdditionalService as : acc.getAdditionalServices()) {
-				asids.add(as.getId());
+			if(webServiceContext.getUserPrincipal().getName().equals(acc.getAgent())) {
+				AccomodationSoap accS = new AccomodationSoap();
+				accS.setId(acc.getId());
+				accS.setName(acc.getName());
+				accS.setCountry(acc.getCountry());
+				accS.setCity(acc.getCity());
+				accS.setAddress(acc.getAddress());
+				accS.setAccomodationType(acc.getAccomodationType().getId());
+				accS.setCategory(acc.getCategory().getId());
+				accS.setCapacity(acc.getCapacity());
+				accS.setDescription(acc.getDescription());
+				List<Long> asids = new ArrayList<>();
+				for(AdditionalService as : acc.getAdditionalServices()) {
+					asids.add(as.getId());
+				}
+				accS.setAdditionalServices((ArrayList<Long>) asids);
+				
+				List<TermSoap> termsSoap = new ArrayList<>();
+				for(Term term : acc.getTerms()) {
+					TermSoap termSoap = new TermSoap();
+					termSoap.setStartDate(term.getStartDate());
+					termSoap.setEndDate(term.getEndDate());
+					termSoap.setPrice(term.getPrice());
+					termSoap.setId(term.getId());
+					termSoap.setAccomodationId(acc.getId());
+					termSoap.setReserved(term.isReserved());
+					termsSoap.add(termSoap);
+				}
+				accS.setTerms((ArrayList<TermSoap>) termsSoap);
+				
+				accsoap.add(accS);
 			}
-			accS.setAdditionalServices((ArrayList<Long>) asids);
-			
-			List<TermSoap> termsSoap = new ArrayList<>();
-			for(Term term : acc.getTerms()) {
-				TermSoap termSoap = new TermSoap();
-				termSoap.setStartDate(term.getStartDate());
-				termSoap.setEndDate(term.getEndDate());
-				termSoap.setPrice(term.getPrice());
-				termSoap.setId(term.getId());
-				termSoap.setAccomodationId(acc.getId());
-				termSoap.setReserved(term.isReserved());
-				termsSoap.add(termSoap);
-			}
-			accS.setTerms((ArrayList<TermSoap>) termsSoap);
-			
-			accsoap.add(accS);
 		}
 		
 		return accsoap;
@@ -218,6 +238,48 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		termRepository.save(term);
 		
 		return term.getId();
+	}
+
+	@Override
+	public List<UserSoap> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		List<UserSoap> usersSoap = new ArrayList<>();
+		for(User user : users) {
+			UserSoap userSoap = new UserSoap();
+			userSoap.setId(user.getId());
+			userSoap.setEmail(user.getEmail());
+			usersSoap.add(userSoap);
+		}
+		return usersSoap;
+	}
+
+	@Override
+	public List<MessageSoap> getMessagesForAgent() {
+		List<Message> messages = messageRepository.findAll();
+		List<MessageSoap> messagesSoap = new ArrayList<>();
+		for(Message msg : messages) {
+			if(webServiceContext.getUserPrincipal().getName().equals(msg.getAgent())) {
+				MessageSoap msgSoap = new MessageSoap();
+				msgSoap.setId(msg.getId());
+				msgSoap.setMessage(msg.getMessage());
+				msgSoap.setTermId(msg.getTerm().getId());
+				if(msg.getUser() != null) {
+					msgSoap.setUserId(msg.getUser().getId());
+				}
+				messagesSoap.add(msgSoap);
+			}
+		}
+		return messagesSoap;
+	}
+
+	@Override
+	public Long sendMessage(MessageSoap messageSoap) {
+		Message msg = new Message();
+		msg.setAgent(webServiceContext.getUserPrincipal().getName());
+		msg.setMessage(messageSoap.getMessage());
+		msg.setTerm(termRepository.getOne(messageSoap.getTermId()));
+		messageRepository.save(msg);
+		return msg.getId();
 	}
 
 }

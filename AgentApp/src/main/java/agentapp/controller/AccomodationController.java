@@ -29,19 +29,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import agentapp.domain.Accomodation;
 import agentapp.domain.AdditionalService;
+import agentapp.domain.Message;
 import agentapp.domain.Term;
 import agentapp.dto.AccomodationInfo;
 import agentapp.dto.ImagesInfo;
 import agentapp.dto.InputStreamDataSource;
+import agentapp.dto.MessageInfo;
 import agentapp.dto.TermInfo;
 import agentapp.repository.AccomodationRepository;
 import agentapp.repository.AccomodationTypeRepository;
 import agentapp.repository.AdditionalServiceRepository;
 import agentapp.repository.CategoryRepository;
+import agentapp.repository.MessageRepository;
 import agentapp.repository.TermRepository;
+import agentapp.repository.UserRepository;
 import agentapp.service.AccomodationService;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
+import rs.ftn.xws.booking.accomodationwebservice.MessageSoap;
 import rs.ftn.xws.booking.accomodationwebservice.TermSoap;
 import rs.ftn.xws.booking.test.TestServiceSoap;
 import rs.ftn.xws.booking.test.UploadModelXsd;
@@ -70,6 +75,12 @@ public class AccomodationController {
 	
 	@Autowired
 	private AccomodationRepository accomodationRepository;
+	
+	@Autowired
+	private MessageRepository messageRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private TestServiceSoap testService;
@@ -346,6 +357,33 @@ public class AccomodationController {
 		}
 		return new ResponseEntity<>(terms,HttpStatus.OK);*/
 		return termRepository.findAll();
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/messages/{id}")
+	public List<Message> getMessages(@PathVariable("id") Long id){
+		return messageRepository.findByTermId(id);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("/messages")
+	public Message sendMessage(@RequestBody MessageInfo msgInfo){
+		System.out.println(msgInfo);
+		MessageSoap msgSoap = new MessageSoap();
+		msgSoap.setMessage(msgInfo.getMessage());
+		msgSoap.setTermId(termRepository.getOne(msgInfo.getTermId()).getDatabaseId());
+		
+		Long dbid = accWebService.sendMessage(msgSoap);
+		
+		Message msg = new Message();
+		msg.setDatabaseId(dbid);
+		msg.setMessage(msgInfo.getMessage());
+		msg.setTerm(termRepository.getOne(msgInfo.getTermId()));
+		messageRepository.save(msg);
+		
+		
+		
+		return msg;
 	}
 
 }

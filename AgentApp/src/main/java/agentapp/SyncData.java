@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,18 +15,24 @@ import agentapp.domain.Accomodation;
 import agentapp.domain.AccomodationType;
 import agentapp.domain.AdditionalService;
 import agentapp.domain.Category;
+import agentapp.domain.Message;
 import agentapp.domain.Term;
+import agentapp.domain.User;
 import agentapp.repository.AccomodationRepository;
 import agentapp.repository.AccomodationTypeRepository;
 import agentapp.repository.AdditionalServiceRepository;
 import agentapp.repository.CategoryRepository;
+import agentapp.repository.MessageRepository;
 import agentapp.repository.TermRepository;
+import agentapp.repository.UserRepository;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationTypeSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AdditionalServiceSoap;
 import rs.ftn.xws.booking.accomodationwebservice.CategorySoap;
+import rs.ftn.xws.booking.accomodationwebservice.MessageSoap;
 import rs.ftn.xws.booking.accomodationwebservice.TermSoap;
+import rs.ftn.xws.booking.accomodationwebservice.UserSoap;
 
 @Component
 public class SyncData {
@@ -47,8 +54,15 @@ public class SyncData {
 	
 	@Autowired
 	private AccomodationRepository accRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private MessageRepository messageRepository;
 
 	@PostConstruct
+	@Transactional
 	public void init() {
 			
 			System.out.println("########## SINHRONIZACIJAA #############");
@@ -61,6 +75,15 @@ public class SyncData {
 			List<AccomodationTypeSoap> typesSoap = accWebService.getAllAccomodationTypes();
 			List<AdditionalServiceSoap> servicesSoap = accWebService.getAllAdditionalServices();
 			List<CategorySoap> categoriesSoap = accWebService.getAllCategories();
+			List<UserSoap> usersSoap  = accWebService.getAllUsers();
+			List<MessageSoap> messagesSoap = accWebService.getMessagesForAgent();
+			
+			for(UserSoap userSoap : usersSoap) {
+				User user = new User();
+				user.setEmail(userSoap.getEmail());
+				user.setDatabaseId(userSoap.getId());
+				userRepository.save(user);
+			}
 			
 			for(AccomodationTypeSoap typeSoap : typesSoap) {
 				AccomodationType type = new AccomodationType();
@@ -110,6 +133,16 @@ public class SyncData {
 					
 				}
 //				accRepository.save(acc);
+				
+			}
+			
+			for(MessageSoap msgSoap : messagesSoap) {
+				Message msg = new Message();
+				msg.setDatabaseId(msgSoap.getId());
+				msg.setMessage(msgSoap.getMessage());
+				msg.setTerm(termRepository.findByDatabaseId(msgSoap.getTermId()));
+				msg.setUser(userRepository.findByDatabaseId(msgSoap.getUserId()));
+				messageRepository.save(msg);
 				
 			}
 		

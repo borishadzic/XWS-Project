@@ -41,6 +41,17 @@ public interface AccomodationWebServiceSoap {
     /**
      * 
      * @return
+     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.MessageSoap>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getMessagesForAgent", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetMessagesForAgent")
+    @ResponseWrapper(localName = "getMessagesForAgentResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetMessagesForAgentResponse")
+    public List<MessageSoap> getMessagesForAgent();
+
+    /**
+     * 
+     * @return
      *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.AccomodationTypeSoap>
      */
     @WebMethod
@@ -48,34 +59,6 @@ public interface AccomodationWebServiceSoap {
     @RequestWrapper(localName = "getAllAccomodationTypes", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAccomodationTypes")
     @ResponseWrapper(localName = "getAllAccomodationTypesResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAccomodationTypesResponse")
     public List<AccomodationTypeSoap> getAllAccomodationTypes();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns java.lang.Long
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "setVisitedValue", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValue")
-    @ResponseWrapper(localName = "setVisitedValueResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValueResponse")
-    public Long setVisitedValue(
-        @WebParam(name = "arg0", targetNamespace = "")
-        boolean arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        Long arg1);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.CategorySoap>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAllCategories", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllCategories")
-    @ResponseWrapper(localName = "getAllCategoriesResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllCategoriesResponse")
-    public List<CategorySoap> getAllCategories();
 
     /**
      * 
@@ -90,28 +73,6 @@ public interface AccomodationWebServiceSoap {
     public Long deleteAccomodation(
         @WebParam(name = "arg0", targetNamespace = "")
         Long arg0);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAll", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAll")
-    @ResponseWrapper(localName = "getAllResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllResponse")
-    public List<AccomodationSoap> getAll();
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.AdditionalServiceSoap>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAllAdditionalServices", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAdditionalServices")
-    @ResponseWrapper(localName = "getAllAdditionalServicesResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAdditionalServicesResponse")
-    public List<AdditionalServiceSoap> getAllAdditionalServices();
 
     /**
      * 
@@ -143,5 +104,80 @@ public interface AccomodationWebServiceSoap {
     public Long modifyAccomodation(
         @WebParam(name = "arg0", targetNamespace = "")
         AccomodationSoap arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.Long
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "sendMessage", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SendMessage")
+    @ResponseWrapper(localName = "sendMessageResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SendMessageResponse")
+    public Long sendMessage(
+        @WebParam(name = "arg0", targetNamespace = "")
+        MessageSoap arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.Long
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "setVisitedValue", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValue")
+    @ResponseWrapper(localName = "setVisitedValueResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.SetVisitedValueResponse")
+    public Long setVisitedValue(
+        @WebParam(name = "arg0", targetNamespace = "")
+        boolean arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Long arg1);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.CategorySoap>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAllCategories", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllCategories")
+    @ResponseWrapper(localName = "getAllCategoriesResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllCategoriesResponse")
+    public List<CategorySoap> getAllCategories();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAll", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAll")
+    @ResponseWrapper(localName = "getAllResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllResponse")
+    public List<AccomodationSoap> getAll();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.AdditionalServiceSoap>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAllAdditionalServices", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAdditionalServices")
+    @ResponseWrapper(localName = "getAllAdditionalServicesResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllAdditionalServicesResponse")
+    public List<AdditionalServiceSoap> getAllAdditionalServices();
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<rs.ftn.xws.booking.accomodationwebservice.UserSoap>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAllUsers", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllUsers")
+    @ResponseWrapper(localName = "getAllUsersResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.GetAllUsersResponse")
+    public List<UserSoap> getAllUsers();
 
 }

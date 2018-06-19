@@ -8,5 +8,7 @@ import agentapp.domain.Term;
 
 @Repository
 public interface TermRepository extends JpaRepository<Term,Long>{
-
+	
+	Term findByDatabaseId(Long id);
+	
 }

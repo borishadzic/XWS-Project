@@ -11,7 +11,9 @@ import rs.ftn.xws.booking.xsd.AccomodationSoap;
 import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
 import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
 import rs.ftn.xws.booking.xsd.CategorySoap;
+import rs.ftn.xws.booking.xsd.MessageSoap;
 import rs.ftn.xws.booking.xsd.TermSoap;
+import rs.ftn.xws.booking.xsd.UserSoap;
 
 @WebService(name = "AccomodationWebServiceSoap", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService")
 @SchemaValidation(type = SchemaValidationType.REQUEST)
@@ -35,4 +37,10 @@ public interface AccomodationWebService {
 	Long creatingTerm(TermSoap termSoap, Long accdatabaseId);
 	
 	Long setVisitedValue(boolean visited, Long termId);
+	
+	List<UserSoap> getAllUsers();
+	
+	List<MessageSoap> getMessagesForAgent();
+	
+	Long sendMessage(MessageSoap messageSoap);
 }
