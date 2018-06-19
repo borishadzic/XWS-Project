@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="mat-h1">My reservations</h1>
 
-  <table mat-table [dataSource]="reservations" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> No. </th>
       <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
@@ -32,12 +32,15 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
 
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element; let i = index;">
         <button mat-icon-button color="accent" matTooltip="Send message">
           <mat-icon>message</mat-icon>
         </button>
         <button mat-icon-button color="accent" matTooltip="Rate">
           <mat-icon>star_rate</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" matTooltip="Cancel reservations" (click)="onCancelReservation(element.id, i)">
+          <mat-icon>remove_circle_outline</mat-icon>
         </button>
       </td>
     </ng-container>

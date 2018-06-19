@@ -49,6 +49,9 @@ public class Accomodation {
 	@Column
 	private int capacity;
 
+	@Column
+	private String agent;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "accomodation_services", 
 		joinColumns = @JoinColumn(name = "accomodation_id"), 
@@ -126,6 +129,14 @@ public class Accomodation {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+	
+	public String getAgent() {
+		return agent;
+	}
+	
+	public void setAgent(String agent) {
+		this.agent = agent;
 	}
 
 	public Set<AdditionalService> getAdditionalServices() {

@@ -18,4 +18,8 @@ export class ReservationService {
     return this.http.get(environment.hostUrl + '/api/reservations');
   }
 
+  cancelReservation(id): Observable<any> {
+    return this.http.delete(environment.hostUrl + '/api/reservations/' + id);
+  }
+
 }

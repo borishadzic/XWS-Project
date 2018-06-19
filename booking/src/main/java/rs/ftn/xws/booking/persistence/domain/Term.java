@@ -1,7 +1,9 @@
 package rs.ftn.xws.booking.persistence.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -44,6 +47,9 @@ public class Term {
 	
 	@Column(nullable = false)
 	private boolean visited;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "term", fetch = FetchType.LAZY)
+	private List<Message> messages;
 	
 	public Term() {
 	}
@@ -118,5 +124,12 @@ public class Term {
 		this.visited = visited;
 	}
 
+	public List<Message> getMessages() {
+		return messages;
+	}
+	
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
 
 }
