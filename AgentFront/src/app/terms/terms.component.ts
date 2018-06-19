@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import { MessagesDialogComponent } from 'src/app/messages-dialog/messages-dialog.component';
 
 @Component({
   selector: 'app-terms',
@@ -9,14 +10,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TermsComponent implements OnInit {
 
-  myDisplayedColumns = ['id', 'accomodation_name', 'start_date','end_date','price','visited', 'manage_visit'];
+  myDisplayedColumns = ['id', 'accomodation_name', 'start_date','end_date','price','visited', 'manage_visit', 'inbox'];
   myDataSource: MatTableDataSource<TermData>;
   public terms;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -56,6 +57,25 @@ export class TermsComponent implements OnInit {
     this.myDataSource.paginator = this.paginator;
     this.myDataSource.sort = this.sort;
 
+  }
+
+  onOpenDialog(id: number){
+    
+    console.log(id);
+    const dialogRef = this.dialog.open(MessagesDialogComponent, 
+      {
+         width: '450px',
+         data: id
+    
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+        
+        
+      }
+    });
   }
 
 }

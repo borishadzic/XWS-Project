@@ -3,22 +3,22 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-bottom: 20px">
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Enter accomodation name" formControlName="name">
+          <input type="text" matInput placeholder="Enter accomodation name" formControlName="name">
         </mat-form-field>
       </div>
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Enter Country" formControlName="country">
+          <input type="text" matInput placeholder="Enter Country" formControlName="country">
         </mat-form-field>
       </div>
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Enter City" formControlName="city">
+          <input type="text" matInput placeholder="Enter City" formControlName="city">
         </mat-form-field>
       </div>
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Enter Address" formControlName="address">
+          <input type="text" matInput placeholder="Enter Address" formControlName="address">
         </mat-form-field>
       </div>
       <div class="example-container">
@@ -46,7 +46,7 @@
       </div>
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Capacity" formControlName="capacity">
+          <input type="number" matInput placeholder="Capacity" formControlName="capacity">
         </mat-form-field>
       </div>
       <br><br>
@@ -59,17 +59,17 @@
         *ngFor="let termControl of form.get('terms').controls; let i = index">
           <div [formGroupName]="i">
             <mat-form-field class="term">
-              <input matInput [matDatepicker]="pickerFrom" placeholder="From" class="form-control" formControlName="startDate">
+              <input  matInput [matDatepicker]="pickerFrom" placeholder="From" class="form-control" formControlName="startDate">
               <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
               <mat-datepicker #pickerFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="term">
-              <input matInput [matDatepicker]="pickerTo" placeholder="To" class="form-control" formControlName="endDate">
+              <input  matInput [matDatepicker]="pickerTo" placeholder="To" class="form-control" formControlName="endDate">
               <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
               <mat-datepicker #pickerTo></mat-datepicker>
             </mat-form-field >
             <mat-form-field class="term">
-                <input matInput placeholder="Price" class="form-control" formControlName="price">
+                <input type="number" matInput placeholder="Price" class="form-control" formControlName="price">
             </mat-form-field>
             <mat-form-field class="term" color="warn" appearance="outline">
               <mat-chip-list>
@@ -102,13 +102,6 @@
       <button mat-raised-button color="warn" type="submit" [disabled]="!form.valid">Add</button>
     </form>
 
-    <mat-chip-list class="mat-chip-list-stacked"  *ngFor="let message of messages">
-        <mat-chip
-          [selected]="true"
-          color="warn"
-          style="margin: 5px auto;">{{ message }}
-        </mat-chip>
-      </mat-chip-list>
   </mat-card-content>
 
 

@@ -14,6 +14,7 @@ import { AccomodationsComponent } from './accomodations/accomodations.component'
 import { HttpClientModule } from '@angular/common/http';
 import { AccomodationComponent } from './accomodation/accomodation.component';
 import { TermsComponent } from './terms/terms.component';
+import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
 
 
 
@@ -27,7 +28,8 @@ import { TermsComponent } from './terms/terms.component';
     NewAccomodationComponent,
     AccomodationsComponent,
     AccomodationComponent,
-    TermsComponent
+    TermsComponent,
+    MessagesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,9 @@ import { TermsComponent } from './terms/terms.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule
+  ],
+  entryComponents: [
+    MessagesDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
