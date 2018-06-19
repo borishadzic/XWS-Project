@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
 
 import { ReservationService } from '../../services/reservation.service';
-import { MatSnackBar, MatTableDataSource } from '@angular/material';
+import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
 
 @Component({
   selector: 'app-reservations',
@@ -13,7 +14,8 @@ export class ReservationsComponent implements OnInit {
   public dataSource = new MatTableDataSource<any>();
 
   constructor(private reservationService: ReservationService,
-              private snackBack: MatSnackBar) { }
+              private snackBack: MatSnackBar,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.reservationService.getReservations()
@@ -34,6 +36,14 @@ export class ReservationsComponent implements OnInit {
         duration: 2000
       })
     );
+  }
+
+  onOpenMessages(id: number) {
+    this.dialog.open(MessagesDialogComponent, {
+      height: '80%',
+      width: '80%',
+      data: id
+    });
   }
 
 }

@@ -1,14 +1,13 @@
 <mat-card class="dashboard-card mat-elevation-z6">
   <mat-card-header>
     <mat-card-title-group>
-      <mat-card-title>{{ term.accomodation.name}}</mat-card-title>
+      <mat-card-title>{{ term.accomodation.name | uppercase }}</mat-card-title>
       <mat-card-subtitle>{{ term.accomodation.category }}</mat-card-subtitle>
-      <mat-card-subtitle>Price {{ term.price }}
-        <span>&#36;</span>
-      </mat-card-subtitle>
-      <mat-card-subtitle>From {{ term.startDate | date }} to {{ term.endDate | date }}</mat-card-subtitle>
       <mat-card-subtitle>
-        {{ term.accomodation.country }} {{ term.accomodation.city }} {{ term.accomodation.address}}
+        {{ term.startDate | date }} to {{ term.endDate | date }} starting at {{ term.price }}<span>&#36;</span>
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        {{ term.accomodation.country }}, {{ term.accomodation.city }}, {{ term.accomodation.address}}
       </mat-card-subtitle>
     </mat-card-title-group>
   </mat-card-header>

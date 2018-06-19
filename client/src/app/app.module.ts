@@ -21,6 +21,7 @@ import { EmailDialogComponent } from './components/email-dialog/email-dialog.com
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AccomodationItemComponent } from './components/dashboard/accomodation-item/accomodation-item.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
+import { MessagesDialogComponent } from './components/messages-dialog/messages-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ReservationsComponent } from './components/reservations/reservations.co
     EmailDialogComponent,
     ChangePasswordComponent,
     AccomodationItemComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    MessagesDialogComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { ReservationsComponent } from './components/reservations/reservations.co
     SlideshowModule
   ],
   entryComponents: [
-    EmailDialogComponent
+    EmailDialogComponent,
+    MessagesDialogComponent
   ],
   providers: [
     [{
