@@ -17,6 +17,7 @@ export class AccomodationComponent implements OnInit {
   public categories;
   public id;
   public accomodation;
+  public terms;
 
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
@@ -41,6 +42,8 @@ export class AccomodationComponent implements OnInit {
     
 
 
+    
+
 
     this.http.get('http://localhost:8081/additionalServices').subscribe(data => {
       this.services = <any>data;
@@ -55,49 +58,59 @@ export class AccomodationComponent implements OnInit {
       this.categories = data;
     });
 
-    this.http.get('http://localhost:8081/accomodations/'+this.id).subscribe(data => {
-      this.accomodation = data;
+
+    this.http.get('http://localhost:8081/accomodations/'+this.id +'/terms').subscribe(data => {
+      this.terms = data;
 
 
-      let tempServices = [];
-      
-      this.form = new FormGroup({
-        'name': new FormControl(this.accomodation.name,Validators.required),
-        'country': new FormControl(this.accomodation.country,Validators.required),
-        'city': new FormControl(this.accomodation.city,Validators.required),
-        'address': new FormControl(this.accomodation.address,Validators.required),
-        'accomodationType': new FormControl(this.accomodation.accomodationType.id,Validators.required),
-        'category': new FormControl(this.accomodation.category.id,Validators.required),
-        'description': new FormControl(this.accomodation.description),
-        'capacity': new FormControl(this.accomodation.capacity,Validators.required),
-        'terms': new FormArray([]),
-        'additionalServices': new FormControl([])
+      this.http.get('http://localhost:8081/accomodations/'+this.id).subscribe(data => {
+        this.accomodation = data;
+
+        
+
+        let tempServices = [];
+        
+        this.form = new FormGroup({
+          'name': new FormControl(this.accomodation.name,Validators.required),
+          'country': new FormControl(this.accomodation.country,Validators.required),
+          'city': new FormControl(this.accomodation.city,Validators.required),
+          'address': new FormControl(this.accomodation.address,Validators.required),
+          'accomodationType': new FormControl(this.accomodation.accomodationType.id,Validators.required),
+          'category': new FormControl(this.accomodation.category.id,Validators.required),
+          'description': new FormControl(this.accomodation.description),
+          'capacity': new FormControl(this.accomodation.capacity,Validators.required),
+          'terms': new FormArray([]),
+          'additionalServices': new FormControl([])
+        });
+
+
+      let niz = <number[]>this.form.get('additionalServices').value;
+      for(let i=0; i<this.services.length;i++){
+        for(let j=0;j<this.accomodation.additionalServices.length;j++){
+          let tempSelectedService = this.accomodation.additionalServices[j];
+          let tempService =this.services[i];
+          if(tempService.id === tempSelectedService.id){
+            tempService.test = true;
+            niz.push(tempSelectedService.id);
+          }
+        }  
+      }
+
+      for(let i=0; i<this.terms.length;i++){
+        const group = new FormGroup({
+          'startDate': new FormControl(this.terms[i].startDate,Validators.required),
+          'endDate': new FormControl(this.terms[i].endDate,Validators.required),
+          'price': new FormControl(this.terms[i].price,Validators.required),
+          'reserved': new FormControl(this.terms[i].reserved),
+          'id' : new FormControl(this.terms[i].id),
+          'visited': new FormControl(this.terms[i].visited)
+        });
+        (<FormArray>this.form.get('terms')).push(group);
+      }
+
       });
-
-
-     let niz = <number[]>this.form.get('additionalServices').value;
-     for(let i=0; i<this.services.length;i++){
-      for(let j=0;j<this.accomodation.additionalServices.length;j++){
-        let tempSelectedService = this.accomodation.additionalServices[j];
-        let tempService =this.services[i];
-        if(tempService.id === tempSelectedService.id){
-          tempService.test = true;
-          niz.push(tempSelectedService.id);
-        }
-      }  
-     }
-
-     for(let i=0; i<this.accomodation.terms.length;i++){
-      const group = new FormGroup({
-        'startDate': new FormControl(this.accomodation.terms[i].startDate,Validators.required),
-        'endDate': new FormControl(this.accomodation.terms[i].endDate,Validators.required),
-        'price': new FormControl(this.accomodation.terms[i].price,Validators.required),
-        'reserved': new FormControl(this.accomodation.terms[i].reserved)
-      });
-      (<FormArray>this.form.get('terms')).push(group);
-     }
-
     });
+    
   }
 
 
@@ -109,7 +122,9 @@ export class AccomodationComponent implements OnInit {
       'startDate': new FormControl(null,Validators.required),
       'endDate': new FormControl(null,Validators.required),
       'price': new FormControl(null,Validators.required),
-      'reserved': new FormControl(false)
+      'reserved': new FormControl(false),
+      'id' : new FormControl(null),
+      'visited': new FormControl(false)
     });
     (<FormArray>this.form.get('terms')).push(group);
   }
@@ -139,11 +154,9 @@ export class AccomodationComponent implements OnInit {
   }
   
   onSubmit(){
-    console.log(this.form.value);
    if(this.form.valid){
       this.http.put('http://localhost:8081/accomodations/'+this.id,this.form.value)
       .subscribe(
-        data => console.log(data)
       );
     }
 

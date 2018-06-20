@@ -96,8 +96,11 @@
       <mat-divider></mat-divider>
       <br>
       <div>
+        <h4>Your images:</h4>
         <input type="file" multiple accept="image/*" placeholder="Upload images" (change)="onFileChanged($event)">
       </div>
+      <br>
+      <mat-divider></mat-divider>
       <br>
       <button mat-raised-button color="warn" type="submit" [disabled]="!form.valid">Add</button>
     </form>

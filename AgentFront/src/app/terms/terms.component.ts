@@ -23,7 +23,6 @@ export class TermsComponent implements OnInit {
 
     this.http.get('http://localhost:8081/accomodations/visited').subscribe(data => {
       this.terms = data;
-      console.log(this.terms);
 
       const termsD: TermData[] = [];
     for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
@@ -31,7 +30,6 @@ export class TermsComponent implements OnInit {
     this.myDataSource = new MatTableDataSource(termsD);
     this.myDataSource.paginator = this.paginator;
     this.myDataSource.sort = this.sort;
-    console.log(this.myDataSource);
     });
 
   }
@@ -61,7 +59,6 @@ export class TermsComponent implements OnInit {
 
   onOpenDialog(id: number){
     
-    console.log(id);
     const dialogRef = this.dialog.open(MessagesDialogComponent, 
       {
          width: '450px',
