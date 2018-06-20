@@ -43,4 +43,6 @@ public interface AccomodationWebService {
 	List<MessageSoap> getMessagesForAgent();
 	
 	Long sendMessage(MessageSoap messageSoap);
+	
+	Long modifyTerm(TermSoap termSoap);
 }

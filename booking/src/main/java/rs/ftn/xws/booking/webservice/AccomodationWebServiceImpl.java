@@ -106,14 +106,14 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		Accomodation acc = accRepository.getOne(accomodation.getId());
 		
 		//acc.getTerms().clear();
-		List<Term> tempTerms = new ArrayList<>();
+		/*List<Term> tempTerms = new ArrayList<>();
 		for(Term term : termRepository.findAll()) {
 			if(term.getAccomodation().getId() == acc.getId()) {
 				tempTerms.add(term);
 			}
 		}
 		
-		termRepository.deleteAll(tempTerms);
+		termRepository.deleteAll(tempTerms);*/
 		
 		//modifikovanje
 		acc.setName(accomodation.getName());
@@ -169,6 +169,10 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 					termSoap.setId(term.getId());
 					termSoap.setAccomodationId(acc.getId());
 					termSoap.setReserved(term.isReserved());
+					termSoap.setVisited(term.isVisited());
+					if(term.getUser() != null) {
+						termSoap.setUserId(term.getUser().getId());
+					}
 					termsSoap.add(termSoap);
 				}
 				accS.setTerms((ArrayList<TermSoap>) termsSoap);
@@ -227,6 +231,7 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		term.setPrice(termSoap.getPrice());
 		term.setAccomodation(accRepository.getOne(accDatabaseId));
 		term.setReserved(termSoap.isReserved());
+		term.setVisited(termSoap.isVisited());
 		term = termRepository.save(term);
 		return term.getId();
 	}
@@ -280,6 +285,17 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		msg.setTerm(termRepository.getOne(messageSoap.getTermId()));
 		messageRepository.save(msg);
 		return msg.getId();
+	}
+
+	@Override
+	public Long modifyTerm(TermSoap termSoap) {
+		Term term = termRepository.getOne(termSoap.getId());
+		term.setStartDate(termSoap.getStartDate());
+		term.setEndDate(term.getEndDate());
+		term.setPrice(termSoap.getPrice());
+		term.setReserved(termSoap.isReserved());
+		termRepository.save(term);
+		return term.getId();
 	}
 
 }

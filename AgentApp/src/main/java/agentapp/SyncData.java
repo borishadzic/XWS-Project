@@ -128,6 +128,9 @@ public class SyncData {
 					term.setPrice(termSoap.getPrice());
 					term.setDatabaseId(termSoap.getId());
 					term.setAccomodation(acc);
+					term.setVisited(termSoap.isVisited());
+					term.setReserved(term.isReserved());
+					term.setUser(userRepository.findByDatabaseId(termSoap.getUserId()));
 //					acc.getTerms().add(term);
 					termRepository.save(term);
 					

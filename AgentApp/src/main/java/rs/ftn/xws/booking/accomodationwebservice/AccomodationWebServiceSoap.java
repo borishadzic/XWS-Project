@@ -76,6 +76,20 @@ public interface AccomodationWebServiceSoap {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns java.lang.Long
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "modifyTerm", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.ModifyTerm")
+    @ResponseWrapper(localName = "modifyTermResponse", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", className = "rs.ftn.xws.booking.accomodationwebservice.ModifyTermResponse")
+    public Long modifyTerm(
+        @WebParam(name = "arg0", targetNamespace = "")
+        TermSoap arg0);
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return

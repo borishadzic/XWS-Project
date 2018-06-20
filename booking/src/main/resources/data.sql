@@ -49,8 +49,8 @@ insert into category (category) values ('*****');
 insert into category (category) values ('uncategorized');
 
 -- test data
-insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id)
-values (1, 'Lozionicka 12', 4, 'Novi Sad', 'Srbija', 'Opis', 'Sheraton', 1, 4) ;
+insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id, agent)
+values (1, 'Lozionicka 12', 4, 'Novi Sad', 'Srbija', 'Opis', 'Sheraton', 1, 4, 'CN=a1') ;
 insert into accomodation_image values (1, 'url1', 1);
 insert into accomodation_image values (2, 'url2', 1);
 insert into term(id, end_date, price, start_date, accomodation_id, reserved, visited) values (1,'2018-08-02',120,'2018-06-15', 1, 0, 0);
@@ -97,8 +97,8 @@ insert into accomodation_services values (4,1);
 insert into accomodation_services values (4,7);
 insert into accomodation_services values (4,2);
 
-insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id)
-values (5, 'Šonzelize', 2, 'Paris', 'France', 'skupo ali kratko', 'French connection', 2, 5) ;
+insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id,agent)
+values (5, 'Šonzelize', 2, 'Paris', 'France', 'skupo ali kratko', 'French connection', 2, 5, 'CN=a1') ;
 insert into accomodation_image values (9, 'url1', 5);
 insert into accomodation_image values (10, 'url2', 5);
 insert into term(id, end_date, price, start_date, accomodation_id, reserved, visited) values (13,'2018-09-15',500,'2018-09-05',5, 0, 0);
@@ -109,8 +109,8 @@ insert into accomodation_services values (5,3);
 insert into accomodation_services values (5,1);
 insert into accomodation_services values (5,8);
 
-insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id)
-values (6, 'Sirtaki 13', 6, 'Paralia', 'Greece', 'grcka za sirotinju', 'Vila Janos', 3, 2) ;
+insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id,agent)
+values (6, 'Sirtaki 13', 6, 'Paralia', 'Greece', 'grcka za sirotinju', 'Vila Janos', 3, 2, 'CN=a1') ;
 insert into accomodation_image values (11, 'url1', 6);
 insert into accomodation_image values (12, 'url2', 6);
 insert into term(id, end_date, price, start_date, accomodation_id, reserved, visited) values (16,'2018-06-22',85,'2018-06-10',6, 0, 0);

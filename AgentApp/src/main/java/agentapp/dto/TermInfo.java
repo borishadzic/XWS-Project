@@ -5,6 +5,8 @@ import java.util.Date;
 
 
 public class TermInfo {
+	
+	private Long id;
 
 	private Date startDate;
 
@@ -59,6 +61,14 @@ public class TermInfo {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
