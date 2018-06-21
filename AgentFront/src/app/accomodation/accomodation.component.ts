@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,8 @@ export class AccomodationComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
               private http: HttpClient,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
@@ -157,6 +158,12 @@ export class AccomodationComponent implements OnInit {
    if(this.form.valid){
       this.http.put('http://localhost:8081/accomodations/'+this.id,this.form.value)
       .subscribe(
+        (data) => {
+          this.snackBar.open('Accomodation information successfuly changed.', 'Close', {
+            duration: 2000
+          });
+          this.router.navigate(['']);
+        }
       );
     }
 

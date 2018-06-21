@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-accomodation',
@@ -18,7 +19,8 @@ export class NewAccomodationComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
-              private http: HttpClient,) { }
+              private http: HttpClient,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -105,7 +107,12 @@ export class NewAccomodationComponent implements OnInit {
           }
 
           this.http.post('http://localhost:8081/accomodations/' + id, formData)
-            .subscribe(() => alert('Uspelo?'));
+            .subscribe(() => {
+              this.snackBar.open('Adding accomodation and uploading images, please wait.', 'Close', {
+                duration: 2000
+              });
+              this.router.navigate(['']);
+            });
         }
       );
     }else{

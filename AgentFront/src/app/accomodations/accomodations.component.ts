@@ -25,7 +25,6 @@ export class AccomodationsComponent implements OnInit {
 
     this.http.get('http://localhost:8081/accomodations').subscribe(data => {
       this.accomodations = data;
-      console.log(this.accomodations);
 
       const accomodationsD: AccomodationData[] = [];
     for (let i = 0; i < this.accomodations.length; i++) { accomodationsD.push(createAccomodation(this.accomodations[i])); }
@@ -33,7 +32,6 @@ export class AccomodationsComponent implements OnInit {
     this.myDataSource = new MatTableDataSource(accomodationsD);
     this.myDataSource.paginator = this.paginator;
     this.myDataSource.sort = this.sort;
-    console.log(this.myDataSource);
     });
 
     
@@ -50,10 +48,12 @@ export class AccomodationsComponent implements OnInit {
 
   onRemove(id){
     this.http.delete('http://localhost:8081/accomodations/'+id,{ responseType: 'text' }).subscribe(data => {
-      this.accomodations.splice(id-1,1);
+      this.http.get('http://localhost:8081/accomodations').subscribe(data => {
+      this.accomodations = data;
       const accomodationsD: AccomodationData[] = [];
       for (let i = 0; i < this.accomodations.length; i++) { accomodationsD.push(createAccomodation(this.accomodations[i])); }
       this.myDataSource = new MatTableDataSource(accomodationsD);
+      });
     });
   }
 
