@@ -36,7 +36,7 @@
         <button mat-icon-button color="accent" matTooltip="Send message" (click)="onOpenMessages(element.id)">
           <mat-icon>message</mat-icon>
         </button>
-        <button mat-icon-button color="accent" matTooltip="Rate">
+        <button *ngIf="element.canRate" mat-icon-button color="accent" matTooltip="Rate" (click)="onRate(element.id, i)">
           <mat-icon>star_rate</mat-icon>
         </button>
         <button mat-icon-button color="accent" matTooltip="Cancel reservations" (click)="onCancelReservation(element.id, i)">

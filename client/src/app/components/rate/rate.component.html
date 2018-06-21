@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Rate your visit</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="message-container">
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Rating" type="number" min="1" max="10" formControlName="rating">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <textarea matInput placeholder="Comment" style="resize: none" rows="5" formControlName="comment">
+      </textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+    <button [mat-dialog-close]="false" mat-raised-button color="warn">Close</button>
+  </mat-dialog-actions>
+</form>

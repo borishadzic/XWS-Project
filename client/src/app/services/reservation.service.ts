@@ -22,4 +22,8 @@ export class ReservationService {
     return this.http.delete(environment.hostUrl + '/api/reservations/' + id);
   }
 
+  rate(id, rating): Observable<any> {
+    return this.http.post<any>(environment.hostUrl + '/api/reservations/' + id + '/ratings', rating);
+  }
+
 }

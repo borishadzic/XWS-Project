@@ -19,6 +19,6 @@ public interface TermRepository extends JpaRepository<Term,Long>{
 	List<Term> findCurrentUserReservations();
 	
 	@Query("select t from Term t where t.id = :id and t.user.id = ?#{principal.id}")
-	Term findByIdCurrentUser(@Param("id") Long id);
+	Term findByIdAndCurrentUser(@Param("id") Long id);
 	
 }

@@ -3,6 +3,7 @@ import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
 
 import { ReservationService } from '../../services/reservation.service';
 import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
+import { RateComponent } from '../rate/rate.component';
 
 @Component({
   selector: 'app-reservations',
@@ -36,6 +37,23 @@ export class ReservationsComponent implements OnInit {
         duration: 2000
       })
     );
+  }
+
+  onRate(id: number, index: number) {
+    const dialog = this.dialog.open(RateComponent, {
+      height: '325px',
+      width: '550px',
+      data: id
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataSource.data[index].canRate = false;
+        this.snackBack.open('Rating has been submited!', 'Close', {
+          duration: 2000
+        });
+      }
+    });
   }
 
   onOpenMessages(id: number) {

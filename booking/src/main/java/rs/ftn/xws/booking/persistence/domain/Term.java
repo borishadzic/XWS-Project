@@ -43,13 +43,16 @@ public class Term {
 
 	@Column(nullable = false)
 	private boolean reserved;
-	
+
 	@Column(nullable = false)
 	private boolean visited;
-	
+
+	@Column(nullable = false)
+	private boolean rated;
+
 	@OneToMany(mappedBy = "term", fetch = FetchType.LAZY)
 	private List<Message> messages;
-	
+
 	public Term() {
 	}
 
@@ -123,10 +126,18 @@ public class Term {
 		this.visited = visited;
 	}
 
+	public boolean isRated() {
+		return rated;
+	}
+
+	public void setRated(boolean rated) {
+		this.rated = rated;
+	}
+
 	public List<Message> getMessages() {
 		return messages;
 	}
-	
+
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}

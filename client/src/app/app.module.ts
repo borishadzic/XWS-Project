@@ -22,6 +22,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { AccomodationItemComponent } from './components/dashboard/accomodation-item/accomodation-item.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
 import { MessagesDialogComponent } from './components/messages-dialog/messages-dialog.component';
+import { RateComponent } from './components/rate/rate.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MessagesDialogComponent } from './components/messages-dialog/messages-d
     ChangePasswordComponent,
     AccomodationItemComponent,
     ReservationsComponent,
-    MessagesDialogComponent
+    MessagesDialogComponent,
+    RateComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +52,8 @@ import { MessagesDialogComponent } from './components/messages-dialog/messages-d
   ],
   entryComponents: [
     EmailDialogComponent,
-    MessagesDialogComponent
+    MessagesDialogComponent,
+    RateComponent
   ],
   providers: [
     [{

@@ -11,6 +11,7 @@ public class ReservationDto {
 	private Date to;
 	private Float price;
 	private String accomodationName;
+	private boolean canRate;
 
 	public ReservationDto() {
 
@@ -22,6 +23,7 @@ public class ReservationDto {
 		this.to = term.getEndDate();
 		this.price = term.getPrice();
 		this.accomodationName = term.getAccomodation().getName();
+		this.canRate = term.isVisited() && !term.isRated();
 	}
 
 	public Long getId() {
@@ -62,6 +64,14 @@ public class ReservationDto {
 
 	public void setAccomodationName(String accomodationName) {
 		this.accomodationName = accomodationName;
+	}
+
+	public boolean isCanRate() {
+		return canRate;
+	}
+
+	public void setCanRate(boolean canRate) {
+		this.canRate = canRate;
 	}
 
 }
