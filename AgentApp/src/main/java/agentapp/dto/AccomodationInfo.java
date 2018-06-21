@@ -3,7 +3,6 @@ package agentapp.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import agentapp.domain.Term;
 
 public class AccomodationInfo {
 

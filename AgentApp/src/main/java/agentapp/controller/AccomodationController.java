@@ -16,7 +16,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,8 +42,6 @@ import agentapp.repository.AdditionalServiceRepository;
 import agentapp.repository.CategoryRepository;
 import agentapp.repository.MessageRepository;
 import agentapp.repository.TermRepository;
-import agentapp.repository.UserRepository;
-import agentapp.service.AccomodationService;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
 import rs.ftn.xws.booking.accomodationwebservice.MessageSoap;
@@ -55,42 +52,35 @@ import rs.ftn.xws.booking.test.UploadModelXsd;
 @RestController
 @RequestMapping("/accomodations")
 public class AccomodationController {
-	
+
 	@Autowired
 	private AccomodationWebServiceSoap accWebService;
-	
-	@Autowired
-	private AccomodationService accService;
-	
+
 	@Autowired
 	private AdditionalServiceRepository addServiceRepository;
-	
+
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	@Autowired
 	private AccomodationTypeRepository accTypeRepo;
-	
+
 	@Autowired
 	private TermRepository termRepository;
-	
+
 	@Autowired
 	private AccomodationRepository accomodationRepository;
-	
+
 	@Autowired
 	private MessageRepository messageRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
+
 	@Autowired
 	private TestServiceSoap testService;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@PostMapping
 	public Accomodation addAccomodation(@RequestBody AccomodationInfo info) throws DatatypeConfigurationException {
 		System.out.println(info.getCategory());
-		//soap
+		// soap
 		AccomodationSoap accSoap = new AccomodationSoap();
 		accSoap.setName(info.getName());
 		accSoap.setCountry(info.getCountry());
@@ -100,22 +90,21 @@ public class AccomodationController {
 		accSoap.setAccomodationType(accTypeRepo.getOne(info.getAccomodationType()).getDatabaseId());
 		accSoap.setCapacity(info.getCapacity());
 		accSoap.setDescription(info.getDescription());
-		
+
 		List<Long> addservices = new ArrayList<Long>();
 		List<AdditionalService> services = addServiceRepository.findAllById(info.getAdditionalServices());
-		
-		for(AdditionalService service : services) {
+
+		for (AdditionalService service : services) {
 			addservices.add(service.getDatabaseId());
 		}
 		accSoap.setAdditionalServices(addservices);
-		
+
 		List<TermInfo> termsInfo = info.getTerms();
 		List<TermSoap> termsSoap = new ArrayList<TermSoap>();
-		
-		for(TermInfo terminfo : termsInfo ) {
+
+		for (TermInfo terminfo : termsInfo) {
 			GregorianCalendar c = new GregorianCalendar();
-			
-			
+
 			TermSoap termSoap = new TermSoap();
 			c.setTime(terminfo.getStartDate());
 			XMLGregorianCalendar startdate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
@@ -127,16 +116,16 @@ public class AccomodationController {
 			termSoap.setVisited(terminfo.isVisited());
 			termsSoap.add(termSoap);
 		}
-		
+
 		accSoap.setTerms(termsSoap);
-		
+
 		Long databaseId = accWebService.addAccomodation(accSoap);
-		
-		//soap
-		
-		//lokalno
+
+		// soap
+
+		// lokalno
 		Accomodation acc = new Accomodation();
-		
+
 		acc.setName(info.getName());
 		acc.setCountry(info.getCountry());
 		acc.setCity(info.getCity());
@@ -146,14 +135,15 @@ public class AccomodationController {
 		acc.setCapacity(info.getCapacity());
 		acc.setDescription(info.getDescription());
 		acc.setDatabaseId(databaseId);
-		
-		Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(addServiceRepository.findAllById(info.getAdditionalServices()));
+
+		Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(
+				addServiceRepository.findAllById(info.getAdditionalServices()));
 		acc.setAdditionalServices(serviceslocal);
 		accomodationRepository.save(acc);
-		
+
 		List<Term> termsLocal = new ArrayList<Term>();
-		for(TermInfo termInfo : termsInfo) {
-			//term soap
+		for (TermInfo termInfo : termsInfo) {
+			// term soap
 			GregorianCalendar c = new GregorianCalendar();
 			TermSoap termSoap = new TermSoap();
 			c.setTime(termInfo.getStartDate());
@@ -180,64 +170,61 @@ public class AccomodationController {
 		}
 		acc.setTerms(termsLocal);
 		accomodationRepository.save(acc);
-		
-		//lokalno
+
+		// lokalno
 		return acc;
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@PostMapping("{id}")
-	public ResponseEntity<?> uploadAccomodationImages(@PathVariable Long id, @ModelAttribute @Valid ImagesInfo imagesInfo) throws Exception {
+	public ResponseEntity<?> uploadAccomodationImages(@PathVariable Long id,
+			@ModelAttribute @Valid ImagesInfo imagesInfo) throws Exception {
 		List<MultipartFile> images = imagesInfo.getImage();
 		Accomodation accomodation = accomodationRepository.getOne(id);
-		
+
 		if (accomodation == null) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		UploadModelXsd uploadModelXsd = new UploadModelXsd();
 		List<DataHandler> dataHandlerImages = new ArrayList<>();
-		
+
 		for (MultipartFile image : images) {
-			dataHandlerImages.add(new DataHandler(new InputStreamDataSource(image.getInputStream(), image.getContentType())));
-		}		
-		
+			dataHandlerImages
+					.add(new DataHandler(new InputStreamDataSource(image.getInputStream(), image.getContentType())));
+		}
+
 		uploadModelXsd.setImages(dataHandlerImages);
 		uploadModelXsd.setId(accomodation.getDatabaseId());
-		
+
 		testService.uploadMultiple(uploadModelXsd);
-		
+
 		return ResponseEntity.ok().build();
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping
-	public List<Accomodation> getAllAccomodations(){
+	public List<Accomodation> getAllAccomodations() {
 		return accomodationRepository.findAll();
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/{id}")
-	public Accomodation getAccomodationById(@PathVariable("id") Long id){
+	public Accomodation getAccomodationById(@PathVariable("id") Long id) {
 		return accomodationRepository.getOne(id);
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/{id}/terms")
-	public List<Term> getTermsOfAccomodation(@PathVariable("id") Long id){
+	public List<Term> getTermsOfAccomodation(@PathVariable("id") Long id) {
 		Accomodation acc = accomodationRepository.getOne(id);
 		List<Term> terms = new ArrayList<>();
-		for(Term term : acc.getTerms()) {
+		for (Term term : acc.getTerms()) {
 			terms.add(term);
 		}
 		return terms;
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@PutMapping("/{id}")
-	public Accomodation modifyAccomodation(@RequestBody AccomodationInfo info,@PathVariable("id") Long id) throws DatatypeConfigurationException{
-		
-		
+	public Accomodation modifyAccomodation(@RequestBody AccomodationInfo info, @PathVariable("id") Long id)
+			throws DatatypeConfigurationException {
+
 		Accomodation acc = accomodationRepository.getOne(id);
 		acc.setName(info.getName());
 		acc.setCountry(info.getCountry());
@@ -247,11 +234,12 @@ public class AccomodationController {
 		acc.setCategory(categoryRepository.getOne(info.getCategory()));
 		acc.setDescription(info.getDescription());
 		acc.setCapacity(info.getCapacity());
-		Set<AdditionalService> services = new HashSet<AdditionalService>(addServiceRepository.findAllById(info.getAdditionalServices()));
+		Set<AdditionalService> services = new HashSet<AdditionalService>(
+				addServiceRepository.findAllById(info.getAdditionalServices()));
 		acc.getAdditionalServices().clear();
 		acc.setAdditionalServices(services);
 		acc = accomodationRepository.save(acc);
-		
+
 		AccomodationSoap accSoap = new AccomodationSoap();
 		accSoap.setName(info.getName());
 		accSoap.setCountry(info.getCountry());
@@ -273,17 +261,17 @@ public class AccomodationController {
 		termsSoap.add(termS);
 		accSoap.setTerms(termsSoap);
 		accWebService.modifyAccomodation(accSoap);
-		
-		for(TermInfo terminfo : info.getTerms()) {
-			if(terminfo.getId() != null) {
+
+		for (TermInfo terminfo : info.getTerms()) {
+			if (terminfo.getId() != null) {
 				Term term = termRepository.getOne(terminfo.getId());
 				term.setStartDate(terminfo.getStartDate());
 				term.setEndDate(terminfo.getEndDate());
 				term.setPrice(terminfo.getPrice());
 				term.setReserved(terminfo.isReserved());
 				termRepository.save(term);
-				
-				//pozovi soap servis za modifikaciju
+
+				// pozovi soap servis za modifikaciju
 				GregorianCalendar c = new GregorianCalendar();
 				TermSoap termSoap = new TermSoap();
 				c.setTime(terminfo.getStartDate());
@@ -296,7 +284,7 @@ public class AccomodationController {
 				termSoap.setAccomodationId(acc.getDatabaseId());
 				termSoap.setId(termRepository.getOne(terminfo.getId()).getDatabaseId());
 				accWebService.modifyTerm(termSoap);
-			}else {
+			} else {
 				Term term = new Term();
 				term.setStartDate(terminfo.getStartDate());
 				term.setEndDate(terminfo.getEndDate());
@@ -304,8 +292,8 @@ public class AccomodationController {
 				term.setReserved(terminfo.isReserved());
 				term.setAccomodation(acc);
 				term = termRepository.save(term);
-				
-				//pozovi soap servis za kreiranje novog termina
+
+				// pozovi soap servis za kreiranje novog termina
 				GregorianCalendar c = new GregorianCalendar();
 				TermSoap termSoap = new TermSoap();
 				c.setTime(terminfo.getStartDate());
@@ -321,67 +309,60 @@ public class AccomodationController {
 				termRepository.save(term);
 			}
 		}
-		
+
 		return acc;
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> removeAccomodation(@PathVariable("id") Long id){
-		
+	public ResponseEntity<String> removeAccomodation(@PathVariable("id") Long id) {
+
 		Accomodation acc = accomodationRepository.getOne(id);
-		
+
 		accWebService.deleteAccomodation(acc.getDatabaseId());
 		accomodationRepository.deleteById(id);
-		
-		return new ResponseEntity<>("Deleted",HttpStatus.OK);
+
+		return new ResponseEntity<>("Deleted", HttpStatus.OK);
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/{id}/{visited}")
-	public ResponseEntity<String> setVisitedValue(@PathVariable("visited") boolean visited,@PathVariable("id") Long id){
-		
+	public ResponseEntity<String> setVisitedValue(@PathVariable("visited") boolean visited,
+			@PathVariable("id") Long id) {
+
 		Term term = termRepository.getOne(id);
-		
+
 		term.setVisited(visited);
-		
+
 		termRepository.save(term);
-		
+
 		accWebService.setVisitedValue(visited, term.getId());
-		
-		return new ResponseEntity<>("Visited changed",HttpStatus.OK);
+
+		return new ResponseEntity<>("Visited changed", HttpStatus.OK);
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/visited")
-	public List<Term> getTerms(){
+	public List<Term> getTerms() {
 		return termRepository.findAll();
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/messages/{id}")
-	public List<Message> getMessages(@PathVariable("id") Long id){
+	public List<Message> getMessages(@PathVariable("id") Long id) {
 		return messageRepository.findByTermId(id);
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@PostMapping("/messages")
-	public Message sendMessage(@RequestBody MessageInfo msgInfo){
-		System.out.println(msgInfo);
+	public Message sendMessage(@RequestBody MessageInfo msgInfo) {
 		MessageSoap msgSoap = new MessageSoap();
 		msgSoap.setMessage(msgInfo.getMessage());
 		msgSoap.setTermId(termRepository.getOne(msgInfo.getTermId()).getDatabaseId());
-		
+
 		Long dbid = accWebService.sendMessage(msgSoap);
-		
+
 		Message msg = new Message();
 		msg.setDatabaseId(dbid);
 		msg.setMessage(msgInfo.getMessage());
 		msg.setTerm(termRepository.getOne(msgInfo.getTermId()));
 		messageRepository.save(msg);
-		
-		
-		
+
 		return msg;
 	}
 
