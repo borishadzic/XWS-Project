@@ -15,24 +15,14 @@ import org.springframework.context.annotation.Configuration;
 
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebService;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
-import rs.ftn.xws.booking.test.TestService;
-import rs.ftn.xws.booking.test.TestServiceSoap;
 
 @Configuration
 public class ServiceConfig {
 
 	@Bean
-	public TestServiceSoap getTestServiceSoap() {
-		TestService service = new TestService();
-		TestServiceSoap info = service.getTestServicePort(new MTOMFeature());
-		setUpInterceptors(info);
-		return info;
-	}
-
-	@Bean
 	public AccomodationWebServiceSoap getAccomodationWebServiceSoap() {
 		AccomodationWebService service = new AccomodationWebService();
-		AccomodationWebServiceSoap sservice = service.getAccomodationWebServicePort();
+		AccomodationWebServiceSoap sservice = service.getAccomodationWebServicePort(new MTOMFeature());
 		setUpInterceptors(sservice);
 		return sservice;
 	}

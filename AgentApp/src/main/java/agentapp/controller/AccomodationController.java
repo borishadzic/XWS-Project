@@ -32,6 +32,7 @@ import agentapp.domain.AdditionalService;
 import agentapp.domain.Message;
 import agentapp.domain.Term;
 import agentapp.dto.AccomodationInfo;
+import agentapp.dto.CommentInfo;
 import agentapp.dto.ImagesInfo;
 import agentapp.dto.InputStreamDataSource;
 import agentapp.dto.MessageInfo;
@@ -42,12 +43,13 @@ import agentapp.repository.AdditionalServiceRepository;
 import agentapp.repository.CategoryRepository;
 import agentapp.repository.MessageRepository;
 import agentapp.repository.TermRepository;
+import agentapp.repository.UserRepository;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationSoap;
 import rs.ftn.xws.booking.accomodationwebservice.AccomodationWebServiceSoap;
+import rs.ftn.xws.booking.accomodationwebservice.AgentCommentSoap;
 import rs.ftn.xws.booking.accomodationwebservice.MessageSoap;
 import rs.ftn.xws.booking.accomodationwebservice.TermSoap;
-import rs.ftn.xws.booking.test.TestServiceSoap;
-import rs.ftn.xws.booking.test.UploadModelXsd;
+import rs.ftn.xws.booking.accomodationwebservice.UploadModelXsd;
 
 @RestController
 @RequestMapping("/accomodations")
@@ -73,9 +75,9 @@ public class AccomodationController {
 
 	@Autowired
 	private MessageRepository messageRepository;
-
+	
 	@Autowired
-	private TestServiceSoap testService;
+	private UserRepository userRepository;
 
 	@PostMapping
 	public Accomodation addAccomodation(@RequestBody AccomodationInfo info) throws DatatypeConfigurationException {
@@ -196,7 +198,7 @@ public class AccomodationController {
 		uploadModelXsd.setImages(dataHandlerImages);
 		uploadModelXsd.setId(accomodation.getDatabaseId());
 
-		testService.uploadMultiple(uploadModelXsd);
+		accWebService.uploadMultiple(uploadModelXsd);
 
 		return ResponseEntity.ok().build();
 	}
@@ -364,6 +366,52 @@ public class AccomodationController {
 		messageRepository.save(msg);
 
 		return msg;
+	}
+	
+	@GetMapping("/terms/{id}/reserved/{reserved}")
+	public ResponseEntity<String> setReservedValue(@PathVariable("id") Long id,@PathVariable("reserved") boolean reserved){
+		Term term = termRepository.getOne(id);
+		//sync
+		TermSoap termSoap = accWebService.getTerm(term.getDatabaseId());
+		term.setStartDate(termSoap.getStartDate().toGregorianCalendar().getTime());
+		term.setEndDate(termSoap.getEndDate().toGregorianCalendar().getTime());
+		term.setReserved(termSoap.isReserved());
+		term.setPrice(termSoap.getPrice());
+		term.setDatabaseId(termSoap.getId());
+		if(termSoap.getUserId() != null) {
+			term.setUser(userRepository.findByDatabaseId(termSoap.getUserId()));
+		}
+		term = termRepository.save(term);
+		//sync
+		
+		if(term.getUser() == null) {
+			String result =accWebService.setReservedValue(term.getDatabaseId(), reserved);
+			if(result != null) {
+				term.setReserved(reserved);
+				termRepository.save(term);
+				return new ResponseEntity<>("Reservation successful",HttpStatus.OK);
+			}
+		}
+		
+		return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+	}
+	
+	@GetMapping("/{id}/comments")
+	public List<CommentInfo> getCommentsForAccomodation(@PathVariable("id") Long id){
+		Accomodation acc = accomodationRepository.getOne(id);
+		List<AgentCommentSoap> agentComments = accWebService.getCommentsForAgent();
+		List<CommentInfo> accomodationComments = new ArrayList<>();
+		for(AgentCommentSoap comment : agentComments) {
+			if(comment.getAccomodationId() == acc.getDatabaseId()) {
+				CommentInfo cominfo = new CommentInfo();
+				cominfo.setAccomodation(acc.getName());
+				cominfo.setComment(comment.getComment());
+				cominfo.setRating(comment.getRating());
+				cominfo.setUsername(userRepository.findByDatabaseId(comment.getUserId()).getEmail());
+				accomodationComments.add(cominfo);
+			}
+		}
+		return accomodationComments;
 	}
 
 }

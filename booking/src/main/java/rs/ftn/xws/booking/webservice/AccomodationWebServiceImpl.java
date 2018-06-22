@@ -1,18 +1,28 @@
 package rs.ftn.xws.booking.webservice;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.activation.DataHandler;
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.WebServiceException;
+import javax.xml.ws.soap.MTOM;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import rs.ftn.xws.booking.cloud.CloudFunctionsService;
+import rs.ftn.xws.booking.cloud.model.AgentComment;
 import rs.ftn.xws.booking.persistence.domain.Accomodation;
+import rs.ftn.xws.booking.persistence.domain.AccomodationImage;
 import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 import rs.ftn.xws.booking.persistence.domain.AdditionalService;
 import rs.ftn.xws.booking.persistence.domain.Category;
@@ -23,24 +33,31 @@ import rs.ftn.xws.booking.persistence.repository.AccomodationRepository;
 import rs.ftn.xws.booking.persistence.repository.AccomodationTypeRepository;
 import rs.ftn.xws.booking.persistence.repository.AdditionalServiceRepository;
 import rs.ftn.xws.booking.persistence.repository.CategoryRepository;
+import rs.ftn.xws.booking.persistence.repository.ImageRepository;
 import rs.ftn.xws.booking.persistence.repository.MessageRepository;
 import rs.ftn.xws.booking.persistence.repository.TermRepository;
 import rs.ftn.xws.booking.persistence.repository.UserRepository;
 import rs.ftn.xws.booking.service.AccomodationService;
+import rs.ftn.xws.booking.service.StorageService;
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
 import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
 import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
+import rs.ftn.xws.booking.xsd.AgentCommentSoap;
 import rs.ftn.xws.booking.xsd.CategorySoap;
 import rs.ftn.xws.booking.xsd.MessageSoap;
 import rs.ftn.xws.booking.xsd.TermSoap;
+import rs.ftn.xws.booking.xsd.UploadModelXsd;
 import rs.ftn.xws.booking.xsd.UserSoap;
 
 @Service
+@MTOM(enabled = true)
 @WebService(endpointInterface = "rs.ftn.xws.booking.webservice.AccomodationWebService",
 			serviceName = "AccomodationWebService",
 			portName = "AccomodationWebServicePort",
 			targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService")
 public class AccomodationWebServiceImpl implements AccomodationWebService{
+	
+	private static final Logger logger = LoggerFactory.getLogger(AccomodationWebServiceImpl.class);
 	
 	@Autowired
 	private AccomodationService accService;
@@ -69,6 +86,16 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 	@Autowired
 	private MessageRepository messageRepository;
 	
+	@Autowired
+	@Qualifier("Azure")
+	private StorageService storageService;
+	
+	@Autowired
+	private ImageRepository imageRepository;
+	
+	@Autowired
+	private CloudFunctionsService cloudFunctions;
+	
 	@Override
 	public Long addAccomodation(AccomodationSoap accomodation) {
 						
@@ -87,33 +114,12 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		newaccomodation.setAgent(webServiceContext.getUserPrincipal().getName());
 		newaccomodation = accService.addAccomodation(newaccomodation);
 		
-		
-		/*for(TermSoap termSoap : accomodation.getTerms()) {
-			Term term = new Term();
-			term.setStartDate(termSoap.getStartDate());
-			term.setEndDate(termSoap.getEndDate());
-			term.setPrice(termSoap.getPrice());
-			term.setAccomodation(newaccomodation);
-			termRepository.save(term);
-		}*/
-		
-		
 		return newaccomodation.getId();
 	}
 
 	@Override
 	public Long modifyAccomodation(AccomodationSoap accomodation) {
 		Accomodation acc = accRepository.getOne(accomodation.getId());
-		
-		//acc.getTerms().clear();
-		/*List<Term> tempTerms = new ArrayList<>();
-		for(Term term : termRepository.findAll()) {
-			if(term.getAccomodation().getId() == acc.getId()) {
-				tempTerms.add(term);
-			}
-		}
-		
-		termRepository.deleteAll(tempTerms);*/
 		
 		//modifikovanje
 		acc.setName(accomodation.getName());
@@ -296,6 +302,75 @@ public class AccomodationWebServiceImpl implements AccomodationWebService{
 		term.setReserved(termSoap.isReserved());
 		termRepository.save(term);
 		return term.getId();
+	}
+
+	@Override
+	public void uploadMultiple(UploadModelXsd model) {
+		Accomodation a = accRepository.findById(model.getId()).get();
+		if(webServiceContext.getUserPrincipal().getName().equals(a.getAgent())) {
+			List<AccomodationImage> images = new ArrayList<>();
+			
+			for (DataHandler data: model.getImages()) {
+				try {
+					String imageUrl = storageService.saveFile(data.getInputStream());
+					images.add(new AccomodationImage(imageUrl, a));
+				} catch (IOException e) {
+					logger.error(e.getMessage());
+					throw new WebServiceException("An error has occured while uploading images.s");
+				}
+			}
+			
+			imageRepository.saveAll(images);
+		}
+		
+	}
+
+	@Override
+	public String testMethod() {
+		System.out.println(webServiceContext.getUserPrincipal());
+		return "Server testMethod()";
+	}
+
+	@Override
+	public String setReservedValue(Long termId, boolean value) {
+		Term term = termRepository.getOne(termId);
+		if(term.getUser() != null) {
+			return null;
+		}
+		term.setReserved(value);
+		termRepository.save(term);
+		return "Reserved value changed";
+	}
+
+	@Override
+	public TermSoap getTerm(Long termId) {
+		Term term = termRepository.getOne(termId);
+		TermSoap termSoap = new TermSoap();
+		termSoap.setStartDate(term.getStartDate());
+		termSoap.setEndDate(term.getEndDate());
+		termSoap.setPrice(term.getPrice());
+		termSoap.setId(term.getId());
+		if(term.getUser() != null) {
+			termSoap.setUserId(term.getUser().getId());
+		}
+		termSoap.setReserved(term.isReserved());
+		termSoap.setVisited(term.isVisited());
+		return termSoap;
+	}
+
+	@Override
+	public List<AgentCommentSoap> getCommentsForAgent() {
+		List<AgentComment> agentComments = cloudFunctions.getCommentsForAgent(webServiceContext.getUserPrincipal().getName());
+		List<AgentCommentSoap> agentCommentsSoap = new ArrayList<>();
+		for(AgentComment comment : agentComments) {
+			AgentCommentSoap commentSoap = new AgentCommentSoap();
+			commentSoap.setAccomodationId(comment.getAccomodation());
+			commentSoap.setUserId(comment.getUser());
+			commentSoap.setComment(comment.getComment());
+			commentSoap.setRating(comment.getRating());
+			agentCommentsSoap.add(commentSoap);
+		}
+		return agentCommentsSoap;
 	}
 
 }

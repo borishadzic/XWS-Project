@@ -1,5 +1,6 @@
 package rs.ftn.xws.booking.cloud;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriTemplate;
 
 import rs.ftn.xws.booking.cloud.model.AccomodationRating;
 import rs.ftn.xws.booking.cloud.model.AdminComment;
@@ -46,10 +48,10 @@ public class CloudFunctionServiceImpl implements CloudFunctionsService {
 
 	@Override
 	public List<AgentComment> getCommentsForAgent(String agent) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(cloudConfig.getGetCommentsForAgent())
-				.queryParam("agent", agent);
+		String url = cloudConfig.getGetCommentsForAgent() + "?agent={agent}";
+		  URI expanded = new UriTemplate(url).expand(agent);
 
-		return Arrays.asList(restTemplate.getForObject(builder.toUriString(), AgentComment[].class));
+		  return Arrays.asList(restTemplate.getForObject(expanded, AgentComment[].class));
 	}
 
 	@Override

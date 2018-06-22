@@ -23,16 +23,24 @@ public class ObjectFactory {
 
 	private final static QName _AddAccomodationResponse_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "addAccomodationResponse");
+	private final static QName _SetReservedValueResponse_QNAME = new QName(
+			"http://booking.xws.ftn.rs/accomodationWebService", "setReservedValueResponse");
 	private final static QName _GetMessagesForAgent_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "getMessagesForAgent");
 	private final static QName _GetAllAccomodationTypes_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "getAllAccomodationTypes");
 	private final static QName _ModifyTermResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"modifyTermResponse");
+	private final static QName _UploadMultiple_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"uploadMultiple");
 	private final static QName _DeleteAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"deleteAccomodation");
+	private final static QName _GetTermResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"getTermResponse");
 	private final static QName _ModifyAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"modifyAccomodation");
+	private final static QName _UploadModelXsd_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"uploadModelXsd");
 	private final static QName _ModifyAccomodationResponse_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "modifyAccomodationResponse");
 	private final static QName _SetVisitedValue_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
@@ -49,6 +57,8 @@ public class ObjectFactory {
 			"http://booking.xws.ftn.rs/accomodationWebService", "setVisitedValueResponse");
 	private final static QName _AddAccomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"addAccomodation");
+	private final static QName _TestMethod_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"testMethod");
 	private final static QName _SendMessageResponse_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "sendMessageResponse");
 	private final static QName _GetAllAdditionalServicesResponse_QNAME = new QName(
@@ -59,8 +69,16 @@ public class ObjectFactory {
 			"modifyTerm");
 	private final static QName _GetAllCategoriesResponse_QNAME = new QName(
 			"http://booking.xws.ftn.rs/accomodationWebService", "getAllCategoriesResponse");
+	private final static QName _UploadMultipleResponse_QNAME = new QName(
+			"http://booking.xws.ftn.rs/accomodationWebService", "uploadMultipleResponse");
+	private final static QName _GetCommentsForAgentResponse_QNAME = new QName(
+			"http://booking.xws.ftn.rs/accomodationWebService", "getCommentsForAgentResponse");
+	private final static QName _TestMethodResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"testMethodResponse");
 	private final static QName _CreatingTerm_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"creatingTerm");
+	private final static QName _GetCommentsForAgent_QNAME = new QName(
+			"http://booking.xws.ftn.rs/accomodationWebService", "getCommentsForAgent");
 	private final static QName _SendMessage_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"sendMessage");
 	private final static QName _GetAllCategories_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
@@ -72,8 +90,12 @@ public class ObjectFactory {
 			"getAllUsers");
 	private final static QName _GetAllResponse_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"getAllResponse");
+	private final static QName _GetTerm_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"getTerm");
 	private final static QName _Accomodation_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
 			"Accomodation");
+	private final static QName _SetReservedValue_QNAME = new QName("http://booking.xws.ftn.rs/accomodationWebService",
+			"setReservedValue");
 
 	/**
 	 * Create a new ObjectFactory that can be used to create new instances of schema
@@ -89,6 +111,14 @@ public class ObjectFactory {
 	 */
 	public AccomodationSoap createAccomodationSoap() {
 		return new AccomodationSoap();
+	}
+
+	/**
+	 * Create an instance of {@link UploadModelXsd }
+	 * 
+	 */
+	public UploadModelXsd createUploadModelXsd() {
+		return new UploadModelXsd();
 	}
 
 	/**
@@ -156,11 +186,35 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link GetTermResponse }
+	 * 
+	 */
+	public GetTermResponse createGetTermResponse() {
+		return new GetTermResponse();
+	}
+
+	/**
 	 * Create an instance of {@link AddAccomodationResponse }
 	 * 
 	 */
 	public AddAccomodationResponse createAddAccomodationResponse() {
 		return new AddAccomodationResponse();
+	}
+
+	/**
+	 * Create an instance of {@link SetReservedValueResponse }
+	 * 
+	 */
+	public SetReservedValueResponse createSetReservedValueResponse() {
+		return new SetReservedValueResponse();
+	}
+
+	/**
+	 * Create an instance of {@link UploadMultiple }
+	 * 
+	 */
+	public UploadMultiple createUploadMultiple() {
+		return new UploadMultiple();
 	}
 
 	/**
@@ -220,11 +274,35 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link SetReservedValue }
+	 * 
+	 */
+	public SetReservedValue createSetReservedValue() {
+		return new SetReservedValue();
+	}
+
+	/**
 	 * Create an instance of {@link GetAllResponse }
 	 * 
 	 */
 	public GetAllResponse createGetAllResponse() {
 		return new GetAllResponse();
+	}
+
+	/**
+	 * Create an instance of {@link GetTerm }
+	 * 
+	 */
+	public GetTerm createGetTerm() {
+		return new GetTerm();
+	}
+
+	/**
+	 * Create an instance of {@link GetCommentsForAgent }
+	 * 
+	 */
+	public GetCommentsForAgent createGetCommentsForAgent() {
+		return new GetCommentsForAgent();
 	}
 
 	/**
@@ -241,6 +319,22 @@ public class ObjectFactory {
 	 */
 	public GetAllCategories createGetAllCategories() {
 		return new GetAllCategories();
+	}
+
+	/**
+	 * Create an instance of {@link GetCommentsForAgentResponse }
+	 * 
+	 */
+	public GetCommentsForAgentResponse createGetCommentsForAgentResponse() {
+		return new GetCommentsForAgentResponse();
+	}
+
+	/**
+	 * Create an instance of {@link TestMethodResponse }
+	 * 
+	 */
+	public TestMethodResponse createTestMethodResponse() {
+		return new TestMethodResponse();
 	}
 
 	/**
@@ -268,11 +362,27 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link UploadMultipleResponse }
+	 * 
+	 */
+	public UploadMultipleResponse createUploadMultipleResponse() {
+		return new UploadMultipleResponse();
+	}
+
+	/**
 	 * Create an instance of {@link CreatingTerm }
 	 * 
 	 */
 	public CreatingTerm createCreatingTerm() {
 		return new CreatingTerm();
+	}
+
+	/**
+	 * Create an instance of {@link TestMethod }
+	 * 
+	 */
+	public TestMethod createTestMethod() {
+		return new TestMethod();
 	}
 
 	/**
@@ -340,6 +450,14 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link AgentCommentSoap }
+	 * 
+	 */
+	public AgentCommentSoap createAgentCommentSoap() {
+		return new AgentCommentSoap();
+	}
+
+	/**
 	 * Create an instance of {@link UserSoap }
 	 * 
 	 */
@@ -356,6 +474,17 @@ public class ObjectFactory {
 	public JAXBElement<AddAccomodationResponse> createAddAccomodationResponse(AddAccomodationResponse value) {
 		return new JAXBElement<AddAccomodationResponse>(_AddAccomodationResponse_QNAME, AddAccomodationResponse.class,
 				null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement
+	 * }{@code <}{@link SetReservedValueResponse }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "setReservedValueResponse")
+	public JAXBElement<SetReservedValueResponse> createSetReservedValueResponse(SetReservedValueResponse value) {
+		return new JAXBElement<SetReservedValueResponse>(_SetReservedValueResponse_QNAME,
+				SetReservedValueResponse.class, null, value);
 	}
 
 	/**
@@ -390,6 +519,16 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link UploadMultiple
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "uploadMultiple")
+	public JAXBElement<UploadMultiple> createUploadMultiple(UploadMultiple value) {
+		return new JAXBElement<UploadMultiple>(_UploadMultiple_QNAME, UploadMultiple.class, null, value);
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link DeleteAccomodation
 	 * }{@code >}}
 	 * 
@@ -400,6 +539,16 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link GetTermResponse
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getTermResponse")
+	public JAXBElement<GetTermResponse> createGetTermResponse(GetTermResponse value) {
+		return new JAXBElement<GetTermResponse>(_GetTermResponse_QNAME, GetTermResponse.class, null, value);
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link ModifyAccomodation
 	 * }{@code >}}
 	 * 
@@ -407,6 +556,16 @@ public class ObjectFactory {
 	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "modifyAccomodation")
 	public JAXBElement<ModifyAccomodation> createModifyAccomodation(ModifyAccomodation value) {
 		return new JAXBElement<ModifyAccomodation>(_ModifyAccomodation_QNAME, ModifyAccomodation.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link UploadModelXsd
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "uploadModelXsd")
+	public JAXBElement<UploadModelXsd> createUploadModelXsd(UploadModelXsd value) {
+		return new JAXBElement<UploadModelXsd>(_UploadModelXsd_QNAME, UploadModelXsd.class, null, value);
 	}
 
 	/**
@@ -498,6 +657,16 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link TestMethod
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "testMethod")
+	public JAXBElement<TestMethod> createTestMethod(TestMethod value) {
+		return new JAXBElement<TestMethod>(_TestMethod_QNAME, TestMethod.class, null, value);
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link SendMessageResponse
 	 * }{@code >}}
 	 * 
@@ -551,6 +720,39 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link JAXBElement
+	 * }{@code <}{@link UploadMultipleResponse }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "uploadMultipleResponse")
+	public JAXBElement<UploadMultipleResponse> createUploadMultipleResponse(UploadMultipleResponse value) {
+		return new JAXBElement<UploadMultipleResponse>(_UploadMultipleResponse_QNAME, UploadMultipleResponse.class,
+				null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement
+	 * }{@code <}{@link GetCommentsForAgentResponse }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getCommentsForAgentResponse")
+	public JAXBElement<GetCommentsForAgentResponse> createGetCommentsForAgentResponse(
+			GetCommentsForAgentResponse value) {
+		return new JAXBElement<GetCommentsForAgentResponse>(_GetCommentsForAgentResponse_QNAME,
+				GetCommentsForAgentResponse.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link TestMethodResponse
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "testMethodResponse")
+	public JAXBElement<TestMethodResponse> createTestMethodResponse(TestMethodResponse value) {
+		return new JAXBElement<TestMethodResponse>(_TestMethodResponse_QNAME, TestMethodResponse.class, null, value);
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link CreatingTerm
 	 * }{@code >}}
 	 * 
@@ -558,6 +760,16 @@ public class ObjectFactory {
 	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "creatingTerm")
 	public JAXBElement<CreatingTerm> createCreatingTerm(CreatingTerm value) {
 		return new JAXBElement<CreatingTerm>(_CreatingTerm_QNAME, CreatingTerm.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link GetCommentsForAgent
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getCommentsForAgent")
+	public JAXBElement<GetCommentsForAgent> createGetCommentsForAgent(GetCommentsForAgent value) {
+		return new JAXBElement<GetCommentsForAgent>(_GetCommentsForAgent_QNAME, GetCommentsForAgent.class, null, value);
 	}
 
 	/**
@@ -621,6 +833,15 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link GetTerm }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "getTerm")
+	public JAXBElement<GetTerm> createGetTerm(GetTerm value) {
+		return new JAXBElement<GetTerm>(_GetTerm_QNAME, GetTerm.class, null, value);
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link AccomodationSoap
 	 * }{@code >}}
 	 * 
@@ -628,6 +849,16 @@ public class ObjectFactory {
 	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "Accomodation")
 	public JAXBElement<AccomodationSoap> createAccomodation(AccomodationSoap value) {
 		return new JAXBElement<AccomodationSoap>(_Accomodation_QNAME, AccomodationSoap.class, null, value);
+	}
+
+	/**
+	 * Create an instance of {@link JAXBElement }{@code <}{@link SetReservedValue
+	 * }{@code >}}
+	 * 
+	 */
+	@XmlElementDecl(namespace = "http://booking.xws.ftn.rs/accomodationWebService", name = "setReservedValue")
+	public JAXBElement<SetReservedValue> createSetReservedValue(SetReservedValue value) {
+		return new JAXBElement<SetReservedValue>(_SetReservedValue_QNAME, SetReservedValue.class, null, value);
 	}
 
 }

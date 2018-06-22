@@ -1,22 +1,23 @@
 
-package rs.ftn.xws.booking.test;
+package rs.ftn.xws.booking.accomodationwebservice;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for uploadMultiple complex type.
+ * <p>Java class for getTermResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="uploadMultiple">
+ * &lt;complexType name="getTermResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://booking.xws.ftn.rs/test}uploadModelXsd" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://booking.xws.ftn.rs/accomodationWebService}termSoap" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "uploadMultiple", propOrder = {
-    "arg0"
+@XmlType(name = "getTermResponse", propOrder = {
+    "_return"
 })
-public class UploadMultiple {
+public class GetTermResponse {
 
-    protected UploadModelXsd arg0;
+    @XmlElement(name = "return")
+    protected TermSoap _return;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link UploadModelXsd }
+     *     {@link TermSoap }
      *     
      */
-    public UploadModelXsd getArg0() {
-        return arg0;
+    public TermSoap getReturn() {
+        return _return;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the return property.
      * 
      * @param value
      *     allowed object is
-     *     {@link UploadModelXsd }
+     *     {@link TermSoap }
      *     
      */
-    public void setArg0(UploadModelXsd value) {
-        this.arg0 = value;
+    public void setReturn(TermSoap value) {
+        this._return = value;
     }
 
 }

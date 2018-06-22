@@ -1,4 +1,4 @@
-package rs.ftn.xws.booking.webservice;
+package rs.ftn.xws.booking.xsd;
 
 import java.util.List;
 

@@ -17,31 +17,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import rs.ftn.xws.booking.webservice.AccomodationWebService;
-import rs.ftn.xws.booking.webservice.TestServiceImpl;
 
 @Configuration
 public class CXFConfig {
 
 	@Autowired
-	private TestServiceImpl testService;
-	
-	@Autowired
 	private AccomodationWebService accomodationWebService;
-	
-	@Bean
-	public Endpoint testServiceEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(springBus(), testService);
-		endpoint.publish("/TestService");
-		return endpoint;
-	}
-	
+
 	@Bean
 	public Endpoint accomodationWebServiceEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(springBus(), accomodationWebService);
 		endpoint.publish("/AccomodationWebService");
 		return endpoint;
 	}
-	
+
 	@Bean(name = Bus.DEFAULT_BUS_ID)
 	public SpringBus springBus() {
 		SpringBus springBus = new SpringBus();
@@ -49,7 +38,7 @@ public class CXFConfig {
 		springBus.getOutInterceptors().add(getWSS4JOutInterceptor());
 		return springBus;
 	}
-	
+
 	private WSS4JInInterceptor getWSS4JInInterceptor() {
 		Map<String, Object> inProps = new HashMap<String, Object>();
 		inProps.put(WSHandlerConstants.ACTION,
@@ -63,7 +52,7 @@ public class CXFConfig {
 
 	private WSS4JOutInterceptor getWSS4JOutInterceptor() {
 		Map<String, Object> outProps = new HashMap<String, Object>();
-		outProps.put(WSHandlerConstants.ACTION, 
+		outProps.put(WSHandlerConstants.ACTION,
 				WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.ENCRYPT);
 		outProps.put(WSHandlerConstants.USER, "server");
 		outProps.put(WSHandlerConstants.SIG_PROP_FILE, "server-crypto.properties");
@@ -78,5 +67,5 @@ public class CXFConfig {
 
 		return new WSS4JOutInterceptor(outProps);
 	}
-	
+
 }

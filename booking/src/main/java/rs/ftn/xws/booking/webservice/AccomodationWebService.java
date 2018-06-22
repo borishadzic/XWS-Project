@@ -10,9 +10,11 @@ import org.apache.cxf.annotations.SchemaValidation.SchemaValidationType;
 import rs.ftn.xws.booking.xsd.AccomodationSoap;
 import rs.ftn.xws.booking.xsd.AccomodationTypeSoap;
 import rs.ftn.xws.booking.xsd.AdditionalServiceSoap;
+import rs.ftn.xws.booking.xsd.AgentCommentSoap;
 import rs.ftn.xws.booking.xsd.CategorySoap;
 import rs.ftn.xws.booking.xsd.MessageSoap;
 import rs.ftn.xws.booking.xsd.TermSoap;
+import rs.ftn.xws.booking.xsd.UploadModelXsd;
 import rs.ftn.xws.booking.xsd.UserSoap;
 
 @WebService(name = "AccomodationWebServiceSoap", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService")
@@ -45,4 +47,14 @@ public interface AccomodationWebService {
 	Long sendMessage(MessageSoap messageSoap);
 	
 	Long modifyTerm(TermSoap termSoap);
+	
+	void uploadMultiple(UploadModelXsd fileUploadServer);
+	
+	String testMethod();
+	
+	String setReservedValue(Long termId, boolean value);
+	
+	TermSoap getTerm(Long termId);
+	
+	List<AgentCommentSoap> getCommentsForAgent();
 }

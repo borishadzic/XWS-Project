@@ -1,4 +1,4 @@
-package rs.ftn.xws.booking.test;
+package rs.ftn.xws.booking.accomodationwebservice;
 
 import java.util.List;
 
