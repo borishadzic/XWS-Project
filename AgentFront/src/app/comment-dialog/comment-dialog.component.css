@@ -1,0 +1,19 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+
+
+  mat-card{
+    background-color: rgb(233, 170, 94);
+  }
+
+  mat-card-content{
+    border-radius: 25px;
+    padding: 10px;
+    border: 1px solid black;
+  }

@@ -71,15 +71,6 @@
             <mat-form-field class="term" >
                 <input type="number" matInput placeholder="Price" class="form-control" formControlName="price">
             </mat-form-field>
-            <mat-form-field class="term" color="warn" appearance="outline">
-              <mat-chip-list>
-                
-                <!-- <mat-chip disabled class="form-control" color="warn" selected="true" (click)="onTermRemove(termControl,$event)">Reserve</mat-chip> -->
-                <button mat-raised-button [disabled] = "termControl.get('reserved').value" color="warn" (click)="onTermReserve(termControl,$event)">Reserve</button>
-                <button mat-raised-button [disabled] = "!termControl.get('reserved').value" color="warn" (click)="onTermUnreserve(termControl,$event)">Unreserve</button>
-                
-              </mat-chip-list>
-            </mat-form-field>
           </div>
         </div>
       </div>
@@ -93,6 +84,13 @@
             <mat-checkbox [checked]="service.test" (change)="onServiceCheck(service.id, $event)">{{service.name}}</mat-checkbox>
           
         </div>
+      </div>
+      <br>
+      <mat-divider></mat-divider>
+      <br>
+      <div>
+        <h4>Your images:</h4>
+        <input type="file" multiple accept="image/*" placeholder="Upload images" (change)="onFileChanged($event)">
       </div>
       <br>
       <mat-divider></mat-divider>

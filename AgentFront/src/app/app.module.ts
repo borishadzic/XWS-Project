@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AccomodationComponent } from './accomodation/accomodation.component';
 import { TermsComponent } from './terms/terms.component';
 import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
+import { CommentDialogComponent } from './comment-dialog/comment-dialog.component';
 
 
 
@@ -29,7 +30,8 @@ import { MessagesDialogComponent } from './messages-dialog/messages-dialog.compo
     AccomodationsComponent,
     AccomodationComponent,
     TermsComponent,
-    MessagesDialogComponent
+    MessagesDialogComponent,
+    CommentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { MessagesDialogComponent } from './messages-dialog/messages-dialog.compo
     HttpClientModule
   ],
   entryComponents: [
-    MessagesDialogComponent
+    MessagesDialogComponent,
+    CommentDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Comments</h2>
+
+<mat-dialog-content>
+  <div *ngFor = "let comment of comments">
+    <mat-card>
+      <mat-card-title>Rated {{comment.accomodation}}: {{comment.rating}}/10</mat-card-title>
+      <mat-card-subtitle>From: {{comment.username}}</mat-card-subtitle>
+      <mat-card-content>{{comment.comment}}</mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-dialog-close mat-raised-button color="primary">Exit</button>
+</mat-dialog-actions>

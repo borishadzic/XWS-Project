@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CommentDialogComponent } from 'src/app/comment-dialog/comment-dialog.component';
 
 @Component({
   selector: 'app-accomodations',
@@ -10,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class AccomodationsComponent implements OnInit {
   
-  myDisplayedColumns = ['id','name','country','city','type','category','capacity','manage','remove'];
+  myDisplayedColumns = ['id','name','country','city','type','category','capacity','manage','remove','comments'];
   myDataSource: MatTableDataSource<AccomodationData>;
   public accomodations;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient,private router: Router) {   
+  constructor(private http: HttpClient,private router: Router,private dialog: MatDialog) {   
   }
 
   ngOnInit() {
@@ -57,6 +58,23 @@ export class AccomodationsComponent implements OnInit {
     });
   }
 
+
+  onOpenDialog(id: number){
+    const dialogRef = this.dialog.open(CommentDialogComponent, 
+      {
+         width: '750px',
+         data: id
+    
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+        
+        
+      }
+    });
+  }
 
 }
 

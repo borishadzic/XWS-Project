@@ -18,6 +18,7 @@ export class AccomodationComponent implements OnInit {
   public id;
   public accomodation;
   public terms;
+  private images: File[];
 
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
@@ -130,19 +131,19 @@ export class AccomodationComponent implements OnInit {
     (<FormArray>this.form.get('terms')).push(group);
   }
 
-  onTermReserve(term,event){
+  // onTermReserve(term,event){
   
-    (<FormArray>this.form.get('terms')).at((<FormArray>this.form.get('terms')).value.indexOf(term.value)).get('reserved').setValue(true);
+  //   (<FormArray>this.form.get('terms')).at((<FormArray>this.form.get('terms')).value.indexOf(term.value)).get('reserved').setValue(true);
     
     
-  }
+  // }
 
-  onTermUnreserve(term,event){
+  // onTermUnreserve(term,event){
   
-    (<FormArray>this.form.get('terms')).at((<FormArray>this.form.get('terms')).value.indexOf(term.value)).get('reserved').setValue(false);
+  //   (<FormArray>this.form.get('terms')).at((<FormArray>this.form.get('terms')).value.indexOf(term.value)).get('reserved').setValue(false);
     
     
-  }
+  // }
 
   onServiceCheck(id: any,event: any){
     let niz = <number[]>this.form.get('additionalServices').value;
@@ -159,14 +160,30 @@ export class AccomodationComponent implements OnInit {
       this.http.put('http://localhost:8081/accomodations/'+this.id,this.form.value)
       .subscribe(
         (data) => {
-          this.snackBar.open('Accomodation information successfuly changed.', 'Close', {
-            duration: 2000
-          });
-          this.router.navigate(['']);
+          
+          const id = (<any>data).id;
+
+          const formData = new FormData();
+          for (const image of this.images) {
+            formData.append('image', image, image.name);
+          }
+
+          this.http.post('http://localhost:8081/accomodations/' + id, formData)
+            .subscribe(() => {
+              this.snackBar.open('Accomodation successfully modified.', 'Close', {
+                duration: 2000
+              });
+              this.router.navigate(['']);
+            });
         }
       );
     }
 
+  }
+
+
+  onFileChanged(event) {
+    this.images = event.target.files;
   }
 
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, MatDialog, MatSnackBar} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { MessagesDialogComponent } from 'src/app/messages-dialog/messages-dialog.component';
 
@@ -10,14 +10,14 @@ import { MessagesDialogComponent } from 'src/app/messages-dialog/messages-dialog
 })
 export class TermsComponent implements OnInit {
 
-  myDisplayedColumns = ['id', 'accomodation_name', 'start_date','end_date','price','visited', 'manage_visit', 'inbox'];
+  myDisplayedColumns = ['id', 'accomodation_name', 'start_date','end_date','price','visited', 'reserved' ,'inbox'];
   myDataSource: MatTableDataSource<TermData>;
   public terms;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient,private dialog: MatDialog) { }
+  constructor(private http: HttpClient,private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -43,20 +43,6 @@ export class TermsComponent implements OnInit {
     }
   }
 
-  onConfirmVisit(id){
-    this.http.get('http://localhost:8081/accomodations/'+id+'/true',{ responseType: 'text' }).subscribe(data => {
-
-    });
-    this.terms[id-1].visited = true;
-    const termsD: TermData[] = [];
-    for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
-
-    this.myDataSource = new MatTableDataSource(termsD);
-    this.myDataSource.paginator = this.paginator;
-    this.myDataSource.sort = this.sort;
-
-  }
-
   onOpenDialog(id: number){
     
     const dialogRef = this.dialog.open(MessagesDialogComponent, 
@@ -74,6 +60,37 @@ export class TermsComponent implements OnInit {
       }
     });
   }
+  
+
+  onVisitedCheck(id:any,event: any){
+    this.http.get('http://localhost:8081/accomodations/'+id+'/'+event.checked,{ responseType: 'text' }).subscribe(data => {
+      this.terms[id-1].visited = event.checked;
+      const termsD: TermData[] = [];
+      for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
+  
+      this.myDataSource = new MatTableDataSource(termsD);
+      this.myDataSource.paginator = this.paginator;
+      this.myDataSource.sort = this.sort;
+    });
+  }
+
+  onReservedCheck(id:any,event: any){
+    this.http.get('http://localhost:8081/accomodations/terms/'+id+'/reserved/'+event.checked,{ responseType: 'text' }).subscribe(data => {
+      this.terms[id-1].reserved = event.checked;
+      const termsD: TermData[] = [];
+      for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
+  
+      this.myDataSource = new MatTableDataSource(termsD);
+      this.myDataSource.paginator = this.paginator;
+      this.myDataSource.sort = this.sort;
+    },
+    error => {
+      this.snackBar.open('Error reserving a term, Term is already reserved by a user!!!', 'Close', {
+        duration: 2000
+      });
+    }
+  );
+  }
 
 }
 
@@ -85,7 +102,8 @@ function createTerm(term): TermData{
     start_date: term.startDate,
     end_date: term.endDate,
     price: term.price,
-    visited: term.visited
+    visited: term.visited,
+    reserved: term.reserved
   }
 }
 
@@ -96,5 +114,6 @@ export interface TermData{
   start_date: string;
   end_date: string;
   price: number;
+  reserved : boolean;
   visited: boolean;
 }
