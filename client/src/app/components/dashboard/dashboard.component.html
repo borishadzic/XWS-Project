@@ -56,6 +56,9 @@
         <button type="submit" mat-raised-button color="primary" [disabled]="!searchForm.valid">
             <mat-icon>search</mat-icon> Search
         </button>
+        <button type="reset" mat-raised-button color="primary" (click)="onReset()">
+          <mat-icon>refresh</mat-icon> Reset
+        </button>
       </form>
 
       <mat-expansion-panel hideToggle="true">
@@ -76,14 +79,12 @@
                 {{ service.name }}
               </mat-list-option>
           </mat-selection-list>
-
           <mat-selection-list dense #types>
               <h3 mat-subheader>Accomodation types</h3>
               <mat-list-option *ngFor="let type of filter.types" [value]="type.id">
                 {{ type.type }}
               </mat-list-option>
           </mat-selection-list>
-
           <mat-selection-list dense #categories>
               <h3 mat-subheader>Category</h3>
               <mat-list-option *ngFor="let category of filter.categories" [value]="category.id">
@@ -98,12 +99,27 @@
 
   <div class="spacer"></div>
 
-  <div fxLayout="column" fxLayoutAlign="start strech" fxLayoutGap="30px">
+  <!-- <div fxLayout="column" fxLayoutAlign="start strech" fxLayoutGap="30px">
     <app-accomodation-item
       *ngFor="let term of terms; let i = index"
       [term]="term"
       [isAuthenticated]="isAuthenticated"
       (reserve)="onReserve($event, i)">
     </app-accomodation-item>
+  </div> -->
+  <div fxLayout="row wrap"
+       fxLayout.lt-md="column"
+       fxLayoutAlign.lt-md="space-around stretch"
+       fxLayoutAlign="space-around start">
+      <app-accomodation-item
+        [@list]
+        fxFlex.md="50%"
+        fxFlex.gt-md="50%"
+        style="padding: 1em"
+        *ngFor="let term of terms; let i = index"
+        [term]="term"
+        [isAuthenticated]="isAuthenticated"
+        (reserve)="onReserve($event, i)">
+      </app-accomodation-item>
   </div>
 </div>

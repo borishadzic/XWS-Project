@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Comments</h2>
+
+<mat-dialog-content style="height: 80%;">
+  <mat-card *ngFor="let comment of comments" class="comment mat-elevation-z4">
+    <mat-card-subtitle>Rating
+      <b>{{ comment.rating }}</b>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ comment.comment }}</p>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-dialog-close mat-raised-button color="primary">Close</button>
+</mat-dialog-actions>

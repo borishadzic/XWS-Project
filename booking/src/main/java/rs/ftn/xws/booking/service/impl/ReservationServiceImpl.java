@@ -68,6 +68,10 @@ public class ReservationServiceImpl implements ReservationService {
 		if (term == null) {
 			throw new ReservationException("Error while canceling reservaton!");
 		}
+		
+		if (term.isVisited()) {
+			throw new ReservationException("You have already visitedd!");
+		}
 
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.DAY_OF_MONTH, -3);

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectionList, MatSnackBar } from '@angular/material';
+import { trigger, style, state, transition, animate } from '@angular/animations';
 
 import { FilterService } from '../../services/filter.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,7 +12,19 @@ import { Filter } from '../../models/filter';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations: [
+    trigger('list', [
+      state('in', style({ opacity: 1, transform: 'translateY(0)'  })),
+      transition('void => *', [
+        style({ opacity: 0, transform: 'translateY(200px)' }),
+        animate('750ms ease-in')
+      ]),
+      transition('* => void', [
+        animate('500ms ease-out',  style({ opacity: 0,  transform: 'translateY(-500px) scale(0.3)' }))
+      ])
+    ])
+  ]
 })
 export class DashboardComponent implements OnInit {
 
@@ -43,7 +56,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('categories') categories: MatSelectionList;
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isLoggedIn();
+    this.authService.loginEvent
+      .subscribe(isAuthenticated => this.isAuthenticated = isAuthenticated);
 
     this.filterService.getSearchFilter().subscribe(
       filter => this.filter = filter
@@ -72,6 +86,18 @@ export class DashboardComponent implements OnInit {
       this.accomodationService.searchAccomodations(this.searchForm.value, services, types, categories)
         .subscribe(terms => this.terms = terms);
     }
+  }
+
+  onReset() {
+    this.accomodationService.getAccomodations().subscribe(terms => {
+      this.terms = terms;
+      this.searchForm.patchValue({
+        startDate: (new Date()).toISOString(),
+        endDate: (new Date()).toISOString(),
+        sortBy: 'PRICE',
+        orderBy: 'ASC'
+      });
+    });
   }
 
   onReserve(id, index) {

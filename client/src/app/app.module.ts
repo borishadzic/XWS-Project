@@ -23,6 +23,7 @@ import { AccomodationItemComponent } from './components/dashboard/accomodation-i
 import { ReservationsComponent } from './components/reservations/reservations.component';
 import { MessagesDialogComponent } from './components/messages-dialog/messages-dialog.component';
 import { RateComponent } from './components/rate/rate.component';
+import { CommentsDialogComponent } from './components/comments-dialog/comments-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RateComponent } from './components/rate/rate.component';
     AccomodationItemComponent,
     ReservationsComponent,
     MessagesDialogComponent,
-    RateComponent
+    RateComponent,
+    CommentsDialogComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { RateComponent } from './components/rate/rate.component';
   entryComponents: [
     EmailDialogComponent,
     MessagesDialogComponent,
-    RateComponent
+    RateComponent,
+    CommentsDialogComponent
   ],
   providers: [
     [{

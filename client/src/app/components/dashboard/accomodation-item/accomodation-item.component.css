@@ -1,3 +1,7 @@
 .dashboard-card {
   padding: 3em;
 }
+
+.subtitle-spacer {
+  margin: 0 1em;
+}

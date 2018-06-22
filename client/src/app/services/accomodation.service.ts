@@ -33,4 +33,8 @@ export class AccomodationService {
     });
   }
 
+  getComments(id: number): Observable<any> {
+    return this.http.get<any>(environment.hostUrl + '/api/accomodations/' + id + '/comments');
+  }
+
 }

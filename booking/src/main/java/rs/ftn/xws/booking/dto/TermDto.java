@@ -8,6 +8,7 @@ public class TermDto {
 	private Date startDate;
 	private Date endDate;
 	private float price;
+	private float rating = 0;
 	private AccomodationDto accomodation;
 
 	public TermDto() {
@@ -53,11 +54,19 @@ public class TermDto {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
 	public AccomodationDto getAccomodation() {
 		return accomodation;
 	}
-	
+
 	public void setAccomodation(AccomodationDto accomodation) {
 		this.accomodation = accomodation;
 	}

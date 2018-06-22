@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import rs.ftn.xws.booking.cloud.CloudFunctionsService;
+import rs.ftn.xws.booking.cloud.model.AccomodationRating;
 import rs.ftn.xws.booking.dto.AccomodationDto;
 import rs.ftn.xws.booking.dto.Order;
 import rs.ftn.xws.booking.dto.Sort;
@@ -37,6 +39,9 @@ public class AccomodationServiceImpl implements AccomodationService {
 	@Autowired
 	private AdditionalServiceRepository additionalServiceRepository;
 
+	@Autowired
+	private CloudFunctionsService cloudFunctionsService;
+	
 	@Override
 	public Accomodation addAccomodation(Accomodation accomodation) {
 		return accomodationRepository.save(accomodation);
@@ -63,6 +68,7 @@ public class AccomodationServiceImpl implements AccomodationService {
 	public List<TermDto> getTerms() {
 		List<Accomodation> accomodations = accomodationRepository.findAll();
 		accomodations = filterByNonReserved(accomodations);
+		
 		return convert(accomodations);
 	}
 	
@@ -165,19 +171,32 @@ public class AccomodationServiceImpl implements AccomodationService {
 			termDtos.addAll(terms);
 		}
 
-		return termDtos;
+		return setRatings(termDtos);
+	}
+	
+	private List<TermDto> setRatings(List<TermDto> terms) {
+		List<AccomodationRating> ratings = cloudFunctionsService.getRatings();
+		
+		for (AccomodationRating rating : ratings) {
+			for (TermDto term : terms) {
+				if (rating.getAccomodation().equals(term.getAccomodation().getId())) {
+					term.setRating(rating.getRating());
+				}
+			}
+		}
+		
+		return terms;
 	}
 	
 	public List<TermDto> sortAndOrer(List<TermDto> terms, Sort sortBy, Order orderBy) {
 		Comparator<? super TermDto> comparator = null;
 
 		if (sortBy.equals(Sort.PRICE)) {
-			comparator = Comparator.comparing(a -> ((TermDto) a).getPrice());
+			comparator = Comparator.comparing(TermDto::getPrice);
 		} else if (sortBy == Sort.CATEGORY) {
 			comparator = Comparator.comparing(a -> ((TermDto) a).getAccomodation().getCategory());
 		} else {
-			// Ovo je za rejting
-			comparator = Comparator.comparing(a -> ((TermDto) a).getPrice());
+			comparator = Comparator.comparing(TermDto::getRating);
 		}
 		
 		if (orderBy == Order.DESC) {

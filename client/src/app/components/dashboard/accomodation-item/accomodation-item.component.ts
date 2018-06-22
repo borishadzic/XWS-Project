@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { CommentsDialogComponent } from '../../comments-dialog/comments-dialog.component';
 
 @Component({
   selector: 'app-accomodation-item',
@@ -11,9 +13,17 @@ export class AccomodationItemComponent implements OnInit {
   @Input() public isAuthenticated = false;
   @Output() public reserve = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private matDialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  onOpenComments(id: number) {
+    this.matDialog.open(CommentsDialogComponent, {
+      height: '550px',
+      width: '700px',
+      data: id
+    });
   }
 
 }
