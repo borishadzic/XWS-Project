@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-navbar',
@@ -12,20 +10,9 @@ import { MatSnackBar } from '@angular/material';
 export class NavbarComponent implements OnInit {
 
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-  constructor(private breakpointObserver: BreakpointObserver, private http: HttpClient,
-  private snackbar: MatSnackBar) {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
-  }
-
-  onSync(){
-    this.http.get('http://localhost:8081/accomodations/sync').subscribe(
-      () => {
-        this.snackbar.open('Data synchronized with booking server!', 'Close', {
-          duration: 2000
-        });
-      }
-    );
   }
 
 }

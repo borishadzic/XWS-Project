@@ -97,7 +97,7 @@ insert into accomodation_services values (4,7);
 insert into accomodation_services values (4,2);
 
 insert into accomodation (id, address, capacity, city, country, description, name, type_id, category_id,agent)
-values (5, 'Å onzelize', 2, 'Paris', 'France', 'skupo ali kratko', 'French connection', 2, 5, 'CN=a1') ;
+values (5, 'Šonzelize', 2, 'Paris', 'France', 'skupo ali kratko', 'French connection', 2, 5, 'CN=a1') ;
 insert into accomodation_image values (9, 'url1', 5);
 insert into accomodation_image values (10, 'url2', 5);
 insert into term(id, end_date, price, start_date, accomodation_id, reserved, visited, rated) values (13,'2018-09-15',500,'2018-09-05',5, 0, 0, 0);

@@ -10,6 +10,4 @@ public interface MessageRepository extends JpaRepository<Message,Long>{
 	
 	List<Message> findByTermId(Long id);
 	
-	Message findByDatabaseId(Long id);
-	
 }
