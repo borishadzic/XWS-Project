@@ -12,29 +12,18 @@ import { MatSnackBar } from '@angular/material';
 export class NavbarComponent implements OnInit {
 
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-<<<<<<< HEAD
-  constructor(private breakpointObserver: BreakpointObserver, private http: HttpClient,
-  private snackbar: MatSnackBar) {}
-=======
   constructor(private breakpointObserver: BreakpointObserver, private http: HttpClient, private snackBar: MatSnackBar) {}
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 
   ngOnInit() {
   }
 
   onSync(){
     this.http.get('http://localhost:8081/accomodations/sync').subscribe(
-<<<<<<< HEAD
-      () => {
-        this.snackbar.open('Data synchronized with booking server!', 'Close', {
-          duration: 2000
-        });
-=======
       () =>{
         this.snackBar.open('Data synced with server','Close',{
           duration:2000
         })
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
+        window.location.reload();
       }
     );
   }

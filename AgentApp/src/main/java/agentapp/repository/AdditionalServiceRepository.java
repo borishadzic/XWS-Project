@@ -1,6 +1,5 @@
 package agentapp.repository;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,9 +12,4 @@ public interface AdditionalServiceRepository extends JpaRepository<AdditionalSer
 	
 	AdditionalService findByDatabaseId(Long id);
 	
-<<<<<<< HEAD
-	List<AdditionalService> findAllByDatabaseId(Iterable<Long> arg0);
-	
-=======
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 }

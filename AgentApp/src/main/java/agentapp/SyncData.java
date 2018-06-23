@@ -120,20 +120,11 @@ public class SyncData {
 				acc.setAccomodationType(accTypeRepository.findByDatabaseId(accSoap.getAccomodationType()));
 				acc.setCategory(categoryRepository.findByDatabaseId(accSoap.getCategory()));
 				acc.setCapacity(accSoap.getCapacity());
-<<<<<<< HEAD
-				//proba
-				List<Long> asids = new ArrayList<>();
-				for(Long asid : accSoap.getAdditionalServices()){
-					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
-				}
-				//proba
-=======
 				//dodatne usluge
 				List<Long> asids = new ArrayList<>();
 				for(Long asid : accSoap.getAdditionalServices()) {
 					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
 				}
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(asids));
 				acc.setAdditionalServices(serviceslocal);
 				//acc.setTerms(new ArrayList<Term>());
@@ -169,44 +160,6 @@ public class SyncData {
 	}
 	
 	@Transactional
-<<<<<<< HEAD
-	public void clean(){
-		List<AccomodationType> temptype = new ArrayList<>();
-		for(AccomodationType accType : accTypeRepository.findAll()){
-			temptype.add(accType);
-		}
-		accTypeRepository.deleteAll(temptype);
-		
-		List<AdditionalService> tempservice = new ArrayList<>();
-		for(AdditionalService accService : additionalServiceRepository.findAll()){
-			tempservice.add(accService);
-		}
-		additionalServiceRepository.deleteAll(tempservice);
-		
-		List<Category> tempcat = new ArrayList<>();
-		for(Category cat : categoryRepository.findAll()){
-			tempcat.add(cat);
-		}
-		categoryRepository.deleteAll(tempcat);
-		
-		List<Message> tempmsg = new ArrayList<>();
-		for(Message msg : messageRepository.findAll()){
-			tempmsg.add(msg);
-		}
-		messageRepository.deleteAll(tempmsg);
-		
-		List<User> tempuser = new ArrayList<>();
-		for(User user : userRepository.findAll()){
-			tempuser.add(user);
-		}
-		userRepository.deleteAll(tempuser);
-		
-		List<Accomodation> tempacc = new ArrayList<>();
-		for(Accomodation acc : accRepository.findAll()){
-			tempacc.add(acc);
-		}
-		accRepository.deleteAll(tempacc);
-=======
 	public void clean() {
 		messageRepository.deleteAll();
 		additionalServiceRepository.deleteAll();
@@ -215,7 +168,6 @@ public class SyncData {
 		accRepository.deleteAll();
 		categoryRepository.deleteAll();
 		accTypeRepository.deleteAll();
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 	}
 	
 }

@@ -425,15 +425,15 @@ public class AccomodationController {
 	}
 	
 	@GetMapping("/sync")
-<<<<<<< HEAD
-	public void synchronize(){
-		syncData.clean();
-		syncData.init();
-	}
-=======
 	public void sync() {
 		syncData.clean();
-		syncData.init();	}
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
+		syncData.init();	
+		
+	}
+	
+	@GetMapping("/terms/{termId}")
+	public Term getTerm(@PathVariable("termId") Long termId) {
+		return termRepository.getOne(termId);
+	}
 
 }
