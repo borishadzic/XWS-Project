@@ -9,4 +9,6 @@ import agentapp.domain.Accomodation;
 @Repository
 public interface AccomodationRepository extends JpaRepository<Accomodation,Long>{
 
+	Accomodation findByDatabaseId(Long id);
+	
 }
