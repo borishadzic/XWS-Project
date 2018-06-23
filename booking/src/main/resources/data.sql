@@ -8,10 +8,10 @@ insert into roles (id, name) values (2, 'ROLE_AGENT');
 insert into roles (id, name) values (3, 'ROLE_USER');
 
 -- users
-insert into users (id, email, enabled, password) 
-values (UUID(), 'bokih.95@gmail.com', 1, '$2a$10$8bH9N7jBJo6XNlfR.mKhYeD9yoWGJJXJ.rOaCgftdn5SdSwZaOlfq');
-insert into users (id, email, enabled, password) 
-values (UUID(), 'darkokirin@gmail.com', 1, '$2a$10$uZzqU5v.G10pFySkUUIbXuNDukV//c19dBD/hiqbYSgyP8pbhTxh2');
+insert into users (id, email, enabled, password,non_locked) 
+values (UUID(), 'bokih.95@gmail.com', 1, '$2a$10$8bH9N7jBJo6XNlfR.mKhYeD9yoWGJJXJ.rOaCgftdn5SdSwZaOlfq',1);
+insert into users (id, email, enabled, password,non_locked) 
+values (UUID(), 'darkokirin@gmail.com', 1, '$2a$10$uZzqU5v.G10pFySkUUIbXuNDukV//c19dBD/hiqbYSgyP8pbhTxh2',1);
 
 
 -- role-permissions
