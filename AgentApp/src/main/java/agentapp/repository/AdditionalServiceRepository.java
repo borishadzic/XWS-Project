@@ -8,5 +8,7 @@ import agentapp.domain.AdditionalService;
 
 @Repository
 public interface AdditionalServiceRepository extends JpaRepository<AdditionalService,Long>{
-
+	
+	AdditionalService findByDatabaseId(Long id);
+	
 }

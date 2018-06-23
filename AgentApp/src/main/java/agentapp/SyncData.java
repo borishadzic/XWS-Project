@@ -114,12 +114,17 @@ public class SyncData {
 				acc.setAddress(accSoap.getAddress());
 				acc.setDescription(accSoap.getDescription());
 				acc.setDatabaseId(accSoap.getId());
-				acc.setAccomodationType(accTypeRepository.getOne(accSoap.getAccomodationType()));
-				acc.setCategory(categoryRepository.getOne(accSoap.getCategory()));
+				acc.setAccomodationType(accTypeRepository.findByDatabaseId(accSoap.getAccomodationType()));
+				acc.setCategory(categoryRepository.findByDatabaseId(accSoap.getCategory()));
 				acc.setCapacity(accSoap.getCapacity());
-				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accSoap.getAdditionalServices()));
+				//dodatne usluge
+				List<Long> asids = new ArrayList<>();
+				for(Long asid : accSoap.getAdditionalServices()) {
+					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
+				}
+				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(asids));
 				acc.setAdditionalServices(serviceslocal);
-				acc.setTerms(new ArrayList<Term>());
+				//acc.setTerms(new ArrayList<Term>());
 				acc = accRepository.save(acc);
 				for(TermSoap termSoap: accSoap.getTerms() ) {
 					Term term = new Term();
@@ -129,7 +134,7 @@ public class SyncData {
 					term.setDatabaseId(termSoap.getId());
 					term.setAccomodation(acc);
 					term.setVisited(termSoap.isVisited());
-					term.setReserved(term.isReserved());
+					term.setReserved(termSoap.isReserved());
 					term.setUser(userRepository.findByDatabaseId(termSoap.getUserId()));
 //					acc.getTerms().add(term);
 					termRepository.save(term);
@@ -149,6 +154,17 @@ public class SyncData {
 				
 			}
 		
+	}
+	
+	@Transactional
+	public void clean() {
+		messageRepository.deleteAll();
+		additionalServiceRepository.deleteAll();
+		termRepository.deleteAll();
+		userRepository.deleteAll();
+		accRepository.deleteAll();
+		categoryRepository.deleteAll();
+		accTypeRepository.deleteAll();
 	}
 	
 }

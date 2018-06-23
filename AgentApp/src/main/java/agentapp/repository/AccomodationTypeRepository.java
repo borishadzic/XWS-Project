@@ -8,5 +8,7 @@ import agentapp.domain.AccomodationType;
 
 @Repository
 public interface AccomodationTypeRepository extends JpaRepository<AccomodationType,Long>{
-
+	
+	AccomodationType findByDatabaseId(Long id);
+	
 }

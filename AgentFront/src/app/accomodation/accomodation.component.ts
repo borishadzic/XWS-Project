@@ -164,6 +164,7 @@ export class AccomodationComponent implements OnInit {
           const id = (<any>data).id;
 
           const formData = new FormData();
+          if(this.images != null){
           for (const image of this.images) {
             formData.append('image', image, image.name);
           }
@@ -175,6 +176,8 @@ export class AccomodationComponent implements OnInit {
               });
               this.router.navigate(['']);
             });
+          }
+          this.router.navigate(['']);
         }
       );
     }
