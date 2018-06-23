@@ -44,6 +44,10 @@ namespace AdminFront
             this.PrimaryFrame.Content = new FilteView();
         }
         
+        public void AgentClick(object sender, RoutedEventArgs e)
+        {
+            this.PrimaryFrame.Content = new CommentView();
+        }
 
     }
 }

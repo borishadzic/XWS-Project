@@ -44,6 +44,60 @@ namespace AdminFront.Requests
 
         }
 
+        public static void ApproveComment(AdminCommentDTO comment)
+        {
+            ServicePointManager.ServerCertificateValidationCallback =
+                 delegate (object s, X509Certificate certificate,
+                X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                 { return true; };
+
+            var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/approveComments");
+            
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.UseDefaultCredentials = true;
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                string content2 = JsonConvert.SerializeObject(comment);
+                streamWriter.Write(content2);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+        }
+
+        public static void BanComment(AdminCommentDTO comment)
+        {
+            ServicePointManager.ServerCertificateValidationCallback =
+                 delegate (object s, X509Certificate certificate,
+                X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                 { return true; };
+
+            var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/banComments");
+
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.UseDefaultCredentials = true;
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                string content2 = JsonConvert.SerializeObject(comment);
+                streamWriter.Write(content2);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+        }
+
         public static ProfileDTO toogleLockedUser(ProfileDTO user)
         {
             ServicePointManager.ServerCertificateValidationCallback =

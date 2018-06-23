@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AdminFront.DTOs;
+using AdminFront.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,38 @@ namespace AdminFront.Pages
     /// </summary>
     public partial class CommentView : UserControl
     {
+
+        List<AdminCommentDTO> comments = new List<AdminCommentDTO>();
+
+
+
+
         public CommentView()
         {
             InitializeComponent();
+            comments = ClientRequests.getComments();
+            //if (comments.Count==0)
+            //{
+            //    comments.Add(new AdminCommentDTO(0,"nocomments","nocomments"));
+            //}
+            CommentList.ItemsSource = comments;
         }
+
+        public void approveComment(object sender, RoutedEventArgs args)
+        {
+
+            ClientRequests.ApproveComment(comments.ElementAt(CommentList.SelectedIndex));
+            comments = ClientRequests.getComments();
+            CommentList.ItemsSource = comments;
+        }
+
+        private void banComment(object sender, RoutedEventArgs e)
+        {
+
+            ClientRequests.BanComment(comments.ElementAt(CommentList.SelectedIndex));
+            comments = ClientRequests.getComments();
+            CommentList.ItemsSource = comments;
+        }
+
     }
 }

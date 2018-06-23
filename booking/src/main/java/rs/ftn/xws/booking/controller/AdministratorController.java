@@ -93,6 +93,18 @@ public class AdministratorController {
 		comments = cloudFunctionsService.getCommentsForReview();
 		return comments;
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/approveComments")
+    public void approveComment(@RequestBody AdminComment comment) {
+		 cloudFunctionsService.approveComment(comment.getId());
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/banComments")
+    public void banComment(@RequestBody AdminComment comment) {
+		 cloudFunctionsService.declineComment(comment.getId());
+	}
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getClients")

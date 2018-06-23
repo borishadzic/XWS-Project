@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import agentapp.SyncData;
 import agentapp.domain.Accomodation;
 import agentapp.domain.AdditionalService;
 import agentapp.domain.Message;
@@ -78,6 +79,9 @@ public class AccomodationController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private SyncData syncData;
 
 	@PostMapping
 	public Accomodation addAccomodation(@RequestBody AccomodationInfo info) throws DatatypeConfigurationException {
@@ -412,6 +416,12 @@ public class AccomodationController {
 			}
 		}
 		return accomodationComments;
+	}
+	
+	@GetMapping("/sync")
+	public void synchronize(){
+		syncData.clean();
+		syncData.init();
 	}
 
 }

@@ -45,24 +45,27 @@ namespace AdminFront.Pages
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            var klient = clients.ElementAt(ListaKlijenata.SelectedIndex);
 
-            var wraper = (WrapPanel)((CheckBox)sender).Parent;
-            var tb = (TextBlock)wraper.Children[1];
-
-            var client1 = tb.Text;
-            var klient = clients.Find(x => x.username == client1);
             var client = ClientRequests.toogleLockedUser(klient);
         }
 
         private void CheckBox_Checked2(object sender, RoutedEventArgs e)
         {
+            var klient = clients.ElementAt(ListaKlijenata.SelectedIndex);
+            ProfileDTO client;
+            if (klient.nonLocked)
+            {
+                client = ClientRequests.toogleLockedUser(klient);
+            }
+            else
+            {
 
-            var wraper = (WrapPanel)((CheckBox)sender).Parent;
-            var tb = (TextBlock)wraper.Children[1];
+                client = ClientRequests.toogleLockedUser2(klient);
+            }
+            clients = ClientRequests.getClients();
+            ListaKlijenata.ItemsSource = clients;
 
-            var client1 = tb.Text;
-            var klient = clients.Find(x => x.username == client1);
-            var client = ClientRequests.toogleLockedUser2(klient);
         }
     }
 }

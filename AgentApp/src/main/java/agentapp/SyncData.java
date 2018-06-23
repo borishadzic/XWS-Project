@@ -66,10 +66,13 @@ public class SyncData {
 	public void init() {
 			
 			System.out.println("########## SINHRONIZACIJAA #############");
-		
+	
 			/*accTypeRepository.deleteAll();
 			additionalServiceRepository.deleteAll();
-			categoryRepository.deleteAll();*/
+			categoryRepository.deleteAll();
+			messageRepository.deleteAll();
+			userRepository.deleteAll();
+			termRepository.deleteAll();*/
 		
 		
 			List<AccomodationTypeSoap> typesSoap = accWebService.getAllAccomodationTypes();
@@ -114,10 +117,16 @@ public class SyncData {
 				acc.setAddress(accSoap.getAddress());
 				acc.setDescription(accSoap.getDescription());
 				acc.setDatabaseId(accSoap.getId());
-				acc.setAccomodationType(accTypeRepository.getOne(accSoap.getAccomodationType()));
-				acc.setCategory(categoryRepository.getOne(accSoap.getCategory()));
+				acc.setAccomodationType(accTypeRepository.findByDatabaseId(accSoap.getAccomodationType()));
+				acc.setCategory(categoryRepository.findByDatabaseId(accSoap.getCategory()));
 				acc.setCapacity(accSoap.getCapacity());
-				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(accSoap.getAdditionalServices()));
+				//proba
+				List<Long> asids = new ArrayList<>();
+				for(Long asid : accSoap.getAdditionalServices()){
+					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
+				}
+				//proba
+				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(asids));
 				acc.setAdditionalServices(serviceslocal);
 				acc.setTerms(new ArrayList<Term>());
 				acc = accRepository.save(acc);
@@ -149,6 +158,45 @@ public class SyncData {
 				
 			}
 		
+	}
+	
+	@Transactional
+	public void clean(){
+		List<AccomodationType> temptype = new ArrayList<>();
+		for(AccomodationType accType : accTypeRepository.findAll()){
+			temptype.add(accType);
+		}
+		accTypeRepository.deleteAll(temptype);
+		
+		List<AdditionalService> tempservice = new ArrayList<>();
+		for(AdditionalService accService : additionalServiceRepository.findAll()){
+			tempservice.add(accService);
+		}
+		additionalServiceRepository.deleteAll(tempservice);
+		
+		List<Category> tempcat = new ArrayList<>();
+		for(Category cat : categoryRepository.findAll()){
+			tempcat.add(cat);
+		}
+		categoryRepository.deleteAll(tempcat);
+		
+		List<Message> tempmsg = new ArrayList<>();
+		for(Message msg : messageRepository.findAll()){
+			tempmsg.add(msg);
+		}
+		messageRepository.deleteAll(tempmsg);
+		
+		List<User> tempuser = new ArrayList<>();
+		for(User user : userRepository.findAll()){
+			tempuser.add(user);
+		}
+		userRepository.deleteAll(tempuser);
+		
+		List<Accomodation> tempacc = new ArrayList<>();
+		for(Accomodation acc : accRepository.findAll()){
+			tempacc.add(acc);
+		}
+		accRepository.deleteAll(tempacc);
 	}
 	
 }

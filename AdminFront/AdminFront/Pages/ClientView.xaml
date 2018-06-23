@@ -5,28 +5,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdminFront.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="450"
              Background="White">
     <Grid>
-        <HeaderedItemsControl Name="Cointainer">
-            <ListView Name="ListaKlijenata">
-                
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <TextBlock Text="email: "/>
-                            <TextBlock Text="{Binding username}"/>
-                            <TextBlock Text="          "/>
-                            <TextBlock Text="authorities: "/>
-                            <ListView ItemsSource="{Binding authorities}">
-                                
-                            </ListView>
-                            <TextBlock Text="    nonLocked: "/>
-                            <CheckBox IsChecked="{Binding nonLocked}" Checked="CheckBox_Checked2" Unchecked="CheckBox_Checked"/>
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </HeaderedItemsControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Name="ListaKlijenata" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="email" Width="150" DisplayMemberBinding="{Binding username}"/>
+                    <GridViewColumn Header="authorities" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding authorities}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="non_locked" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Left" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=nonLocked}" Value="True">
+                                                    <Setter Property="Text" Value="NonLocked"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=nonLocked}" Value="False">
+                                                    <Setter Property="Text" Value="Locked"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Text="Change selected account status:"/>
+            <Border Width="20"/>
+            <Button Content="Change Status" Click="CheckBox_Checked2"/>
+        </StackPanel>
     </Grid>
 </UserControl>
