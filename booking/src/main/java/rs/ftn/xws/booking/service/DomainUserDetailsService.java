@@ -29,8 +29,6 @@ import rs.ftn.xws.booking.persistence.repository.RoleRepository;
 import rs.ftn.xws.booking.persistence.repository.UserRepository;
 import rs.ftn.xws.booking.security.UserPrincipal;
 
-
-
 @Service
 public class DomainUserDetailsService implements UserDetailsService {
 
@@ -42,7 +40,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
 	@Override
@@ -53,32 +51,32 @@ public class DomainUserDetailsService implements UserDetailsService {
 
 		return getUserPrincipal(user);
 	}
-	
+
 	public void changePassword(User user, String newPassword) {
 		user.setPassword(passwordEncoder.encode(newPassword));
 		userRepository.save(user);
 		logger.info("User {} has changed their password.", user.getEmail());
 	}
-	
+
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email).orElse(null);
 	}
-	
+
 	public void changeUserNonLockStatusTrue(User user) {
 		user.setNonLocked(true);
 		userRepository.save(user);
 	}
-	
+
 	public void changeUserNonLockStatusFalse(User user) {
 		user.setNonLocked(false);
 		userRepository.save(user);
 	}
-	
-	public List<User> findAllUsers(){
+
+	public List<User> findAllUsers() {
 		return userRepository.findAll();
 	}
-	
-	public User findCurrentUser(){
+
+	public User findCurrentUser() {
 		return userRepository.findCurrentUser();
 	}
 
@@ -111,7 +109,8 @@ public class DomainUserDetailsService implements UserDetailsService {
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
 
-		return new UserPrincipal(user.getId(), user.getPassword(), user.getEmail(), user.isEnabled(), authorities, user.isNonLocked());
+		return new UserPrincipal(user.getId(), user.getPassword(), user.getEmail(), user.isEnabled(), authorities,
+				user.isNonLocked());
 	}
 
 	public void activateUser(User user) {
@@ -133,12 +132,12 @@ public class DomainUserDetailsService implements UserDetailsService {
 				.distinct()
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
-		
+
 		List<String> auts = new ArrayList<String>();
 		for (GrantedAuthority nesto : authorities) {
 			auts.add(nesto.getAuthority());
 		}
-		
+
 		return auts;
 	}
 }

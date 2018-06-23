@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ftn.xws.booking.cloud.CloudFunctionsService;
+import rs.ftn.xws.booking.cloud.model.AdminComment;
 import rs.ftn.xws.booking.dto.BonusDto;
 import rs.ftn.xws.booking.dto.ModifyDTO;
 import rs.ftn.xws.booking.dto.ProfileDto;
@@ -32,6 +34,9 @@ import rs.ftn.xws.booking.service.TokenService;
 public class AdministratorController {
 	@Autowired
     private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private CloudFunctionsService cloudFunctionsService;
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -81,7 +86,13 @@ public class AdministratorController {
 		return searchFilterService.modifyCategory(name.getOldName(),name.getNewName());
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/getComments")
+    public List<AdminComment> getCommentsForReview(){
+		List<AdminComment> comments;
+		comments = cloudFunctionsService.getCommentsForReview();
+		return comments;
+	}
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/getClients")
