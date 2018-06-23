@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { ReservationService } from '../../services/reservation.service';
 import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
@@ -8,7 +9,21 @@ import { RateComponent } from '../rate/rate.component';
 @Component({
   selector: 'app-reservations',
   templateUrl: './reservations.component.html',
-  styleUrls: ['./reservations.component.css']
+  styleUrls: ['./reservations.component.css'],
+  animations: [
+    trigger('reservations', [
+      transition('void => *', [
+        style({ opacity: 0, transform: 'translateX(-200px)' }),
+        animate('1s ease')
+      ])
+    ]),
+    trigger('actions', [
+      transition('void => *', [
+        style({ opacity: 0, transform: 'translateX(200px)' }),
+        animate('0.75s ease')
+      ])
+    ])
+  ]
 })
 export class ReservationsComponent implements OnInit {
 
