@@ -38,11 +38,11 @@ public class ServiceConfig {
 		Map<String, Object> outProps = new HashMap<String, Object>();
 		outProps.put(WSHandlerConstants.ACTION,
 				WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.ENCRYPT);
-		outProps.put(WSHandlerConstants.USER, "a1");
+		outProps.put(WSHandlerConstants.USER, "agent");
 		outProps.put(WSHandlerConstants.SIG_PROP_FILE, "client-crypto.properties");
 		outProps.put(WSHandlerConstants.ENC_PROP_FILE, "client-crypto.properties");
 		outProps.put(WSHandlerConstants.DEC_PROP_FILE, "client-crypto.properties");
-		outProps.put(WSHandlerConstants.ENCRYPTION_USER, "server");
+		outProps.put(WSHandlerConstants.ENCRYPTION_USER, "booking");
 		outProps.put(WSHandlerConstants.SIGNATURE_PARTS,
 				"{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body");
 		outProps.put(WSHandlerConstants.ENCRYPTION_PARTS,

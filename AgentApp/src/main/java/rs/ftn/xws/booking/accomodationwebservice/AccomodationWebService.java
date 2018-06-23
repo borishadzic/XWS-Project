@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "AccomodationWebService", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", wsdlLocation = "https://localhost:8443/services/AccomodationWebService?wsdl")
+@WebServiceClient(name = "AccomodationWebService", targetNamespace = "http://booking.xws.ftn.rs/accomodationWebService", wsdlLocation = "http://localhost:8080/booking/services/AccomodationWebService?wsdl")
 public class AccomodationWebService
     extends Service
 {
@@ -30,7 +30,7 @@ public class AccomodationWebService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://localhost:8443/services/AccomodationWebService?wsdl");
+            url = new URL("http://localhost:8080/booking/services/AccomodationWebService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
