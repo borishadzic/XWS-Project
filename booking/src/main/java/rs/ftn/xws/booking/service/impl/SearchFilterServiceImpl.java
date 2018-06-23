@@ -26,6 +26,8 @@ public class SearchFilterServiceImpl implements SearchFilterService {
 	@Autowired
 	private AdditionalServiceRepository additionalServiceRepository;
 
+	
+	
 	@Override
 	public AccomodationType addType(String type) {
 		if (!accomodationTypeRepository.existsByType(type)) {
@@ -46,7 +48,7 @@ public class SearchFilterServiceImpl implements SearchFilterService {
 
 	@Override
 	public AdditionalService addAdditionalService(String name) {
-		if (!additionalServiceRepository.existsByName(name)) {
+		if (additionalServiceRepository.findByName(name).isEmpty()) {
 			return additionalServiceRepository.save(new AdditionalService(name));
 		}
 
@@ -60,6 +62,42 @@ public class SearchFilterServiceImpl implements SearchFilterService {
 		List<AdditionalService> services = additionalServiceRepository.findAll();
 		
 		return new FilterDto(types, categories, services);
+	}
+
+	@Override
+	public AccomodationType modifyType(String oldType, String newType) {
+		if(accomodationTypeRepository.findByType(oldType).isEmpty()) {
+			return null;
+		}
+		
+		AccomodationType type = accomodationTypeRepository.findByType(oldType).get(0);
+		type.setType(newType);
+		accomodationTypeRepository.save(type);
+		return type;
+	}
+
+	@Override
+	public Category modifyCategory(String oldCat, String newCat) {
+		if(categoryRepository.findByCategory(oldCat).isEmpty()) {
+			return null;
+		}
+		
+		Category type = categoryRepository.findByCategory(oldCat).get(0);
+		type.setCategory(newCat);
+		categoryRepository.save(type);
+		return type;
+	}
+
+	@Override
+	public AdditionalService modifyService(String oldServ, String newServ) {
+		if(additionalServiceRepository.findByName(oldServ).isEmpty()) {
+			return null;
+		}
+		
+		AdditionalService type = additionalServiceRepository.findByName(oldServ).get(0);
+		type.setName(newServ);
+		additionalServiceRepository.save(type);
+		return type;
 	}
 
 }

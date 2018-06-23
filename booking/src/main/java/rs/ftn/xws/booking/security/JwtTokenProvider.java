@@ -56,7 +56,7 @@ public class JwtTokenProvider {
 				getIdFromClaims(claims), 
 				getUsernameFromClaims(claims), 
 				true,
-				getGrantedAuthoritiesFromClaims(claims)
+				getGrantedAuthoritiesFromClaims(claims),true
 			);
 		} catch (Exception e) {
 			throw new InvalidJWTokenException(e);

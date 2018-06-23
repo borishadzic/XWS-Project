@@ -112,5 +112,5 @@ public class AccomodationDto {
 	public void setImages(List<String> images) {
 		this.images = images;
 	}
-
+	
 }

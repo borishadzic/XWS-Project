@@ -16,7 +16,6 @@ public class Category {
 	private Long id;
 
 	@Column
-	@NaturalId
 	private String category;
 
 	public Category() {

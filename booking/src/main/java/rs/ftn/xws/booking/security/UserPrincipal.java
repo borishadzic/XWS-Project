@@ -16,18 +16,20 @@ public class UserPrincipal implements UserDetails {
 	private String password;
 	private String username;
 	private boolean enabled;
+	private boolean nonLocked;
 	private Collection<? extends GrantedAuthority> autorities;
 	
-	public UserPrincipal(String id, String password, String username, boolean enabled, Collection<? extends GrantedAuthority> autorities) {
+	public UserPrincipal(String id, String password, String username, boolean enabled, Collection<? extends GrantedAuthority> autorities, boolean locked) {
 		this.id = id;
 		this.password = password;
 		this.username = username;
 		this.autorities = autorities;
 		this.enabled = enabled;
+		this.nonLocked = locked;
 	}
 	
-	public UserPrincipal(String id, String username, boolean enabled, Collection<? extends GrantedAuthority> autorities) {
-		this(id, null, username, enabled, autorities);
+	public UserPrincipal(String id, String username, boolean enabled, Collection<? extends GrantedAuthority> autorities, boolean locked) {
+		this(id, null, username, enabled, autorities, locked);
 	}
 	
 	public String getId() {
@@ -56,7 +58,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return nonLocked;
 	}
 
 	@Override

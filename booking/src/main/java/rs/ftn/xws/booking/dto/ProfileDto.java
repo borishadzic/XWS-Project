@@ -8,9 +8,16 @@ public class ProfileDto {
 	
 	private List<String> authorities;
 	
-	public ProfileDto(String username, List<String> authorities) {
+	private boolean nonLocked;
+	
+	private ProfileDto() {
+		
+	}
+	
+	public ProfileDto(String username, List<String> authorities, boolean nonLocked) {
 		this.username = username;
 		this.authorities = authorities;
+		this.nonLocked = nonLocked;
 	}
 	
 	public String getUsername() {
@@ -27,6 +34,14 @@ public class ProfileDto {
 	
 	public void setAuthorities(List<String> authorities) {
 		this.authorities = authorities;
+	}
+	
+	public void setNonLocked() {
+		this.nonLocked = !nonLocked;
+	}
+	
+	public boolean getNonLocked() {
+		return this.nonLocked;
 	}
 	
 }

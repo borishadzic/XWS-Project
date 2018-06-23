@@ -15,6 +15,7 @@ public interface AccomodationService {
 	Accomodation modifyAccomodation(Accomodation accomodation);
 
 	Accomodation removeAccomodation(Long accomodationId);
+	
 
 	List<Accomodation> getAll();
 

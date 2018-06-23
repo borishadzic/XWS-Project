@@ -16,7 +16,6 @@ public class AdditionalService {
 	private Long id;
 
 	@Column
-	@NaturalId
 	private String name;
 
 	public AdditionalService() {

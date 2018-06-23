@@ -80,7 +80,7 @@ public class AccountController {
     				.collect(Collectors.toList());
     		
 	        return ResponseEntity.ok(new JwtAuthenticationResponse(
-	        	new ProfileDto(email, authorities),
+	        	new ProfileDto(email, authorities, true),
 	    		tokenProvider.generateToken(authentication)
 			));
 		} catch (AuthenticationException e) {

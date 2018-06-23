@@ -36,6 +36,8 @@ public class User {
 
 	@Column(name = "enabled")
 	private boolean enabled;
+	
+	private boolean nonLocked;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -50,6 +52,7 @@ public class User {
 		this.password = password;
 		this.roles = roles;
 		this.enabled = false;
+		this.nonLocked = true;
 	}
 
 	public String getId() {
@@ -90,6 +93,14 @@ public class User {
 	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public boolean isNonLocked() {
+		return nonLocked;
+	}
+	
+	public void setNonLocked(boolean locked) {
+		this.nonLocked = locked;
 	}
 
 }

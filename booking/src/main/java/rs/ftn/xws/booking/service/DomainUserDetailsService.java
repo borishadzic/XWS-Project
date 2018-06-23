@@ -1,5 +1,6 @@
 package rs.ftn.xws.booking.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -63,6 +64,20 @@ public class DomainUserDetailsService implements UserDetailsService {
 		return userRepository.findByEmail(email).orElse(null);
 	}
 	
+	public void changeUserNonLockStatusTrue(User user) {
+		user.setNonLocked(true);
+		userRepository.save(user);
+	}
+	
+	public void changeUserNonLockStatusFalse(User user) {
+		user.setNonLocked(false);
+		userRepository.save(user);
+	}
+	
+	public List<User> findAllUsers(){
+		return userRepository.findAll();
+	}
+	
 	public User findCurrentUser(){
 		return userRepository.findCurrentUser();
 	}
@@ -96,11 +111,34 @@ public class DomainUserDetailsService implements UserDetailsService {
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
 
-		return new UserPrincipal(user.getId(), user.getPassword(), user.getEmail(), user.isEnabled(), authorities);
+		return new UserPrincipal(user.getId(), user.getPassword(), user.getEmail(), user.isEnabled(), authorities, user.isNonLocked());
 	}
 
 	public void activateUser(User user) {
 		user.setEnabled(true);
 		userRepository.save(user);
+	}
+
+	public List<String> getUserAuthorities(User user) {
+		Stream<String> roles = user.getRoles().stream()
+				.map(Role::getName)
+				.map(Enum::name);
+
+		Stream<String> permissions = user.getRoles().stream()
+				.map(Role::getPermissions)
+				.flatMap(Collection::stream)
+				.map(Permission::getName);
+
+		List<GrantedAuthority> authorities = Stream.concat(roles, permissions)
+				.distinct()
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
+		
+		List<String> auts = new ArrayList<String>();
+		for (GrantedAuthority nesto : authorities) {
+			auts.add(nesto.getAuthority());
+		}
+		
+		return auts;
 	}
 }

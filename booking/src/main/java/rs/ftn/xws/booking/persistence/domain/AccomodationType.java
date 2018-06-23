@@ -16,7 +16,6 @@ public class AccomodationType {
 	private Long id;
 
 	@Column
-	@NaturalId
 	private String type;
 
 	public AccomodationType() {

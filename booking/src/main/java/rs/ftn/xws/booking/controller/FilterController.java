@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ftn.xws.booking.dto.BonusDto;
 import rs.ftn.xws.booking.dto.FilterDto;
 import rs.ftn.xws.booking.persistence.domain.AccomodationType;
 import rs.ftn.xws.booking.persistence.domain.AdditionalService;
@@ -25,22 +26,22 @@ public class FilterController {
 		return searchFilterService.getSearchFilter();
 	}
 	
-	@PostMapping("types")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public AccomodationType postType(String type) {
-		return searchFilterService.addType(type);
+	@PostMapping("/types")
+	@PreAuthorize("hasRole('ADMIN')")
+	public AccomodationType postType(BonusDto type) {
+		return searchFilterService.addType(type.getName());
 	}
 	
-	@PostMapping("categories")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public Category postCategory(String category) {
-		return searchFilterService.addCategory(category);
+	@PostMapping("/categories")
+	@PreAuthorize("hasRole('ADMIN')")
+	public Category postCategory(BonusDto category) {
+		return searchFilterService.addCategory(category.getName());
 	}
 	
-	@PostMapping("services")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public AdditionalService postService(String name) {
-		return searchFilterService.addAdditionalService(name);
+	@PostMapping("/services")
+	@PreAuthorize("hasRole('ADMIN')")
+	public AdditionalService postService(BonusDto name) {
+		return searchFilterService.addAdditionalService(name.getName());
 	}
 	
 }

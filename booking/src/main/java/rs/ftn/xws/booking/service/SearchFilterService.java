@@ -14,5 +14,9 @@ public interface SearchFilterService {
 	AdditionalService addAdditionalService(String name);
 
 	FilterDto getSearchFilter();
+
+	AccomodationType modifyType(String oldType, String newType);
+	Category modifyCategory(String oldCat, String newCat);
+	AdditionalService modifyService(String oldServ, String newServ);
 	
 }

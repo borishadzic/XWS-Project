@@ -52,6 +52,7 @@ public class Accomodation {
 	@Column
 	private String agent;
 	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "accomodation_services", 
 		joinColumns = @JoinColumn(name = "accomodation_id"), 
@@ -177,5 +178,7 @@ public class Accomodation {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+	
 
 }
