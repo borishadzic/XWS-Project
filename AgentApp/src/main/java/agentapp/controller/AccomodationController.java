@@ -427,6 +427,13 @@ public class AccomodationController {
 	@GetMapping("/sync")
 	public void sync() {
 		syncData.clean();
-		syncData.init();	}
+		syncData.init();	
+		}
+	
+	@GetMapping("/terms/{termId}")
+	public Term getTerm(@PathVariable("termId") Long termId) {
+		return termRepository.getOne(termId);
+		
+	}
 
 }
