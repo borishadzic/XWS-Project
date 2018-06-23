@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdminFront.Pages"
              mc:Ignorable="d" 
-<<<<<<< HEAD
              d:DesignHeight="300" d:DesignWidth="500"
              Background="White">
     <Grid>
@@ -18,7 +17,7 @@
                 <GridView>
                     <GridViewColumn Width="150" Header="Agent" DisplayMemberBinding="{Binding agent}"/>
                     <GridViewColumn Width="350" Header="Comment" DisplayMemberBinding="{Binding comment}"/>
-                    
+
                 </GridView>
             </ListView.View>
         </ListView>
@@ -27,30 +26,6 @@
             <Border Width="50"/>
             <Button Content="Decline" Click="banComment"/>
         </StackPanel>
-=======
-             d:DesignHeight="300" d:DesignWidth="300"
-             Background="White">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <ListView Name="CommentList">
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="id: "/>
-                        <TextBlock Text="{Binding id}"/>
-                        <TextBlock Text="; "/>
-                        <TextBlock Text="    nonLocked: "/>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
->>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
     </Grid>
 
 </UserControl>
