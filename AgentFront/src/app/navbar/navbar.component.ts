@@ -22,7 +22,8 @@ export class NavbarComponent implements OnInit {
       () =>{
         this.snackBar.open('Data synced with server','Close',{
           duration:2000
-        })
+        });
+        window.location.reload();
       }
     );
   }

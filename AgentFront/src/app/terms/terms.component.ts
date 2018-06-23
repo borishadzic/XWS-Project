@@ -44,22 +44,27 @@ export class TermsComponent implements OnInit {
     }
   }
 
-  onOpenDialog(id: number){
-    
-    const dialogRef = this.dialog.open(MessagesDialogComponent, 
-      {
-         width: '450px',
-         data: id
-    
-      });
+  onOpenDialog(id: number,i){
+    if(this.terms[i].user != null){
+      const dialogRef = this.dialog.open(MessagesDialogComponent, 
+        {
+          width: '450px',
+          data: id
+      
+        });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-        
-        
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          
+          
+          
+        }
+      });
+    }else{
+      this.snackBar.open('This term has not been reserved!', 'Close', {
+        duration: 3000
+      });
+    }
   }
   
 
@@ -88,8 +93,9 @@ export class TermsComponent implements OnInit {
     },
     error => {
       this.snackBar.open('Error reserving a term, Term is already reserved by a user!!!', 'Close', {
-        duration: 2000
+        duration: 4000
       });
+      this.terms[i].reserved = true;
     }
   );
   }

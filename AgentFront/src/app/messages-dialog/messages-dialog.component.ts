@@ -14,6 +14,7 @@ export class MessagesDialogComponent implements OnInit {
   public form: FormGroup;
   public messages: any;
   public user = "no user";
+  public term;
 
   constructor(private fb: FormBuilder, private http: HttpClient, @Inject(MAT_DIALOG_DATA) private data: number) { }
 
@@ -22,21 +23,26 @@ export class MessagesDialogComponent implements OnInit {
       message: ['', [Validators.required]]
     });
 
-    this.http.get('http://localhost:8081/accomodations/messages/'+this.data).subscribe(data => {
-      this.messages = data;
-      if(this.messages.length != 0){
-        this.user = this.messages[0].user.email;
-        this.form.addControl("termId",new FormControl(this.messages[0].term.id));
-        this.form.addControl("userId",new FormControl(this.messages[0].user.id));
-      }
-      for(let i=0; i<this.messages.length; i++){
-        if(this.messages[i].user != null){
-          this.messages[i].color = 'primary';
-        }else{
-          this.messages[i].color = 'warn';
-        }
-      }
+    this.http.get('http://localhost:8081/accomodations/terms/'+this.data).subscribe(data => {
+        this.term = data;
+        this.http.get('http://localhost:8081/accomodations/messages/'+this.data).subscribe(data => {
+          this.messages = data;
+          //if(this.messages.length != 0){
+            this.user = this.term.user.email;
+            this.form.addControl("termId",new FormControl(this.term.id));
+            this.form.addControl("userId",new FormControl(this.term.user.id));
+          //}
+          for(let i=0; i<this.messages.length; i++){
+            if(this.messages[i].user != null){
+              this.messages[i].color = 'primary';
+            }else{
+              this.messages[i].color = 'warn';
+            }
+          }
+      });
     });
+
+    
   }
  
   onSendMessage(){

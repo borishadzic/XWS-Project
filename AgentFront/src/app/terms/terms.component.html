@@ -42,7 +42,7 @@
 
       <ng-container matColumnDef="inbox">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Inbox </th>
-        <td class="cursor" mat-cell *matCellDef="let row"><mat-icon id="{{row.id}}" mat-list-icon (click)="onOpenDialog(row.id)">inbox</mat-icon></td>
+        <td class="cursor" mat-cell *matCellDef="let row; let i = index"><mat-icon id="{{row.id}}" mat-list-icon (click)="onOpenDialog(row.id,i)">inbox</mat-icon></td>
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="myDisplayedColumns"></tr>
