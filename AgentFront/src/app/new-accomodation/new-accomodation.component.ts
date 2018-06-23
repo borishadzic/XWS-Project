@@ -78,10 +78,11 @@ export class NewAccomodationComponent implements OnInit {
   onTermRemove(term, event) {
     if((<FormArray>this.form.get('terms')).length > 1){
       (<FormArray>this.form.get('terms')).removeAt((<FormArray>this.form.get('terms')).value.indexOf(term.value));
+    }else{
+      this.snackBar.open('There must be at least 1 term!', 'Close', {
+       duration: 2000      
+      });
     }
-    this.snackBar.open('There must be at least 1 term!', 'Close', {
-      duration: 2000
-    });
   }
 
   onServiceCheck(id: any, event: any) {

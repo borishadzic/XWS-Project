@@ -44,36 +44,48 @@ export class TermsComponent implements OnInit {
     }
   }
 
-  onOpenDialog(id: number){
+  onOpenDialog(id: number, i){
     
-    const dialogRef = this.dialog.open(MessagesDialogComponent, 
-      {
-         width: '450px',
-         data: id
-    
-      });
+    if(this.terms[i].user!=null){
+      const dialogRef = this.dialog.open(MessagesDialogComponent, 
+        {
+          width: '450px',
+          data: id
+      
+        });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-        
-        
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          
+          
+          
+        }
+      });
+    }else{
+      this.snackBar.open('This term has not been reserved!', 'Close', {
+        duration: 3000
+      });
+    }
   }
   
 
   onVisitedCheck(id:any,event: any, i: any){
-    this.http.get('http://localhost:8081/accomodations/'+id+'/'+event.checked,{ responseType: 'text' }).subscribe(data => {
-      console.log(i);
-      this.terms[i].visited = event.checked;
-      const termsD: TermData[] = [];
-      for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
-  
-      this.myDataSource = new MatTableDataSource(termsD);
-      this.myDataSource.paginator = this.paginator;
-      this.myDataSource.sort = this.sort;
-    });
+    if(this.terms[i].reserved){
+      this.http.get('http://localhost:8081/accomodations/'+id+'/'+event.checked,{ responseType: 'text' }).subscribe(data => {
+        this.terms[i].visited = event.checked;
+        const termsD: TermData[] = [];
+        for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
+    
+        this.myDataSource = new MatTableDataSource(termsD);
+        this.myDataSource.paginator = this.paginator;
+        this.myDataSource.sort = this.sort;
+      });
+    }else{
+      this.snackBar.open('You cannot set a term to visited if it has not been reserved', 'Close', {
+        duration: 3000
+      });
+      this.terms[i].visited = false;
+    }
   }
 
   onReservedCheck(id:any,event: any, i:any){
@@ -88,8 +100,9 @@ export class TermsComponent implements OnInit {
     },
     error => {
       this.snackBar.open('Error reserving a term, Term is already reserved by a user!!!', 'Close', {
-        duration: 2000
+        duration: 4000
       });
+      this.terms[i].reserved = true;
     }
   );
   }
