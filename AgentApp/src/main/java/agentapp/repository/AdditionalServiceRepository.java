@@ -13,6 +13,9 @@ public interface AdditionalServiceRepository extends JpaRepository<AdditionalSer
 	
 	AdditionalService findByDatabaseId(Long id);
 	
+<<<<<<< HEAD
 	List<AdditionalService> findAllByDatabaseId(Iterable<Long> arg0);
 	
+=======
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 }

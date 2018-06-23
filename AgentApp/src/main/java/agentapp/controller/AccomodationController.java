@@ -240,6 +240,7 @@ public class AccomodationController {
 		acc.setCategory(categoryRepository.getOne(info.getCategory()));
 		acc.setDescription(info.getDescription());
 		acc.setCapacity(info.getCapacity());
+		
 		Set<AdditionalService> services = new HashSet<AdditionalService>(
 				addServiceRepository.findAllById(info.getAdditionalServices()));
 		acc.getAdditionalServices().clear();
@@ -251,12 +252,17 @@ public class AccomodationController {
 		accSoap.setCountry(info.getCountry());
 		accSoap.setCity(info.getCity());
 		accSoap.setAddress(info.getAddress());
-		accSoap.setAccomodationType(info.getAccomodationType());
-		accSoap.setCategory(info.getCategory());
+		accSoap.setAccomodationType(accTypeRepo.getOne(info.getAccomodationType()).getDatabaseId());
+		accSoap.setCategory(categoryRepository.getOne(info.getCategory()).getDatabaseId());
 		accSoap.setDescription(info.getDescription());
 		accSoap.setCapacity(info.getCapacity());
 		accSoap.setId(acc.getDatabaseId());
-		accSoap.setAdditionalServices(info.getAdditionalServices());
+		//dodatne usluge
+		List<Long> asids = new ArrayList<>();
+		for(Long asid : info.getAdditionalServices()) {
+			asids.add(addServiceRepository.getOne(asid).getDatabaseId());
+		}
+		accSoap.setAdditionalServices(asids);
 		List<TermSoap> termsSoap = new ArrayList<>();
 		GregorianCalendar ca = new GregorianCalendar();
 		TermSoap termS = new TermSoap();
@@ -340,7 +346,7 @@ public class AccomodationController {
 
 		termRepository.save(term);
 
-		accWebService.setVisitedValue(visited, term.getId());
+		accWebService.setVisitedValue(visited, term.getDatabaseId());
 
 		return new ResponseEntity<>("Visited changed", HttpStatus.OK);
 	}
@@ -419,9 +425,15 @@ public class AccomodationController {
 	}
 	
 	@GetMapping("/sync")
+<<<<<<< HEAD
 	public void synchronize(){
 		syncData.clean();
 		syncData.init();
 	}
+=======
+	public void sync() {
+		syncData.clean();
+		syncData.init();	}
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 
 }

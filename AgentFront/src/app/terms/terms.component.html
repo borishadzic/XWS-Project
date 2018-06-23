@@ -32,12 +32,12 @@
   
       <ng-container matColumnDef="visited">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Visited </th>
-        <td mat-cell *matCellDef="let row"><mat-checkbox [checked]="row.visited" (change)="onVisitedCheck(row.id, $event)"></mat-checkbox></td>
+        <td mat-cell *matCellDef="let row; let i=index"><mat-checkbox [checked]="row.visited" (change)="onVisitedCheck(row.id, $event, i)"></mat-checkbox></td>
       </ng-container>
 
       <ng-container matColumnDef="reserved">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Reserved </th>
-        <td mat-cell *matCellDef="let row"><mat-checkbox [checked]="row.reserved" (change)="onReservedCheck(row.id, $event)"></mat-checkbox></td>
+        <td mat-cell *matCellDef="let row ; let i = index"><mat-checkbox [disabled]="row.reserved" [checked]="row.reserved" (change)="onReservedCheck(row.id, $event, i)"></mat-checkbox></td>
       </ng-container>
 
       <ng-container matColumnDef="inbox">

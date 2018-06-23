@@ -45,6 +45,7 @@ namespace AdminFront.Pages
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             var klient = clients.ElementAt(ListaKlijenata.SelectedIndex);
 
             var client = ClientRequests.toogleLockedUser(klient);
@@ -66,6 +67,26 @@ namespace AdminFront.Pages
             clients = ClientRequests.getClients();
             ListaKlijenata.ItemsSource = clients;
 
+=======
+
+            var wraper = (WrapPanel)((CheckBox)sender).Parent;
+            var tb = (TextBlock)wraper.Children[1];
+
+            var client1 = tb.Text;
+            var klient = clients.Find(x => x.username == client1);
+            var client = ClientRequests.toogleLockedUser(klient);
+        }
+
+        private void CheckBox_Checked2(object sender, RoutedEventArgs e)
+        {
+
+            var wraper = (WrapPanel)((CheckBox)sender).Parent;
+            var tb = (TextBlock)wraper.Children[1];
+
+            var client1 = tb.Text;
+            var klient = clients.Find(x => x.username == client1);
+            var client = ClientRequests.toogleLockedUser2(klient);
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
         }
     }
 }

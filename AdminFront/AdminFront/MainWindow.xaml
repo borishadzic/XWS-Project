@@ -33,7 +33,11 @@
                 <Label Content="Clients" HorizontalAlignment="Center"/>
             </StackPanel>
         </Button>
+<<<<<<< HEAD
         <Button Grid.Row="2" Grid.Column="0" ToolTip="Agents" Click="AgentClick">
+=======
+        <Button Grid.Row="2" Grid.Column="0" ToolTip="Agents">
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
             <StackPanel>
                 <Image Source="Resources/agents.png"></Image>
                 <Label Content="Agents" HorizontalAlignment="Center"/>

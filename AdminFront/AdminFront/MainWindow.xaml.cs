@@ -44,10 +44,13 @@ namespace AdminFront
             this.PrimaryFrame.Content = new FilteView();
         }
         
+<<<<<<< HEAD
         public void AgentClick(object sender, RoutedEventArgs e)
         {
             this.PrimaryFrame.Content = new CommentView();
         }
+=======
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 
     }
 }

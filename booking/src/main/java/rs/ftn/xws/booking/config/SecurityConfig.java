@@ -3,6 +3,7 @@ package rs.ftn.xws.booking.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -91,8 +92,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			                 "/**/*.css",
 			                 "/**/*.js")
 	                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/account/password-change")
+                	.authenticated()
 	            .antMatchers("/api/account/**")
-	                .permitAll()
+	                .anonymous()
 	            .antMatchers("/services/**")
 	            	.permitAll();
 //	            .anyRequest()

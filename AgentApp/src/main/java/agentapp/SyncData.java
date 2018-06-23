@@ -120,15 +120,23 @@ public class SyncData {
 				acc.setAccomodationType(accTypeRepository.findByDatabaseId(accSoap.getAccomodationType()));
 				acc.setCategory(categoryRepository.findByDatabaseId(accSoap.getCategory()));
 				acc.setCapacity(accSoap.getCapacity());
+<<<<<<< HEAD
 				//proba
 				List<Long> asids = new ArrayList<>();
 				for(Long asid : accSoap.getAdditionalServices()){
 					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
 				}
 				//proba
+=======
+				//dodatne usluge
+				List<Long> asids = new ArrayList<>();
+				for(Long asid : accSoap.getAdditionalServices()) {
+					asids.add(additionalServiceRepository.findByDatabaseId(asid).getId());
+				}
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 				Set<AdditionalService> serviceslocal = new HashSet<AdditionalService>(additionalServiceRepository.findAllById(asids));
 				acc.setAdditionalServices(serviceslocal);
-				acc.setTerms(new ArrayList<Term>());
+				//acc.setTerms(new ArrayList<Term>());
 				acc = accRepository.save(acc);
 				for(TermSoap termSoap: accSoap.getTerms() ) {
 					Term term = new Term();
@@ -138,7 +146,7 @@ public class SyncData {
 					term.setDatabaseId(termSoap.getId());
 					term.setAccomodation(acc);
 					term.setVisited(termSoap.isVisited());
-					term.setReserved(term.isReserved());
+					term.setReserved(termSoap.isReserved());
 					term.setUser(userRepository.findByDatabaseId(termSoap.getUserId()));
 //					acc.getTerms().add(term);
 					termRepository.save(term);
@@ -161,6 +169,7 @@ public class SyncData {
 	}
 	
 	@Transactional
+<<<<<<< HEAD
 	public void clean(){
 		List<AccomodationType> temptype = new ArrayList<>();
 		for(AccomodationType accType : accTypeRepository.findAll()){
@@ -197,6 +206,16 @@ public class SyncData {
 			tempacc.add(acc);
 		}
 		accRepository.deleteAll(tempacc);
+=======
+	public void clean() {
+		messageRepository.deleteAll();
+		additionalServiceRepository.deleteAll();
+		termRepository.deleteAll();
+		userRepository.deleteAll();
+		accRepository.deleteAll();
+		categoryRepository.deleteAll();
+		accTypeRepository.deleteAll();
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
 	}
 	
 }

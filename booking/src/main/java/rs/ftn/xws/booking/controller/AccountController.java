@@ -144,16 +144,10 @@ public class AccountController {
     }
     
     @PostMapping("/password-change")
-    public ResponseEntity<ApiResponse> changePassword(@RequestBody @Valid PasswordChangeRequest passwordChange){
-  		
-    		User user = domainUserDetailsService.findCurrentUser();
-    		if(user != null){
-	    		domainUserDetailsService.changePassword(user, passwordChange.getNewPassword());
-	    		return ResponseEntity.ok(new ApiResponse(true, "Password successfuly reseted!"));
-    		}else{
-    			return ResponseEntity.badRequest().body(new ApiResponse(false, "Invalid request!"));
-    		}
-    	
+    public ResponseEntity<ApiResponse> changePassword(@RequestBody @Valid PasswordChangeRequest passwordChange){		
+		User user = domainUserDetailsService.findCurrentUser();
+		domainUserDetailsService.changePassword(user, passwordChange.getNewPassword());
+		return ResponseEntity.ok(new ApiResponse(true, "Password successfuly reseted!"));
     }
     
 }

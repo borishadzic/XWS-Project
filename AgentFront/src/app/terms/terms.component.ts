@@ -25,7 +25,8 @@ export class TermsComponent implements OnInit {
       this.terms = data;
 
       const termsD: TermData[] = [];
-    for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
+    for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i]));}
+    console.log(termsD);
 
     this.myDataSource = new MatTableDataSource(termsD);
     this.myDataSource.paginator = this.paginator;
@@ -62,9 +63,10 @@ export class TermsComponent implements OnInit {
   }
   
 
-  onVisitedCheck(id:any,event: any){
+  onVisitedCheck(id:any,event: any, i: any){
     this.http.get('http://localhost:8081/accomodations/'+id+'/'+event.checked,{ responseType: 'text' }).subscribe(data => {
-      this.terms[id-1].visited = event.checked;
+      console.log(i);
+      this.terms[i].visited = event.checked;
       const termsD: TermData[] = [];
       for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
   
@@ -74,9 +76,9 @@ export class TermsComponent implements OnInit {
     });
   }
 
-  onReservedCheck(id:any,event: any){
+  onReservedCheck(id:any,event: any, i:any){
     this.http.get('http://localhost:8081/accomodations/terms/'+id+'/reserved/'+event.checked,{ responseType: 'text' }).subscribe(data => {
-      this.terms[id-1].reserved = event.checked;
+      this.terms[i].reserved = event.checked;
       const termsD: TermData[] = [];
       for (let i = 0; i < this.terms.length; i++) { termsD.push(createTerm(this.terms[i])); }
   

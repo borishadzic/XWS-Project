@@ -47,7 +47,7 @@ export class AccomodationsComponent implements OnInit {
     }
   }
 
-  onRemove(id){
+  onRemove(id, i){
     this.http.delete('http://localhost:8081/accomodations/'+id,{ responseType: 'text' }).subscribe(data => {
       this.http.get('http://localhost:8081/accomodations').subscribe(data => {
       this.accomodations = data;

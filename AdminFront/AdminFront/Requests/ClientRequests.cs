@@ -44,6 +44,7 @@ namespace AdminFront.Requests
 
         }
 
+<<<<<<< HEAD
         public static void ApproveComment(AdminCommentDTO comment)
         {
             ServicePointManager.ServerCertificateValidationCallback =
@@ -98,6 +99,8 @@ namespace AdminFront.Requests
 
         }
 
+=======
+>>>>>>> branch 'master' of https://github.com/borishadzic/XWS-Project.git
         public static ProfileDTO toogleLockedUser(ProfileDTO user)
         {
             ServicePointManager.ServerCertificateValidationCallback =
