@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdminFront.Pages
 {
@@ -24,21 +25,35 @@ namespace AdminFront.Pages
     public partial class CommentView : UserControl
     {
 
-        List<AdminCommentDTO> comments = new List<AdminCommentDTO>();
+        private List<AdminCommentDTO> comments = new List<AdminCommentDTO>();
 
-
-
-
+        private DispatcherTimer dt;
+        
         public CommentView()
         {
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(AutoRefresh);
+            dt.Interval = new TimeSpan(0, 5, 0);
+            dt.Start();
             InitializeComponent();
+            comments = ClientRequests.getComments();
+            CommentList.ItemsSource = comments;
+        }
+
+        private void AutoRefresh(object sender, EventArgs args)
+        {
+
             comments = ClientRequests.getComments();
             CommentList.ItemsSource = comments;
         }
 
         public void approveComment(object sender, RoutedEventArgs args)
         {
-
+            if(CommentList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a comment to approve");
+                return;
+            }
             ClientRequests.ApproveComment(comments.ElementAt(CommentList.SelectedIndex));
             comments = ClientRequests.getComments();
             CommentList.ItemsSource = comments;
@@ -46,7 +61,11 @@ namespace AdminFront.Pages
 
         private void banComment(object sender, RoutedEventArgs e)
         {
-
+            if (CommentList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a comment to decline");
+                return;
+            }
             ClientRequests.BanComment(comments.ElementAt(CommentList.SelectedIndex));
             comments = ClientRequests.getComments();
             CommentList.ItemsSource = comments;

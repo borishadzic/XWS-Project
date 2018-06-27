@@ -33,11 +33,11 @@
                 <Label Content="Clients" HorizontalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Button Grid.Row="2" Grid.Column="0" ToolTip="Agents" Click="AgentClick">
+        <Button Grid.Row="2" Grid.Column="0" ToolTip="Comments" Click="AgentClick">
 
             <StackPanel>
-                <Image Source="Resources/agents.png"></Image>
-                <Label Content="Agents" HorizontalAlignment="Center"/>
+                <Image Source="Resources/comment.png"></Image>
+                <Label Content="Comments" HorizontalAlignment="Center"/>
             </StackPanel>
         </Button>
         <Button Grid.Row="3" Grid.Column="0" ToolTip="Data" Click="DataClick">

@@ -31,7 +31,17 @@
                 <TextBlock Text="Add new Type"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="100" Name="NewType"/>
-                    <Button Content="Add" Click="addType"/>
+                    <Button Content="Add" Click="addType">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text.Length, ElementName=NewType, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
                 <TextBlock Text="Change old Type"/>
                 <StackPanel Orientation="Horizontal">
@@ -48,7 +58,17 @@
                 <TextBlock Text="Add new Service"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="100" Name="NewService"/>
-                    <Button Content="Add" Click="addService"/>
+                    <Button Content="Add" Click="addService">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text.Length, ElementName=NewService, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
                 <TextBlock Text="Change old Service"/>
                 <StackPanel Orientation="Horizontal">
@@ -65,7 +85,17 @@
                 <TextBlock Text="Add new Catagory"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="100" Name="NewCatagory"/>
-                    <Button Content="Add" Click="addCatagory"/>
+                    <Button Content="Add" Click="addCatagory">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text.Length, ElementName=NewCatagory, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
                 <TextBlock Text="Change old Catagory"/>
                 <StackPanel Orientation="Horizontal">

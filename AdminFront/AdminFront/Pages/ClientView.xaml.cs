@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdminFront.Pages
 {
@@ -23,27 +24,41 @@ namespace AdminFront.Pages
     /// </summary>
     public partial class ClientView : UserControl
     {
+        private DispatcherTimer dt;
 
-        List<ProfileDTO> clients ;
+        private List<ProfileDTO> clients ;
 
-        ClientRequests cr = new ClientRequests();
-
+        
         public ClientView()
         {
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(AutoRefresh);
+            dt.Interval = new TimeSpan(0, 5, 0);
+            dt.Start();
             InitializeComponent();
             clients = getClients();
             ListaKlijenata.ItemsSource = clients;
 
         }
-
+        private void AutoRefresh(object sender, EventArgs args)
+        {
+            clients = getClients();
+            ListaKlijenata.ItemsSource = clients;
+        }
 
         public List<ProfileDTO> getClients()
         {
             return ClientRequests.getClients();
         }
+        
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (ListaKlijenata.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a client");
+                return;
+            }
             var klient = clients.ElementAt(ListaKlijenata.SelectedIndex);
 
             var client = ClientRequests.toogleLockedUser(klient);
@@ -51,6 +66,11 @@ namespace AdminFront.Pages
 
         private void CheckBox_Checked2(object sender, RoutedEventArgs e)
         {
+            if (ListaKlijenata.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a client");
+                return;
+            }
             var klient = clients.ElementAt(ListaKlijenata.SelectedIndex);
             ProfileDTO client;
             if (klient.nonLocked)

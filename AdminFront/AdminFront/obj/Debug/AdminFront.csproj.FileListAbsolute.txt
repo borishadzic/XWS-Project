@@ -78,3 +78,30 @@ C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront
 C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.csproj.CopyComplete
 C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.exe
 C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.pdb
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\AdminFront.exe.config
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\AdminFront.exe
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\AdminFront.pdb
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\Newtonsoft.Json.dll
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\Newtonsoft.Json.xml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.csprojResolveAssemblyReference.cache
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\MainWindow.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\ClientView.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\CommentView.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\FilteView.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\SignInWindow.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\App.g.cs
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront_MarkupCompile.cache
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront_MarkupCompile.lref
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\MainWindow.baml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\ClientView.baml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\CommentView.baml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\Pages\FilteView.baml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\SignInWindow.baml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.g.resources
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.Properties.Resources.resources
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.csproj.GenerateResource.Cache
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.csproj.CoreCompileInputs.cache
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.exe
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\AdminFront.pdb

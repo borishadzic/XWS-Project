@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdminFront
 {
@@ -22,9 +23,8 @@ namespace AdminFront
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+
         Window1 siw ;
-        FilteView fv;
         public MainWindow()
         {
             siw = new Window1(this);
@@ -33,6 +33,8 @@ namespace AdminFront
             this.Hide();
             DataContext = this;
         }
+
+        
 
         public void ClientClick(object sender, RoutedEventArgs args)
         {

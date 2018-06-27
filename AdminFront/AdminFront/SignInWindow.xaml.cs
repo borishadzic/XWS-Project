@@ -79,9 +79,9 @@ namespace AdminFront
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var response = ClientRequests.SignIn(UserName.Text, Password.Password);
-            if (response == null)
+            if (ClientRequests.token == "")
             {
-                MessageBox.Show("Wrong emmail or password");
+                MessageBox.Show(response);
             }
             else
             {

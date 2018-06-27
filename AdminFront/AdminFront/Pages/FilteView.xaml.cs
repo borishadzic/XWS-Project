@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AdminFront.Pages
 {
@@ -25,12 +26,16 @@ namespace AdminFront.Pages
 
     public partial class FilteView : UserControl
     {
+        private DispatcherTimer dt;
 
-        FilterDTO filter = new FilterDTO();
+        private FilterDTO filter = new FilterDTO();
         public FilteView()
         {
             InitializeComponent();
-
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(AutoRefresh);
+            dt.Interval = new TimeSpan(0, 5, 0);
+            dt.Start();
             filter = ClientRequests.getFilters();
             TypeList.ItemsSource = filter.types.Select(x=> x.type);
             CatagoryList.ItemsSource = filter.categories.Select(x=> x.category);
@@ -38,6 +43,13 @@ namespace AdminFront.Pages
             DataContext = this;
         }
 
+        private void AutoRefresh(object sender, EventArgs args)
+        {
+            filter = ClientRequests.getFilters();
+            TypeList.ItemsSource = filter.types.Select(x => x.type);
+            CatagoryList.ItemsSource = filter.categories.Select(x => x.category);
+            ServicesList.ItemsSource = filter.services.Select(x => x.name);
+        }
 
         public void addType(object sender, RoutedEventArgs arg)
         {
@@ -79,6 +91,11 @@ namespace AdminFront.Pages
 
         public void modifyType(object sender, RoutedEventArgs arg)
         {
+            if (TypeList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select Type to change");
+                return;
+            }
             if (ModifyType.Text == "")
             {
                 MessageBox.Show("Cannot add blank name");
@@ -91,6 +108,11 @@ namespace AdminFront.Pages
 
         public void modifyService(object sender, RoutedEventArgs arg)
         {
+            if (ServicesList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select Service to change");
+                return;
+            }
             if (ModifyService.Text == "")
             {
                 MessageBox.Show("Cannot add blank name");
@@ -103,6 +125,11 @@ namespace AdminFront.Pages
 
         public void modifyCategory(object sender, RoutedEventArgs arg)
         {
+            if (CatagoryList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select Catagory to change");
+                return;
+            }
             if (ModifyCategory.Text == "")
             {
                 MessageBox.Show("Cannot add blank name");

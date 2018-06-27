@@ -287,7 +287,7 @@ namespace AdminFront.Requests
 
         }
 
-        public static LoginToken SignIn(string username, string password1)
+        public static string SignIn(string username, string password1)
         {
             ServicePointManager.ServerCertificateValidationCallback =
                  delegate (object s, X509Certificate certificate,
@@ -312,21 +312,21 @@ namespace AdminFront.Requests
                 }
                  
                 var response = (HttpWebResponse)request.GetResponse();
+                
                 using (var streamReader = new StreamReader(response.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
                     var rootObject = JsonConvert.DeserializeObject<LoginToken>(result);
                     token = rootObject.accessToken;
                     streamReader.Close();
-                    
-                    return rootObject;
+                    return token;
                 }
 
 
             } catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return e.Message;
             }
         }
 

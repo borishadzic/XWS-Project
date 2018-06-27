@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\obj\Debug\
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\obj\Debug\
 AdminFront
 none
 false
 DEBUG;TRACE
-C:\Users\Boris Hadzic\git\XWS-Project\AdminFront\AdminFront\App.xaml
+C:\Users\darko\Source\git\XWS-Project\AdminFront\AdminFront\App.xaml
 51830317211
 
 20-1441799409
-18-1580674248
+18-810855674
 MainWindow.xaml;Pages\ClientView.xaml;Pages\CommentView.xaml;Pages\FilteView.xaml;SignInWindow.xaml;
 
 False
