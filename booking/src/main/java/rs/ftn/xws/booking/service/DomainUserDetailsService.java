@@ -46,6 +46,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		System.out.println(email);
 		User user = userRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
@@ -73,7 +74,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 	}
 
 	public List<User> findAllUsers() {
-		return userRepository.findAll();
+		return userRepository.findUsersExceptSelf();
 	}
 
 	public User findCurrentUser() {

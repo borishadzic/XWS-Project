@@ -1,5 +1,6 @@
 package rs.ftn.xws.booking.persistence.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -19,5 +20,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	@Query("select u from User u where u.id = ?#{principal.id}")
 	User findCurrentUser();
+	
+	@Query("select u from User u where u.id != ?#{principal.id}")
+	List<User> findUsersExceptSelf();
 
 }

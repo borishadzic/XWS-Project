@@ -42,9 +42,19 @@ namespace AdminFront.Pages
 
         private void AutoRefresh(object sender, EventArgs args)
         {
+            Refresh();
+        }
 
+
+        public void Refresh()
+        {
             comments = ClientRequests.getComments();
             CommentList.ItemsSource = comments;
+        }
+
+        public void SetRefreshTime(int minutes)
+        {
+            dt.Interval = new TimeSpan(0, minutes, 0);
         }
 
         public void approveComment(object sender, RoutedEventArgs args)

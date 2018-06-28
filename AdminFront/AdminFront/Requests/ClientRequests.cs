@@ -15,20 +15,25 @@ namespace AdminFront.Requests
 {
     public class ClientRequests
     {
-        private static string webApi = "https://localhost:8443/";
+        private static string webApi = "https://localhost:8443/booking/";
         public static string token = "";
+        public static X509Certificate2Collection certificates;
 
-        
+        public ClientRequests()
+        {
+            certificates = new X509Certificate2Collection();
+            certificates.Import("Resources/keyStore.pfx", "123", X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+            ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true;
+
+        }
+
         public static List<AdminCommentDTO> getComments()
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+            
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/getComments");
             request.Method = "GET";
-            request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
 
 
@@ -46,17 +51,14 @@ namespace AdminFront.Requests
 
         public static void ApproveComment(AdminCommentDTO comment)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+            
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/approveComments");
             
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -73,17 +75,14 @@ namespace AdminFront.Requests
 
         public static void BanComment(AdminCommentDTO comment)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+            
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/banComments");
 
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -100,10 +99,7 @@ namespace AdminFront.Requests
         
         public static ProfileDTO toogleLockedUser(ProfileDTO user)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+           
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/changeLockStatusFalse");
 
@@ -112,7 +108,7 @@ namespace AdminFront.Requests
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -140,17 +136,12 @@ namespace AdminFront.Requests
 
         public static void addType(string type)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
-
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/addType");
 
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -168,17 +159,14 @@ namespace AdminFront.Requests
 
         public static void addService(string type)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+           
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/addService");
 
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -197,17 +185,13 @@ namespace AdminFront.Requests
 
         public static void addCatagory(string type)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/addCategory");
 
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -226,10 +210,7 @@ namespace AdminFront.Requests
 
         public static ProfileDTO toogleLockedUser2(ProfileDTO user)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+           
 
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/admin/changeLockStatusTrue");
 
@@ -238,7 +219,7 @@ namespace AdminFront.Requests
             request.Method = "POST";
             request.ContentType = "application/json";
             request.UseDefaultCredentials = true;
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
@@ -265,14 +246,9 @@ namespace AdminFront.Requests
 
         public static FilterDTO getFilters()
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                delegate (object s, X509Certificate certificate,
-               X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                { return true; };
-
             var request = (HttpWebRequest)WebRequest.Create(webApi + "api/filter");
             request.Method = "GET";
-            request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+            request.ClientCertificates = certificates;
 
             var response = (HttpWebResponse)request.GetResponse();
             using (var streamReader = new StreamReader(response.GetResponseStream()))
@@ -287,55 +263,11 @@ namespace AdminFront.Requests
 
         }
 
-        public static string SignIn(string username, string password1)
-        {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
-            try
-            {
-                
-                var request = (HttpWebRequest)WebRequest.Create(webApi+"api/account/signin");
-                
-                request.Method = "POST";
-                request.ContentType = "application/json";
-                request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
-
-
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-                {
-                    string content2 = JsonConvert.SerializeObject(new LoginDTO(username, password1));
-                    streamWriter.Write(content2);
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                }
-                 
-                var response = (HttpWebResponse)request.GetResponse();
-                
-                using (var streamReader = new StreamReader(response.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    var rootObject = JsonConvert.DeserializeObject<LoginToken>(result);
-                    token = rootObject.accessToken;
-                    streamReader.Close();
-                    return token;
-                }
-
-
-            } catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return e.Message;
-            }
-        }
+        
 
         public static ModifyDTO modifyType(string oldName, string newName)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+            
 
             try
             {
@@ -344,7 +276,7 @@ namespace AdminFront.Requests
 
                 request.Method = "POST";
                 request.ContentType = "application/json";
-                request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+                request.ClientCertificates = certificates;
 
 
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
@@ -379,11 +311,7 @@ namespace AdminFront.Requests
 
         public static ModifyDTO modifyCategory(string oldName, string newName)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
-
+            
             try
             {
 
@@ -391,7 +319,7 @@ namespace AdminFront.Requests
 
                 request.Method = "POST";
                 request.ContentType = "application/json";
-                request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+                request.ClientCertificates = certificates;
 
 
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
@@ -425,11 +353,6 @@ namespace AdminFront.Requests
 
         public static ModifyDTO modifyService(string oldName, string newName)
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
-
             try
             {
 
@@ -437,7 +360,7 @@ namespace AdminFront.Requests
 
                 request.Method = "POST";
                 request.ContentType = "application/json";
-                request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+                request.ClientCertificates = certificates;
 
 
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
@@ -473,15 +396,13 @@ namespace AdminFront.Requests
 
         public static List<ProfileDTO> getClients()
         {
-            ServicePointManager.ServerCertificateValidationCallback =
-                 delegate (object s, X509Certificate certificate,
-                X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                 { return true; };
+            
 
             var request = (HttpWebRequest)WebRequest.Create(webApi+"api/admin/getClients");
 
             request.Method = "GET";
-            request.UseDefaultCredentials = true; request.Headers.Add("Authorization", "Bearer " + token);
+            request.UseDefaultCredentials = true;
+            request.ClientCertificates = certificates;
 
             
 

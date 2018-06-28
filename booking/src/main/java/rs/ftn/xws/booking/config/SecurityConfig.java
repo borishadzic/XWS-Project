@@ -74,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.and()
 	        .csrf()
 	            .disable()
+            .x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)")
+	             .and()
 	        .exceptionHandling()
 	            .authenticationEntryPoint(unauthorizedHandler)
 	            .and()

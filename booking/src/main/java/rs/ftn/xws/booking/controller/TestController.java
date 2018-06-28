@@ -25,6 +25,12 @@ public class TestController {
 		return "Hello World!";
 	}
 
+	@GetMapping("/20")
+	@PreAuthorize("hasRole('ADMIN')")
+	public String getKirin() {
+		return "Kirin";
+	}
+	
 	@GetMapping("/2")
 	@PreAuthorize("hasAuthority('CREATE')")
 	public String getHasAuthority(Authentication authentication) {

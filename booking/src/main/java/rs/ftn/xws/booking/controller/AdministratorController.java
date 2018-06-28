@@ -51,42 +51,42 @@ public class AdministratorController {
 	private SearchFilterService searchFilterService;
     
     @PostMapping("/addType")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('AddContent')")
 	public AccomodationType postType(@RequestBody BonusDto type) {
 		return searchFilterService.addType(type.getName());
 	}
 	
 	@PostMapping("/addCategory")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('AddContent')")
 	public Category postCategory(@RequestBody BonusDto category) {
 		return searchFilterService.addCategory(category.getName());
 	}
 	
 	@PostMapping("/addService")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('AddContent')")
 	public AdditionalService postService(@RequestBody BonusDto name) {
 		return searchFilterService.addAdditionalService(name.getName());
 	}
 	
 	@PostMapping("/modifyService")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ModifyContent')")
 	public AdditionalService modifyService(@RequestBody ModifyDTO name) {
 		return searchFilterService.modifyService(name.getOldName(),name.getNewName());
 	}
 	
 	@PostMapping("/modifyType")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ModifyContent')")
 	public AccomodationType modifyType(@RequestBody ModifyDTO name) {
 		return searchFilterService.modifyType(name.getOldName(),name.getNewName());
 	}
 	
 	@PostMapping("/modifyCategory")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ModifyContent')")
 	public Category modifyCategory(@RequestBody ModifyDTO name) {
 		return searchFilterService.modifyCategory(name.getOldName(),name.getNewName());
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('GetComments')")
     @GetMapping("/getComments")
     public List<AdminComment> getCommentsForReview(){
 		List<AdminComment> comments;
@@ -94,19 +94,19 @@ public class AdministratorController {
 		return comments;
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ApproveComment')")
     @PostMapping("/approveComments")
     public void approveComment(@RequestBody AdminComment comment) {
 		 cloudFunctionsService.approveComment(comment.getId());
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('BlockComment')")
     @PostMapping("/banComments")
     public void banComment(@RequestBody AdminComment comment) {
 		 cloudFunctionsService.declineComment(comment.getId());
 	}
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('GetClients')")
     @GetMapping("/getClients")
     public List<ProfileDto> getClients(){
     	List<ProfileDto> foundClients = new ArrayList<ProfileDto>();
@@ -119,7 +119,7 @@ public class AdministratorController {
     	return foundClients;
     }
     
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('GetAgents')")
     @GetMapping("/getAgents")
     public List<ProfileDto> getAgents(){
     	List<ProfileDto> foundClients = new ArrayList<ProfileDto>();
@@ -143,7 +143,7 @@ public class AdministratorController {
     
     
     
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('LockUser')")
     @PostMapping("/changeLockStatusTrue")
     public ProfileDto lockUser(@RequestBody ProfileDto user) {
     	if (domainUserDetailsService.findByEmail(user.getUsername())==null )
@@ -155,7 +155,7 @@ public class AdministratorController {
     }
     
     
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('UnlockUser')")
     @PostMapping("/changeLockStatusFalse")
     public ProfileDto unLockUser(@RequestBody ProfileDto user) {
     	if (domainUserDetailsService.findByEmail(user.getUsername())==null )

@@ -20,9 +20,18 @@
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close"/>
-                    <MenuItem Header="_Save"/>
+                    <MenuItem Header="_Refresh All" Click="RefreshSources"/>
+                    <MenuItem Header="_Clients" Click="ClientClick"/>
+                    <MenuItem Header="_Comments" Click="AgentClick"/>
+                    <MenuItem Header="_Data" Click="DataClick"/>
+                </MenuItem>
+                <MenuItem Header="_Refresh Timer">
+                    <MenuItem Header="_1 minute" Click="setOneMinute"/>
+                    <MenuItem Header="_5 minutes" Click="setFiveMinutes"/>
+                    <MenuItem Header="_10 minutes" Click="setTenMinutes"/>
+                    <MenuItem Header="_15 minutes" Click="setFifteenMinutes"/>
+                    <MenuItem Header="_30 minutes" Click="setThirtyMinutes"/>
+                    <MenuItem Header="_1 hour" Click="setSixtyMinutes"/>
                 </MenuItem>
             </Menu>
             <StackPanel></StackPanel>
@@ -46,7 +55,7 @@
                 <Label Content="Data" HorizontalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Frame Name="PrimaryFrame" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
+        <Frame Name="PrimaryFrame" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" NavigationUIVisibility="Hidden">
 
         </Frame>
     </Grid>

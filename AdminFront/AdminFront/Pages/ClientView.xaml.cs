@@ -42,6 +42,16 @@ namespace AdminFront.Pages
         }
         private void AutoRefresh(object sender, EventArgs args)
         {
+            Refresh();
+        }
+
+        public void SetRefreshTime(int minutes)
+        {
+            dt.Interval = new TimeSpan(0, minutes, 0);
+        }
+
+        public void Refresh()
+        {
             clients = getClients();
             ListaKlijenata.ItemsSource = clients;
         }

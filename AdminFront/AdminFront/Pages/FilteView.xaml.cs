@@ -45,6 +45,17 @@ namespace AdminFront.Pages
 
         private void AutoRefresh(object sender, EventArgs args)
         {
+            Refresh();
+        }
+
+        public void SetRefreshTime(int minutes)
+        {
+            dt.Interval = new TimeSpan(0, minutes, 0);
+        }
+
+        public void Refresh()
+        {
+
             filter = ClientRequests.getFilters();
             TypeList.ItemsSource = filter.types.Select(x => x.type);
             CatagoryList.ItemsSource = filter.categories.Select(x => x.category);
